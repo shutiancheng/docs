@@ -13,17 +13,33 @@
     "dark": "/logo/dark.svg"
   },
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Renchi AI",
+          "icon": "house",
+          "href": "https://renchi.ai"
+        }
+      ]
+    },
     "tabs": [
+      {
+        "tab": "Guide"
+      },
       {
         "tab": "Documentation",
         "groups": [
           {
             "group": "Getting Started",
-            "pages": ["index"]
+            "pages": [
+              "index"
+            ]
           },
           {
             "group": "Types Reference",
-            "pages": ["types/overview"]
+            "pages": [
+              "types/overview"
+            ]
           }
         ]
       },
@@ -32,7 +48,9 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["api-reference/overview"]
+            "pages": [
+              "api-reference/overview"
+            ]
           },
           {
             "group": "Integrations",
@@ -86,7 +104,9 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["components/overview"]
+            "pages": [
+              "components/overview"
+            ]
           },
           {
             "group": "UI Primitives",
@@ -254,16 +274,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Renchi AI",
-          "href": "https://renchi.ai",
-          "icon": "house"
-        }
-      ]
-    }
+    ]
   },
   "navbar": {
     "links": [
