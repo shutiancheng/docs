@@ -26,21 +26,20 @@ Renchi AI is an AI-powered voice call handling platform designed for UK HVAC and
 
 ## Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    INBOUND CALL FLOW                         │
-├─────────────────────────────────────────────────────────────┤
-│  Customer Call → Twilio → ElevenLabs AI → Webhook Events    │
-│                                               ↓              │
-│                                    [Transcription, Audio,    │
-│                                     Personalization]         │
-├─────────────────────────────────────────────────────────────┤
-│                    BACKEND SERVICES                          │
-│  Next.js API Routes → Supabase (Database + Storage)         │
-│                    → Email Notifications                     │
-│                    → Third-party Integrations               │
-└─────────────────────────────────────────────────────────────┘
-```
+<Steps>
+  <Step title="Inbound Call">
+    Customer calls your Twilio phone number
+  </Step>
+  <Step title="AI Processing">
+    ElevenLabs Conversational AI handles the conversation
+  </Step>
+  <Step title="Webhook Events">
+    Transcription, audio recording, and personalization data sent to backend
+  </Step>
+  <Step title="Backend Services">
+    Next.js API routes process data → Supabase storage → Email notifications → Third-party integrations
+  </Step>
+</Steps>
 
 ## Quick Links
 

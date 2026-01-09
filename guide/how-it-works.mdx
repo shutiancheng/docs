@@ -1,0 +1,82 @@
+---
+title: "How It Works"
+description: "Understand the technology behind Renchi AI"
+---
+
+# How It Works
+
+Renchi AI combines several technologies to deliver intelligent voice call handling.
+
+## System Architecture
+
+```
+INBOUND CALL FLOW
+─────────────────────────────────────────────────────────────
+Customer Call → Twilio → ElevenLabs AI → Webhook Events
+                                                ↓
+                              ┌─────────────────┼─────────────────┐
+                              ↓                 ↓                 ↓
+                        Transcription    Audio Recording   Personalization
+
+BACKEND SERVICES
+─────────────────────────────────────────────────────────────
+Next.js API Routes
+       ├── Supabase (Database + Storage)
+       ├── Email Notifications
+       └── Third-party Integrations
+```
+
+## Key Components
+
+### Twilio (Telephony)
+
+Twilio handles the phone infrastructure:
+- Receives inbound calls to your business number
+- Routes calls to the AI agent
+- Manages call recording and status updates
+
+### ElevenLabs (Voice AI)
+
+ElevenLabs powers the conversational AI:
+- Natural-sounding voice synthesis
+- Real-time speech recognition
+- Context-aware responses
+- Handles complex multi-turn conversations
+
+### Supabase (Database)
+
+Supabase stores all your data:
+- Customer records and history
+- Conversation transcripts
+- Job and booking details
+- Team and organization settings
+
+## Call Flow in Detail
+
+<Steps>
+  <Step title="Call Received">
+    Customer dials your business number. Twilio receives the call and triggers a webhook to your Renchi AI backend.
+  </Step>
+  <Step title="AI Agent Activated">
+    The backend connects the call to your configured ElevenLabs agent, which greets the caller.
+  </Step>
+  <Step title="Conversation">
+    The AI agent handles the conversation, understanding intent, asking clarifying questions, and taking appropriate actions.
+  </Step>
+  <Step title="Actions Taken">
+    Based on the conversation, the agent can book appointments, schedule callbacks, transfer calls, or resolve inquiries.
+  </Step>
+  <Step title="Post-Call Processing">
+    After the call ends, webhooks deliver the transcript, recording, and AI analysis for review.
+  </Step>
+</Steps>
+
+## Data Flow
+
+| Event | Source | Destination | Data |
+|-------|--------|-------------|------|
+| Call started | Twilio | Backend | Caller ID, phone line |
+| Conversation | ElevenLabs | Real-time | Speech, intent |
+| Call ended | Twilio | Backend | Duration, status |
+| Transcript | ElevenLabs | Backend | Full conversation |
+| Recording | Twilio | Storage | Audio file |

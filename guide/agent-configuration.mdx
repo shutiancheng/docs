@@ -1,0 +1,96 @@
+---
+title: "Agent Configuration"
+description: "Configure your AI agent's behavior, voice, and capabilities"
+---
+
+# Agent Configuration
+
+Your AI agent can be customized to match your business needs and brand voice.
+
+## Configuration Tabs
+
+The agent configuration panel has several tabs:
+
+| Tab | Purpose |
+|-----|---------|
+| **General** | Name, greeting, persona |
+| **Voice** | Voice model, speech rate |
+| **Business Hours** | Operating schedule |
+| **Services** | What you offer |
+| **Transfer** | Call routing rules |
+| **Call Handling** | Emergency keywords, callbacks |
+| **Context** | Knowledge base, FAQs |
+
+## General Settings
+
+### Agent Name
+The name your agent uses when greeting callers. Choose something friendly and professional.
+
+```
+"Hi, this is Sarah from ABC Plumbing. How can I help you today?"
+```
+
+### Persona
+Describes how your agent should communicate. Examples:
+- "Friendly and professional customer service representative"
+- "Knowledgeable HVAC technician who explains things simply"
+- "Efficient receptionist who gets to the point quickly"
+
+### Greeting
+The first thing callers hear. Keep it concise:
+- Include your business name
+- Ask how you can help
+- Mention if there's a wait time
+
+## Voice Settings
+
+### Voice Model
+Choose from available ElevenLabs voices. Consider:
+- Gender and age appropriate for your brand
+- Accent that matches your customer base
+- Clarity and professionalism
+
+### Speech Rate
+Adjust how fast your agent speaks:
+- **Slower**: Better for complex information
+- **Normal**: Good for most conversations
+- **Faster**: Efficient for simple transactions
+
+## Business Hours
+
+Set when your agent should use the normal greeting vs. after-hours greeting.
+
+<Note>
+After-hours calls can still be handled by the AI. The greeting just changes to set expectations about response times.
+</Note>
+
+## Services
+
+Define what services your business offers. For each service:
+- **Label**: What customers ask for ("boiler repair")
+- **Description**: Details the AI can share
+- **Price**: Optional pricing information
+- **Premium**: Mark high-priority services
+
+## Transfer Rules
+
+Configure when and where calls should be transferred:
+- **Emergency keywords**: Words that trigger immediate transfer
+- **Transfer numbers**: Where to route urgent calls
+- **Fallback**: What happens if transfer fails
+
+## Context & Knowledge
+
+Add information your agent can reference:
+- Upload documents (PDFs, manuals)
+- Add FAQ entries
+- Link to your website for scraping
+
+<CardGroup cols={2}>
+  <Card title="Components Reference" icon="puzzle-piece" href="/components/configureagentpanel">
+    See the ConfigureAgentPanel component docs
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/overview">
+    Explore the API endpoints
+  </Card>
+</CardGroup>
