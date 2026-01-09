@@ -1,0 +1,34 @@
+---
+title: "BusinessHoursDialog"
+description: "BusinessHoursDialog component"
+---
+
+BusinessHoursDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="initialHours" type="BusinessHours" required={false}>
+  initialHours
+</ResponseField>
+<ResponseField name="onSave" type="(hours: BusinessHours) => void" required={false}>
+  onSave
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { BusinessHoursDialog } from '@/components/BusinessHoursDialog';
+
+export default function Example() {
+  return (
+    <BusinessHoursDialog open={open} onOpenChange={onOpenChange} />
+  );
+}
+```

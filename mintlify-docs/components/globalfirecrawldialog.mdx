@@ -1,0 +1,31 @@
+---
+title: "GlobalFirecrawlDialog"
+description: "GlobalFirecrawlDialog component"
+---
+
+GlobalFirecrawlDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="onSuccess" type="() => void" required={false}>
+  onSuccess
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { GlobalFirecrawlDialog } from '@/components/GlobalFirecrawlDialog';
+
+export default function Example() {
+  return (
+    <GlobalFirecrawlDialog open={open} onOpenChange={onOpenChange} />
+  );
+}
+```

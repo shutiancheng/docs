@@ -1,0 +1,34 @@
+---
+title: "EditPhoneDialog"
+description: "EditPhoneDialog component"
+---
+
+EditPhoneDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="currentPhone" type="string | null" required={true}>
+  currentPhone
+</ResponseField>
+<ResponseField name="onSuccess" type="(newPhone: string | null) => void" required={false}>
+  onSuccess
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { EditPhoneDialog } from '@/components/EditPhoneDialog';
+
+export default function Example() {
+  return (
+    <EditPhoneDialog open={open} onOpenChange={onOpenChange} currentPhone={currentPhone} />
+  );
+}
+```

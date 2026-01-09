@@ -1,0 +1,40 @@
+---
+title: "CallHandlingTab"
+description: "CallHandlingTab component"
+---
+
+CallHandlingTab component
+
+## Props
+
+<ResponseField name="config" type="AgentConfig" required={true}>
+  config
+</ResponseField>
+<ResponseField name="updateConfig" type="<K extends keyof AgentConfig>(
+    key: K,
+    value: AgentConfig[K]
+  ) => void" required={true}>
+  updateConfig
+</ResponseField>
+<ResponseField name="errors" type="Record<string, string>" required={true}>
+  errors
+</ResponseField>
+<ResponseField name="globalEmergencyEnabled" type="boolean" required={false}>
+  globalEmergencyEnabled
+</ResponseField>
+<ResponseField name="onConfigRefresh" type="() => void" required={false}>
+  onConfigRefresh
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CallHandlingTab } from '@/components/CallHandlingTab';
+
+export default function Example() {
+  return (
+    <CallHandlingTab config={config} updateConfig={updateConfig} errors={errors} />
+  );
+}
+```

@@ -1,0 +1,37 @@
+---
+title: "TransferDialog"
+description: "* TransferDialog - Transfer call with AI context summary * Features: - Target team/person selection - AI-generated context summary (editable) - Copy button for context - Additional notes field - Microsoft Teams integration ready"
+---
+
+* TransferDialog - Transfer call with AI context summary * Features: - Target team/person selection - AI-generated context summary (editable) - Copy button for context - Additional notes field - Microsoft Teams integration ready
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="customerName" type="string" required={true}>
+  customerName
+</ResponseField>
+<ResponseField name="contextSummary" type="string" required={true}>
+  contextSummary
+</ResponseField>
+<ResponseField name="onTransferInitiated" type="(targetTeam: string, summary: string, notes: string) => void" required={false}>
+  onTransferInitiated
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { TransferDialog } from '@/components/TransferDialog';
+
+export default function Example() {
+  return (
+    <TransferDialog open={open} onOpenChange={onOpenChange} customerName={customerName} contextSummary={contextSummary} />
+  );
+}
+```

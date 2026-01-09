@@ -1,0 +1,36 @@
+---
+title: "POST /api/setup-super-admin"
+description: "* One-time setup endpoint to create super admin accounts * Usage: POST /api/setup-super-admin Body: { "password": "OpenDispatch123!" } * This endpoint should be called once during initial setup. It will create the super admin accounts if they don't already exist. * SECURITY NOTE: After running this once, consider removing this file or adding additional protection."
+api: "POST /api/setup-super-admin"
+---
+
+* One-time setup endpoint to create super admin accounts * Usage: POST /api/setup-super-admin Body: { "password": "OpenDispatch123!" } * This endpoint should be called once during initial setup. It will create the super admin accounts if they don't already exist. * SECURITY NOTE: After running this once, consider removing this file or adding additional protection.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/setup-super-admin \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/setup-super-admin', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

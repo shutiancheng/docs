@@ -1,0 +1,409 @@
+---
+title: "Types Overview"
+description: "TypeScript types and Zod schemas reference"
+---
+
+# Types Overview
+
+The VoiceAgent platform uses a comprehensive TypeScript type system with 400+ type definitions across 11 type files and 5 Zod validation schemas.
+
+## Type Organization
+
+```
+/web/src/lib/
+├── schemas/          # Zod validation schemas
+│   ├── auth.ts       # Authentication validation
+│   ├── team.ts       # Team/organization validation
+│   ├── customer.ts   # Customer data validation
+│   ├── job.ts        # Job/ticket validation
+│   └── agent-config.ts # Agent configuration validation
+├── types/            # TypeScript type definitions
+│   ├── conversation.ts
+│   ├── team.ts
+│   ├── agent-config.ts
+│   ├── knowledge-base.ts
+│   ├── sentiment.ts
+│   ├── customer.ts
+│   ├── job.ts
+│   ├── call-notes.ts
+│   ├── inbox.ts
+│   └── extraction.ts
+└── integrations/     # Third-party integration types
+    ├── types.ts
+    ├── elevenlabs/types.ts
+    └── twilio/types.ts
+```
+
+---
+
+## Core Types
+
+### Conversation Types
+
+Full conversation data model for call handling:
+
+```typescript
+interface ConversationDetail {
+  id: string;
+  customer: CustomerInfo;
+  metadata: CallMetadata;
+  problem: ProblemDetails;
+  booking?: BookingDetails;
+  transfer?: TransferInfo;
+  analysis: AIAnalysis;
+  transcript: TranscriptEntry[];
+  recording?: RecordingInfo;
+  notes: ConversationNote[];
+}
+
+// Problem categories for UK HVAC/plumbing
+type ProblemCategory =
+  | "annual_service"
+  | "boiler_breakdown"
+  | "blocked_drain"
+  | "leak_repair"
+  | "gas_safety"
+  | "emergency_callout"
+  | "technical_question"
+  | "warranty"
+  | "other";
+
+// Call outcomes
+type CallOutcome =
+  | "booked"
+  | "transferred"
+  | "resolved"
+  | "callback"
+  | "abandoned"
+  | "voicemail";
+
+// Urgency levels
+type UrgencyLevel = "normal" | "high" | "emergency";
+```
+
+### Customer Types
+
+Customer management with full history tracking:
+
+```typescript
+interface Customer {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  postcode?: string;
+  companyName?: string;
+  status: CustomerStatus;
+  type: CustomerType;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+type CustomerStatus = "active" | "new" | "inactive";
+type CustomerType = "residential" | "commercial";
+
+// Filtering options
+interface CustomerFilters {
+  search: string;
+  status: CustomerStatus | "all";
+  postcode: string;
+  callVolume: CallVolumeLevel;
+  lastContact: LastContactPeriod;
+}
+```
+
+### Agent Configuration Types
+
+Voice agent setup with business hours, services, and transfer routing:
+
+```typescript
+interface AgentConfig {
+  // Identity
+  name: string;
+  persona: string;
+  greeting: string;
+
+  // Voice settings
+  voiceModel: string;
+  speechRate: number;
+  afterHoursGreeting?: string;
+
+  // Business hours
+  businessHours: BusinessHours;
+
+  // Services offered
+  services: Service[];
+
+  // Transfer configuration
+  transferConfig: TransferConfig;
+
+  // Emergency handling
+  emergencyKeywords: string[];
+}
+
+interface BusinessHours {
+  monday: DaySchedule;
+  tuesday: DaySchedule;
+  wednesday: DaySchedule;
+  thursday: DaySchedule;
+  friday: DaySchedule;
+  saturday: DaySchedule;
+  sunday: DaySchedule;
+}
+
+interface DaySchedule {
+  enabled: boolean;
+  start: string; // HH:MM format
+  end: string;
+}
+
+interface Service {
+  id: string;
+  label: string;
+  description?: string;
+  enabled: boolean;
+  price?: number;
+  premium?: boolean;
+}
+```
+
+### Job/Ticket Types
+
+Service ticket management:
+
+```typescript
+interface Job {
+  id: string;
+  jobNumber: string;
+  customerId: string;
+  callId?: string;
+  status: JobStatus;
+  jobType: JobType;
+  appointmentDate?: Date;
+  timeSlot?: string;
+  technicianName?: string;
+  technicianPhone?: string;
+  technicianNotes?: string;
+  quotedPriceCents?: number;
+  finalPriceCents?: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+type JobStatus = "open" | "scheduled" | "completed" | "closed";
+
+type JobType =
+  | "annual_service"
+  | "boiler_breakdown"
+  | "blocked_drain"
+  | "leak_repair"
+  | "gas_safety"
+  | "emergency_callout"
+  | "technical_question"
+  | "warranty"
+  | "other";
+
+// Status transitions (validated)
+// open → scheduled → completed → closed
+```
+
+---
+
+## Integration Types
+
+### Twilio Types
+
+```typescript
+interface PhoneLine {
+  id: string;
+  teamId: string;
+  phoneNumber: string;
+  friendlyName: string;
+  twilioSid: string;
+  capabilities: {
+    voice: boolean;
+    sms: boolean;
+    mms: boolean;
+  };
+  monthlyCostCents: number;
+  isActive: boolean;
+}
+
+interface Call {
+  id: string;
+  phoneLineId: string;
+  customerId?: string;
+  direction: "inbound" | "outbound";
+  status: CallStatus;
+  duration?: number;
+  recordingUrl?: string;
+  transcriptSegments?: TranscriptSegment[];
+  aiSummary?: CallAISummary;
+}
+
+type CallStatus =
+  | "queued"
+  | "ringing"
+  | "in-progress"
+  | "completed"
+  | "busy"
+  | "failed"
+  | "no-answer"
+  | "canceled";
+```
+
+### ElevenLabs Types
+
+```typescript
+// Webhook event types
+type ElevenLabsWebhookEvent =
+  | ElevenLabsPostCallTranscriptionEvent
+  | ElevenLabsPostCallAudioEvent
+  | ElevenLabsCallInitiationFailureEvent;
+
+interface ElevenLabsPostCallTranscriptionEvent {
+  type: "post_call_transcription";
+  event_timestamp: number;
+  data: {
+    agent_id: string;
+    conversation_id: string;
+    status: string;
+    transcript: ElevenLabsTranscriptEntry[];
+    metadata: Record<string, unknown>;
+    analysis: ElevenLabsAnalysis;
+  };
+}
+
+interface ElevenLabsTranscriptEntry {
+  role: "agent" | "user";
+  message: string;
+  time_in_call_secs: number;
+  end_time_in_call_secs: number;
+  tool_calls?: unknown[];
+  feedback?: unknown;
+}
+```
+
+---
+
+## Zod Schemas
+
+All major types have corresponding Zod schemas for runtime validation:
+
+### Authentication Schema
+
+```typescript
+import { z } from "zod";
+
+export const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),
+});
+
+export const signupSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[A-Z]/, "Must contain uppercase letter")
+    .regex(/[a-z]/, "Must contain lowercase letter")
+    .regex(/[0-9]/, "Must contain number"),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+});
+```
+
+### Customer Schema
+
+```typescript
+export const customerSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email().optional().or(z.literal("")),
+  phone: z.string().min(10, "Valid phone number required"),
+  addressLine1: z.string().optional(),
+  city: z.string().optional(),
+  postcode: z.string().regex(/^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i, "Invalid UK postcode").optional(),
+  companyName: z.string().optional(),
+  type: z.enum(["residential", "commercial"]),
+});
+```
+
+### Job Schema
+
+```typescript
+export const jobSchema = z.object({
+  customerId: z.string().uuid(),
+  jobType: z.enum([
+    "annual_service",
+    "boiler_breakdown",
+    "blocked_drain",
+    "leak_repair",
+    "gas_safety",
+    "emergency_callout",
+    "technical_question",
+    "warranty",
+    "other",
+  ]),
+  appointmentDate: z.date().optional(),
+  timeSlot: z.string().regex(/^\d{2}:\d{2}$/).optional(),
+  technicianName: z.string().optional(),
+  quotedPriceCents: z.number().int().min(0).optional(),
+});
+```
+
+---
+
+## Type Utilities
+
+### Status Labels and Colors
+
+Each enum-like type has corresponding label and color mappings:
+
+```typescript
+export const JOB_STATUS_LABELS: Record<JobStatus, string> = {
+  open: "Open",
+  scheduled: "Scheduled",
+  completed: "Completed",
+  closed: "Closed",
+};
+
+export const JOB_STATUS_COLORS: Record<JobStatus, { bg: string; text: string; border: string }> = {
+  open: { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
+  scheduled: { bg: "bg-yellow-50", text: "text-yellow-700", border: "border-yellow-200" },
+  completed: { bg: "bg-green-50", text: "text-green-700", border: "border-green-200" },
+  closed: { bg: "bg-zinc-50", text: "text-zinc-700", border: "border-zinc-200" },
+};
+```
+
+### Conversion Functions
+
+Snake_case database rows are converted to camelCase TypeScript types:
+
+```typescript
+export function toCustomer(row: CustomerRow): Customer {
+  return {
+    id: row.id,
+    firstName: row.first_name,
+    lastName: row.last_name,
+    email: row.email,
+    phone: row.phone,
+    // ... more fields
+  };
+}
+```
+
+---
+
+## Best Practices
+
+1. **Use Zod for validation** - All user input should be validated with Zod schemas
+2. **Type conversion at boundaries** - Convert database rows to domain types at the data layer
+3. **Enum labels and colors** - Use the parallel `*_LABELS` and `*_COLORS` objects for display
+4. **Partial schemas for forms** - Use `.pick()` for tab-level validation in multi-step forms

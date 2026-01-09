@@ -1,0 +1,36 @@
+---
+title: "GET /api/cron/daily-summary"
+description: "GET endpoint for /cron/daily-summary"
+api: "GET /api/cron/daily-summary"
+---
+
+GET endpoint for /cron/daily-summary
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://your-domain.com/api/cron/daily-summary \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/cron/daily-summary', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

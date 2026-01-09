@@ -1,0 +1,40 @@
+---
+title: "SmartFillButton"
+description: "SmartFillButton component"
+---
+
+SmartFillButton component
+
+## Props
+
+<ResponseField name="agentId" type="string" required={true}>
+  agentId
+</ResponseField>
+<ResponseField name="onApplied" type="() => void" required={false}>
+  onApplied
+</ResponseField>
+<ResponseField name="className" type="string" required={false}>
+  className
+</ResponseField>
+<ResponseField name="compact" type="boolean" required={false}>
+  compact
+</ResponseField>
+<ResponseField name="disabled" type="boolean" required={false}>
+  disabled
+</ResponseField>
+<ResponseField name="showBotIcon" type="boolean" required={false}>
+  showBotIcon
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { SmartFillButton } from '@/components/SmartFillButton';
+
+export default function Example() {
+  return (
+    <SmartFillButton agentId={agentId} />
+  );
+}
+```

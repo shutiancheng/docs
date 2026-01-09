@@ -1,0 +1,31 @@
+---
+title: "DataConsentDialog"
+description: "* DataConsentDialog - First-time user consent dialog for data usage * Shown on first login to inform users their data may be used to improve the AI models. Users acknowledge by clicking "Got it" and can opt out later in Settings > Privacy."
+---
+
+* DataConsentDialog - First-time user consent dialog for data usage * Shown on first login to inform users their data may be used to improve the AI models. Users acknowledge by clicking "Got it" and can opt out later in Settings > Privacy.
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="onAcknowledged" type="() => void" required={false}>
+  onAcknowledged
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { DataConsentDialog } from '@/components/DataConsentDialog';
+
+export default function Example() {
+  return (
+    <DataConsentDialog open={open} onOpenChange={onOpenChange} />
+  );
+}
+```

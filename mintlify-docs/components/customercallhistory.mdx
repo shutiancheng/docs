@@ -1,0 +1,25 @@
+---
+title: "CustomerCallHistory"
+description: "* CustomerCallHistory Component * Displays a list of all bookings for a customer, sorted newest first. Each row is clickable and navigates to the conversation detail page. * For CSRs, this provides quick context on all previous interactions with the customer to enable personalized service."
+---
+
+* CustomerCallHistory Component * Displays a list of all bookings for a customer, sorted newest first. Each row is clickable and navigates to the conversation detail page. * For CSRs, this provides quick context on all previous interactions with the customer to enable personalized service.
+
+## Props
+
+<ResponseField name="calls" type="CustomerCall[]" required={true}>
+  calls
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CustomerCallHistory } from '@/components/CustomerCallHistory';
+
+export default function Example() {
+  return (
+    <CustomerCallHistory calls={calls} />
+  );
+}
+```

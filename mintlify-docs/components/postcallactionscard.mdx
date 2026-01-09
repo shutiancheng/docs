@@ -1,0 +1,25 @@
+---
+title: "PostCallActionsCard"
+description: "* PostCallActionsCard - SMS sent, job created, follow-up scheduled * Shows the automated post-call actions that were triggered."
+---
+
+* PostCallActionsCard - SMS sent, job created, follow-up scheduled * Shows the automated post-call actions that were triggered.
+
+## Props
+
+<ResponseField name="actions" type="PostCallActions" required={true}>
+  actions
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { PostCallActionsCard } from '@/components/PostCallActionsCard';
+
+export default function Example() {
+  return (
+    <PostCallActionsCard actions={actions} />
+  );
+}
+```

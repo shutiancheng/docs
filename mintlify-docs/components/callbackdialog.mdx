@@ -1,0 +1,37 @@
+---
+title: "CallBackDialog"
+description: "* CallBackDialog - Initiate a callback to the customer * Features: - Pre-filled phone number from customer record - Optional note for callback context - Click-to-call link for mobile/desktop softphone - Logs callback intent in system"
+---
+
+* CallBackDialog - Initiate a callback to the customer * Features: - Pre-filled phone number from customer record - Optional note for callback context - Click-to-call link for mobile/desktop softphone - Logs callback intent in system
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="customerName" type="string" required={true}>
+  customerName
+</ResponseField>
+<ResponseField name="phone" type="string" required={true}>
+  phone
+</ResponseField>
+<ResponseField name="onCallInitiated" type="(note: string) => void" required={false}>
+  onCallInitiated
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CallBackDialog } from '@/components/CallBackDialog';
+
+export default function Example() {
+  return (
+    <CallBackDialog open={open} onOpenChange={onOpenChange} customerName={customerName} phone={phone} />
+  );
+}
+```

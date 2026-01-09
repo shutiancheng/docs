@@ -1,0 +1,36 @@
+---
+title: "GET /api/webhooks/twilio/recording"
+description: "* GET /api/webhooks/twilio/recording * Health check endpoint."
+api: "GET /api/webhooks/twilio/recording"
+---
+
+* GET /api/webhooks/twilio/recording * Health check endpoint.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://your-domain.com/api/webhooks/twilio/recording \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/webhooks/twilio/recording', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

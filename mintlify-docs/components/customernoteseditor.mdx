@@ -1,0 +1,31 @@
+---
+title: "CustomerNotesEditor"
+description: "* CustomerNotesEditor Component * Auto-expanding textarea for editing customer notes with: - Auto-save with 300ms debounce - Character counter (max 4000) - "Saving..." and "Saved" indicators * Designed for CSRs to quickly add notes during or after calls without needing to click a save button."
+---
+
+* CustomerNotesEditor Component * Auto-expanding textarea for editing customer notes with: - Auto-save with 300ms debounce - Character counter (max 4000) - "Saving..." and "Saved" indicators * Designed for CSRs to quickly add notes during or after calls without needing to click a save button.
+
+## Props
+
+<ResponseField name="notes" type="string" required={true}>
+  notes
+</ResponseField>
+<ResponseField name="onSave" type="(notes: string) => Promise<void> | void" required={true}>
+  onSave
+</ResponseField>
+<ResponseField name="maxLength" type="number" required={false}>
+  maxLength
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CustomerNotesEditor } from '@/components/CustomerNotesEditor';
+
+export default function Example() {
+  return (
+    <CustomerNotesEditor notes={notes} onSave={onSave} />
+  );
+}
+```

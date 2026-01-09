@@ -1,0 +1,36 @@
+---
+title: "GET /api/integrations/status"
+description: "* GET /api/integrations/status * Returns the status of all integrations for the current user's team."
+api: "GET /api/integrations/status"
+---
+
+* GET /api/integrations/status * Returns the status of all integrations for the current user's team.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://your-domain.com/api/integrations/status \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/integrations/status', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

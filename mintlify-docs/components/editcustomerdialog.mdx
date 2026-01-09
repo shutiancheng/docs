@@ -1,0 +1,34 @@
+---
+title: "EditCustomerDialog"
+description: "EditCustomerDialog component"
+---
+
+EditCustomerDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="customer" type="CustomerDetail" required={true}>
+  customer
+</ResponseField>
+<ResponseField name="onSubmit" type="(data: CustomerFormData) => void" required={false}>
+  onSubmit
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { EditCustomerDialog } from '@/components/EditCustomerDialog';
+
+export default function Example() {
+  return (
+    <EditCustomerDialog open={open} onOpenChange={onOpenChange} customer={customer} />
+  );
+}
+```

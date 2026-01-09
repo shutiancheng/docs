@@ -1,0 +1,28 @@
+---
+title: "CustomerTagsEditor"
+description: "* CustomerTagsEditor Component * Inline tag editing with: - Display existing tags as removable chips - "+" button to add new tags - Enter to confirm, Escape to cancel - Auto-saves on add/remove * Designed for CSRs to quickly categorize customers without opening a separate dialog."
+---
+
+* CustomerTagsEditor Component * Inline tag editing with: - Display existing tags as removable chips - "+" button to add new tags - Enter to confirm, Escape to cancel - Auto-saves on add/remove * Designed for CSRs to quickly categorize customers without opening a separate dialog.
+
+## Props
+
+<ResponseField name="tags" type="string[]" required={true}>
+  tags
+</ResponseField>
+<ResponseField name="onUpdate" type="(tags: string[]) => void" required={true}>
+  onUpdate
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CustomerTagsEditor } from '@/components/CustomerTagsEditor';
+
+export default function Example() {
+  return (
+    <CustomerTagsEditor tags={tags} onUpdate={onUpdate} />
+  );
+}
+```

@@ -1,0 +1,36 @@
+---
+title: "POST /api/integrations/[provider]/disconnect"
+description: "* POST /api/integrations/[provider]/disconnect * Disconnects an integration by clearing credentials and setting status to disconnected."
+api: "POST /api/integrations/[provider]/disconnect"
+---
+
+* POST /api/integrations/[provider]/disconnect * Disconnects an integration by clearing credentials and setting status to disconnected.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/integrations/[provider]/disconnect \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/integrations/[provider]/disconnect', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

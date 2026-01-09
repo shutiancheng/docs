@@ -1,0 +1,31 @@
+---
+title: "AddTextDocumentDialog"
+description: "AddTextDocumentDialog component"
+---
+
+AddTextDocumentDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="onSuccess" type="() => void" required={false}>
+  onSuccess
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { AddTextDocumentDialog } from '@/components/AddTextDocumentDialog';
+
+export default function Example() {
+  return (
+    <AddTextDocumentDialog open={open} onOpenChange={onOpenChange} />
+  );
+}
+```

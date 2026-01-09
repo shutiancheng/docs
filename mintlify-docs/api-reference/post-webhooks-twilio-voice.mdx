@@ -1,0 +1,36 @@
+---
+title: "POST /api/webhooks/twilio/voice"
+description: "* POST /api/webhooks/twilio/voice * Handles incoming voice calls from Twilio. This is the entry point for all inbound calls to your phone numbers."
+api: "POST /api/webhooks/twilio/voice"
+---
+
+* POST /api/webhooks/twilio/voice * Handles incoming voice calls from Twilio. This is the entry point for all inbound calls to your phone numbers.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/webhooks/twilio/voice \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/webhooks/twilio/voice', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

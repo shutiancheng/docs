@@ -1,0 +1,28 @@
+---
+title: "BookingDetailsCard"
+description: "* BookingDetailsCard - Booking slot, quote, and technician info * Shows booking details if a job was scheduled during the call."
+---
+
+* BookingDetailsCard - Booking slot, quote, and technician info * Shows booking details if a job was scheduled during the call.
+
+## Props
+
+<ResponseField name="booking" type="BookingDetails" required={true}>
+  booking
+</ResponseField>
+<ResponseField name="quote" type="QuoteInfo" required={false}>
+  quote
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { BookingDetailsCard } from '@/components/BookingDetailsCard';
+
+export default function Example() {
+  return (
+    <BookingDetailsCard booking={booking} />
+  );
+}
+```

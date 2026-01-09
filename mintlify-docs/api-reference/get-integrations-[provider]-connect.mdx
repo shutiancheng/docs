@@ -1,0 +1,36 @@
+---
+title: "GET /api/integrations/[provider]/connect"
+description: "* GET /api/integrations/[provider]/connect * Alternative GET endpoint that redirects directly to OAuth provider. Useful for simple anchor link integrations."
+api: "GET /api/integrations/[provider]/connect"
+---
+
+* GET /api/integrations/[provider]/connect * Alternative GET endpoint that redirects directly to OAuth provider. Useful for simple anchor link integrations.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://your-domain.com/api/integrations/[provider]/connect \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/integrations/[provider]/connect', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

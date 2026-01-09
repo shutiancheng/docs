@@ -1,0 +1,50 @@
+---
+title: "JobCard"
+description: "JobCard component"
+---
+
+JobCard component
+
+## Props
+
+<ResponseField name="job" type="{
+    id: string" required={true}>
+  job
+</ResponseField>
+<ResponseField name="jobNumber" type="string" required={true}>
+  jobNumber
+</ResponseField>
+<ResponseField name="status" type="JobStatus" required={true}>
+  status
+</ResponseField>
+<ResponseField name="jobType" type="string" required={true}>
+  jobType
+</ResponseField>
+<ResponseField name="customerName" type="string" required={true}>
+  customerName
+</ResponseField>
+<ResponseField name="customerPhone" type="string" required={false}>
+  customerPhone
+</ResponseField>
+<ResponseField name="postcode" type="string" required={false}>
+  postcode
+</ResponseField>
+<ResponseField name="aiSummary" type="string" required={true}>
+  aiSummary
+</ResponseField>
+<ResponseField name="callId" type="string" required={true}>
+  callId
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { JobCard } from '@/components/JobCard';
+
+export default function Example() {
+  return (
+    <JobCard job={job} jobNumber={jobNumber} status={status} jobType={jobType} customerName={customerName} aiSummary={aiSummary} callId={callId} />
+  );
+}
+```

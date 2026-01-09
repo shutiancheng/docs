@@ -1,0 +1,34 @@
+---
+title: "ProfilePhotoCard"
+description: "ProfilePhotoCard component"
+---
+
+ProfilePhotoCard component
+
+## Props
+
+<ResponseField name="currentAvatarUrl" type="string | null" required={true}>
+  currentAvatarUrl
+</ResponseField>
+<ResponseField name="fullName" type="string | null" required={true}>
+  fullName
+</ResponseField>
+<ResponseField name="email" type="string" required={true}>
+  email
+</ResponseField>
+<ResponseField name="onPhotoUpdate" type="(avatarUrl: string | null) => void" required={false}>
+  onPhotoUpdate
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { ProfilePhotoCard } from '@/components/ProfilePhotoCard';
+
+export default function Example() {
+  return (
+    <ProfilePhotoCard currentAvatarUrl={currentAvatarUrl} fullName={fullName} email={email} />
+  );
+}
+```

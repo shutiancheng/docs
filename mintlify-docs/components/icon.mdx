@@ -1,0 +1,31 @@
+---
+title: "Icon"
+description: "Icon component"
+---
+
+Icon component
+
+## Props
+
+<ResponseField name="icon" type="LucideIcon" required={true}>
+  icon
+</ResponseField>
+<ResponseField name="className" type="string" required={false}>
+  className
+</ResponseField>
+<ResponseField name="style" type="React.CSSProperties" required={false}>
+  style
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { Icon } from '@/components/Icon';
+
+export default function Example() {
+  return (
+    <Icon icon={icon} />
+  );
+}
+```

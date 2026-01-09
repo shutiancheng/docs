@@ -1,0 +1,67 @@
+---
+title: "ConversationFilters"
+description: "ConversationFilters component"
+---
+
+ConversationFilters component
+
+## Props
+
+<ResponseField name="filters" type="ConversationFiltersType" required={true}>
+  filters
+</ResponseField>
+<ResponseField name="onFilterChange" type="<K extends keyof ConversationFiltersType>(
+    key: K,
+    value: ConversationFiltersType[K]
+  ) => void" required={true}>
+  onFilterChange
+</ResponseField>
+<ResponseField name="onFiltersChange" type="(filters: Partial<ConversationFiltersType>) => void" required={false}>
+  onFiltersChange
+</ResponseField>
+<ResponseField name="onReset" type="() => void" required={true}>
+  onReset
+</ResponseField>
+<ResponseField name="onPresetApply" type="(presetId: string) => void" required={true}>
+  onPresetApply
+</ResponseField>
+<ResponseField name="onStatusToggle" type="(status: JobStatus) => void" required={false}>
+  onStatusToggle
+</ResponseField>
+<ResponseField name="onOutcomeToggle" type="(outcome: CallOutcome) => void" required={true}>
+  onOutcomeToggle
+</ResponseField>
+<ResponseField name="onUrgencyToggle" type="(urgency: UrgencyLevel) => void" required={true}>
+  onUrgencyToggle
+</ResponseField>
+<ResponseField name="onCategoryToggle" type="(category: ProblemCategory) => void" required={true}>
+  onCategoryToggle
+</ResponseField>
+<ResponseField name="activePreset" type="ConversationFilterPreset | null" required={true}>
+  activePreset
+</ResponseField>
+<ResponseField name="hasFilters" type="boolean" required={true}>
+  hasFilters
+</ResponseField>
+<ResponseField name="totalCount" type="number" required={true}>
+  totalCount
+</ResponseField>
+<ResponseField name="filteredCount" type="number" required={true}>
+  filteredCount
+</ResponseField>
+<ResponseField name="presets" type="ConversationFilterPreset[]" required={true}>
+  presets
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { ConversationFilters } from '@/components/ConversationFilters';
+
+export default function Example() {
+  return (
+    <ConversationFilters filters={filters} onFilterChange={onFilterChange} onReset={onReset} onPresetApply={onPresetApply} onOutcomeToggle={onOutcomeToggle} onUrgencyToggle={onUrgencyToggle} onCategoryToggle={onCategoryToggle} activePreset={activePreset} hasFilters={hasFilters} totalCount={totalCount} filteredCount={filteredCount} presets={presets} />
+  );
+}
+```

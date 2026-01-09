@@ -1,0 +1,25 @@
+---
+title: "AIAnalysisPanel"
+description: "* AIAnalysisPanel - AI insights, sentiment, performance scores * Shows: - Key topics detected - Customer sentiment - Agent performance score (for QA) - Compliance flags - Suggested follow-up actions"
+---
+
+* AIAnalysisPanel - AI insights, sentiment, performance scores * Shows: - Key topics detected - Customer sentiment - Agent performance score (for QA) - Compliance flags - Suggested follow-up actions
+
+## Props
+
+<ResponseField name="analysis" type="AIAnalysis" required={true}>
+  analysis
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { AIAnalysisPanel } from '@/components/AIAnalysisPanel';
+
+export default function Example() {
+  return (
+    <AIAnalysisPanel analysis={analysis} />
+  );
+}
+```

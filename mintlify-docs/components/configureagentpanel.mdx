@@ -1,0 +1,37 @@
+---
+title: "ConfigureAgentPanel"
+description: "ConfigureAgentPanel component"
+---
+
+ConfigureAgentPanel component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="agent" type="CompanyAgentWithStats" required={true}>
+  agent
+</ResponseField>
+<ResponseField name="onSave" type="(config: AgentConfig) => void" required={false}>
+  onSave
+</ResponseField>
+<ResponseField name="globalEmergencyEnabled" type="boolean" required={false}>
+  globalEmergencyEnabled
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { ConfigureAgentPanel } from '@/components/ConfigureAgentPanel';
+
+export default function Example() {
+  return (
+    <ConfigureAgentPanel open={open} onOpenChange={onOpenChange} agent={agent} />
+  );
+}
+```

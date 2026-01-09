@@ -1,0 +1,56 @@
+---
+title: "CallSummaryCard"
+description: "CallSummaryCard component"
+---
+
+CallSummaryCard component
+
+## Props
+
+<ResponseField name="call" type="{
+    id: string" required={true}>
+  call
+</ResponseField>
+<ResponseField name="customerName" type="string" required={true}>
+  customerName
+</ResponseField>
+<ResponseField name="customerPhone" type="string" required={true}>
+  customerPhone
+</ResponseField>
+<ResponseField name="time" type="string" required={true}>
+  time
+</ResponseField>
+<ResponseField name="category" type="string" required={true}>
+  category
+</ResponseField>
+<ResponseField name="aiSummary" type="string" required={true}>
+  aiSummary
+</ResponseField>
+<ResponseField name="sentiment" type="Sentiment" required={true}>
+  sentiment
+</ResponseField>
+<ResponseField name="outcome" type="string" required={true}>
+  outcome
+</ResponseField>
+<ResponseField name="hasJob" type="boolean" required={true}>
+  hasJob
+</ResponseField>
+<ResponseField name="jobId" type="string" required={false}>
+  jobId
+</ResponseField>
+<ResponseField name="jobStatus" type="JobStatus" required={false}>
+  jobStatus
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CallSummaryCard } from '@/components/CallSummaryCard';
+
+export default function Example() {
+  return (
+    <CallSummaryCard call={call} customerName={customerName} customerPhone={customerPhone} time={time} category={category} aiSummary={aiSummary} sentiment={sentiment} outcome={outcome} hasJob={hasJob} />
+  );
+}
+```

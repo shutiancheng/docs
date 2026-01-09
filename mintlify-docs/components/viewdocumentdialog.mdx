@@ -1,0 +1,34 @@
+---
+title: "ViewDocumentDialog"
+description: "ViewDocumentDialog component"
+---
+
+ViewDocumentDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="document" type="KnowledgeDocument | null" required={true}>
+  document
+</ResponseField>
+<ResponseField name="onUpdate" type="() => void" required={false}>
+  onUpdate
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { ViewDocumentDialog } from '@/components/ViewDocumentDialog';
+
+export default function Example() {
+  return (
+    <ViewDocumentDialog open={open} onOpenChange={onOpenChange} document={document} />
+  );
+}
+```

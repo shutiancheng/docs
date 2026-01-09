@@ -1,0 +1,36 @@
+---
+title: "GET /api/integrations/[provider]/callback"
+description: "* GET /api/integrations/[provider]/callback * OAuth callback handler. Exchanges the authorization code for tokens and stores them in the database."
+api: "GET /api/integrations/[provider]/callback"
+---
+
+* GET /api/integrations/[provider]/callback * OAuth callback handler. Exchanges the authorization code for tokens and stores them in the database.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://your-domain.com/api/integrations/[provider]/callback \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/integrations/[provider]/callback', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

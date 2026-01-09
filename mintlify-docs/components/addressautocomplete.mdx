@@ -1,0 +1,237 @@
+---
+title: "AddressAutocomplete"
+description: "* Parsed address components returned when a place is selected /
+export interface ParsedAddress {
+  /** Full formatted address string */
+  fullAddress: string;
+  /** Street address (street number + route) */
+  streetAddress: string;
+  /** City/locality */
+  city: string;
+  /** State/region/county */
+  region: string;
+  /** Postal/ZIP code */
+  postcode: string;
+  /** ISO 3166-1 alpha-2 country code (e.g., "GB", "US") */
+  countryCode: string;
+  /** Full country name */
+  countryName: string;
+  /** Latitude of the location */
+  lat?: number;
+  /** Longitude of the location */
+  lng?: number;
+}
+
+interface AddressAutocompleteProps {
+  /** Current value of the input */
+  value: string;
+  /** Callback when input value changes */
+  onChange: (value: string) => void;
+  /** Callback when a place is selected from autocomplete */
+  onPlaceSelect?: (address: ParsedAddress) => void;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Additional CSS classes for the input */
+  className?: string;
+  /** Input ID for label association */
+  id?: string;
+  /** Whether the input is disabled */
+  disabled?: boolean;
+  /** ISO country code(s) to bias results toward (e.g., "GB", ["GB", "US"]) */
+  countryBias?: string | string[];
+  /** Whether to require selecting from autocomplete (vs free text) */
+  requireSelection?: boolean;
+}
+
+/** Parse Google Place address components into a structured format /
+function parseAddressComponents(
+  components: google.maps.GeocoderAddressComponent[],
+  formattedAddress: string
+): ParsedAddress {
+  const result: ParsedAddress = {
+    fullAddress: formattedAddress,
+    streetAddress: "",
+    city: "",
+    region: "",
+    postcode: "",
+    countryCode: "",
+    countryName: "",
+  };
+
+  let streetNumber = "";
+  let route = "";
+
+  for (const component of components) {
+    const types = component.types;
+
+    if (types.includes("street_number")) {
+      streetNumber = component.long_name;
+    }
+    if (types.includes("route")) {
+      route = component.long_name;
+    }
+    if (types.includes("locality") || types.includes("postal_town")) {
+      result.city = component.long_name;
+    }
+    if (types.includes("administrative_area_level_1")) {
+      result.region = component.long_name;
+    }
+    if (types.includes("administrative_area_level_2") && !result.region) {
+      result.region = component.long_name;
+    }
+    if (types.includes("postal_code")) {
+      result.postcode = component.long_name;
+    }
+    if (types.includes("country")) {
+      result.countryCode = component.short_name;
+      result.countryName = component.long_name;
+    }
+  }
+
+  // Combine street number and route
+  result.streetAddress = [streetNumber, route].filter(Boolean).join(" ");
+
+  return result;
+}
+
+/** Address autocomplete input powered by Google Places API. Provides type-ahead suggestions and parses selected addresses. *"
+---
+
+* Parsed address components returned when a place is selected /
+export interface ParsedAddress {
+  /** Full formatted address string */
+  fullAddress: string;
+  /** Street address (street number + route) */
+  streetAddress: string;
+  /** City/locality */
+  city: string;
+  /** State/region/county */
+  region: string;
+  /** Postal/ZIP code */
+  postcode: string;
+  /** ISO 3166-1 alpha-2 country code (e.g., "GB", "US") */
+  countryCode: string;
+  /** Full country name */
+  countryName: string;
+  /** Latitude of the location */
+  lat?: number;
+  /** Longitude of the location */
+  lng?: number;
+}
+
+interface AddressAutocompleteProps {
+  /** Current value of the input */
+  value: string;
+  /** Callback when input value changes */
+  onChange: (value: string) => void;
+  /** Callback when a place is selected from autocomplete */
+  onPlaceSelect?: (address: ParsedAddress) => void;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Additional CSS classes for the input */
+  className?: string;
+  /** Input ID for label association */
+  id?: string;
+  /** Whether the input is disabled */
+  disabled?: boolean;
+  /** ISO country code(s) to bias results toward (e.g., "GB", ["GB", "US"]) */
+  countryBias?: string | string[];
+  /** Whether to require selecting from autocomplete (vs free text) */
+  requireSelection?: boolean;
+}
+
+/** Parse Google Place address components into a structured format /
+function parseAddressComponents(
+  components: google.maps.GeocoderAddressComponent[],
+  formattedAddress: string
+): ParsedAddress {
+  const result: ParsedAddress = {
+    fullAddress: formattedAddress,
+    streetAddress: "",
+    city: "",
+    region: "",
+    postcode: "",
+    countryCode: "",
+    countryName: "",
+  };
+
+  let streetNumber = "";
+  let route = "";
+
+  for (const component of components) {
+    const types = component.types;
+
+    if (types.includes("street_number")) {
+      streetNumber = component.long_name;
+    }
+    if (types.includes("route")) {
+      route = component.long_name;
+    }
+    if (types.includes("locality") || types.includes("postal_town")) {
+      result.city = component.long_name;
+    }
+    if (types.includes("administrative_area_level_1")) {
+      result.region = component.long_name;
+    }
+    if (types.includes("administrative_area_level_2") && !result.region) {
+      result.region = component.long_name;
+    }
+    if (types.includes("postal_code")) {
+      result.postcode = component.long_name;
+    }
+    if (types.includes("country")) {
+      result.countryCode = component.short_name;
+      result.countryName = component.long_name;
+    }
+  }
+
+  // Combine street number and route
+  result.streetAddress = [streetNumber, route].filter(Boolean).join(" ");
+
+  return result;
+}
+
+/** Address autocomplete input powered by Google Places API. Provides type-ahead suggestions and parses selected addresses. *
+
+## Props
+
+<ResponseField name="value" type="string" required={true}>
+  value
+</ResponseField>
+<ResponseField name="onChange" type="(value: string) => void" required={true}>
+  onChange
+</ResponseField>
+<ResponseField name="onPlaceSelect" type="(address: ParsedAddress) => void" required={false}>
+  onPlaceSelect
+</ResponseField>
+<ResponseField name="placeholder" type="string" required={false}>
+  placeholder
+</ResponseField>
+<ResponseField name="className" type="string" required={false}>
+  className
+</ResponseField>
+<ResponseField name="id" type="string" required={false}>
+  id
+</ResponseField>
+<ResponseField name="disabled" type="boolean" required={false}>
+  disabled
+</ResponseField>
+<ResponseField name="countryBias" type="string | string[]" required={false}>
+  countryBias
+</ResponseField>
+<ResponseField name="requireSelection" type="boolean" required={false}>
+  requireSelection
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { AddressAutocomplete } from '@/components/AddressAutocomplete';
+
+export default function Example() {
+  return (
+    <AddressAutocomplete value={value} onChange={onChange} />
+  );
+}
+```

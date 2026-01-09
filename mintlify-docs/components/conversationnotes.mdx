@@ -1,0 +1,28 @@
+---
+title: "ConversationNotes"
+description: "* ConversationNotes - Notes list with add functionality * Shows notes added by team members and allows adding new notes."
+---
+
+* ConversationNotes - Notes list with add functionality * Shows notes added by team members and allows adding new notes.
+
+## Props
+
+<ResponseField name="notes" type="ConversationNote[]" required={true}>
+  notes
+</ResponseField>
+<ResponseField name="conversationId" type="string" required={true}>
+  conversationId
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { ConversationNotes } from '@/components/ConversationNotes';
+
+export default function Example() {
+  return (
+    <ConversationNotes notes={notes} conversationId={conversationId} />
+  );
+}
+```

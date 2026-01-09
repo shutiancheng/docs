@@ -1,0 +1,37 @@
+---
+title: "UploadDocumentDialog"
+description: "UploadDocumentDialog component"
+---
+
+UploadDocumentDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="agentId" type="string" required={true}>
+  agentId
+</ResponseField>
+<ResponseField name="onSuccess" type="() => void" required={false}>
+  onSuccess
+</ResponseField>
+<ResponseField name="onExtractionAvailable" type="(preview: string) => void" required={false}>
+  onExtractionAvailable
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { UploadDocumentDialog } from '@/components/UploadDocumentDialog';
+
+export default function Example() {
+  return (
+    <UploadDocumentDialog open={open} onOpenChange={onOpenChange} agentId={agentId} />
+  );
+}
+```

@@ -1,0 +1,25 @@
+---
+title: "CustomerInfoCard"
+description: "* CustomerInfoCard - Customer details with quick actions * Shows customer name, phone, email, address with one-click actions. Phone number should be instantly callable for CSRs."
+---
+
+* CustomerInfoCard - Customer details with quick actions * Shows customer name, phone, email, address with one-click actions. Phone number should be instantly callable for CSRs.
+
+## Props
+
+<ResponseField name="customer" type="CustomerInfo" required={true}>
+  customer
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CustomerInfoCard } from '@/components/CustomerInfoCard';
+
+export default function Example() {
+  return (
+    <CustomerInfoCard customer={customer} />
+  );
+}
+```

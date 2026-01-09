@@ -1,0 +1,31 @@
+---
+title: "Disable2FADialog"
+description: "Disable2FADialog component"
+---
+
+Disable2FADialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="onSuccess" type="() => void" required={false}>
+  onSuccess
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { Disable2FADialog } from '@/components/Disable2FADialog';
+
+export default function Example() {
+  return (
+    <Disable2FADialog open={open} onOpenChange={onOpenChange} />
+  );
+}
+```

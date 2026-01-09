@@ -1,0 +1,31 @@
+---
+title: "UploadGlobalDocumentDialog"
+description: "UploadGlobalDocumentDialog component"
+---
+
+UploadGlobalDocumentDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="onSuccess" type="() => void" required={false}>
+  onSuccess
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { UploadGlobalDocumentDialog } from '@/components/UploadGlobalDocumentDialog';
+
+export default function Example() {
+  return (
+    <UploadGlobalDocumentDialog open={open} onOpenChange={onOpenChange} />
+  );
+}
+```

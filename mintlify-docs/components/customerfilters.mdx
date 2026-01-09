@@ -1,0 +1,55 @@
+---
+title: "CustomerFilters"
+description: "CustomerFilters component"
+---
+
+CustomerFilters component
+
+## Props
+
+<ResponseField name="filters" type="CustomerFiltersType" required={true}>
+  filters
+</ResponseField>
+<ResponseField name="onFilterChange" type="<K extends keyof CustomerFiltersType>(
+    key: K,
+    value: CustomerFiltersType[K]
+  ) => void" required={true}>
+  onFilterChange
+</ResponseField>
+<ResponseField name="onFiltersChange" type="(filters: Partial<CustomerFiltersType>) => void" required={true}>
+  onFiltersChange
+</ResponseField>
+<ResponseField name="onReset" type="() => void" required={true}>
+  onReset
+</ResponseField>
+<ResponseField name="onPresetApply" type="(presetId: string) => void" required={true}>
+  onPresetApply
+</ResponseField>
+<ResponseField name="onStatusToggle" type="(status: CustomerStatus) => void" required={true}>
+  onStatusToggle
+</ResponseField>
+<ResponseField name="activePreset" type="FilterPreset | null" required={true}>
+  activePreset
+</ResponseField>
+<ResponseField name="hasFilters" type="boolean" required={true}>
+  hasFilters
+</ResponseField>
+<ResponseField name="totalCount" type="number" required={true}>
+  totalCount
+</ResponseField>
+<ResponseField name="filteredCount" type="number" required={true}>
+  filteredCount
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CustomerFilters } from '@/components/CustomerFilters';
+
+export default function Example() {
+  return (
+    <CustomerFilters filters={filters} onFilterChange={onFilterChange} onFiltersChange={onFiltersChange} onReset={onReset} onPresetApply={onPresetApply} onStatusToggle={onStatusToggle} activePreset={activePreset} hasFilters={hasFilters} totalCount={totalCount} filteredCount={filteredCount} />
+  );
+}
+```

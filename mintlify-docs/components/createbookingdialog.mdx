@@ -1,0 +1,43 @@
+---
+title: "CreateBookingDialog"
+description: "* CreateBookingDialog - Schedule a service appointment * Features: - Service type pre-filled from problem category - Date picker (default: tomorrow) - Time slot selection (AM 08:00-13:00 / PM 12:00-18:00) - Quote amount (pre-filled if available) - Special instructions - Edit mode if booking already exists"
+---
+
+* CreateBookingDialog - Schedule a service appointment * Features: - Service type pre-filled from problem category - Date picker (default: tomorrow) - Time slot selection (AM 08:00-13:00 / PM 12:00-18:00) - Quote amount (pre-filled if available) - Special instructions - Edit mode if booking already exists
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="customerName" type="string" required={true}>
+  customerName
+</ResponseField>
+<ResponseField name="problemCategory" type="ProblemCategory" required={true}>
+  problemCategory
+</ResponseField>
+<ResponseField name="existingBooking" type="BookingDetails" required={false}>
+  existingBooking
+</ResponseField>
+<ResponseField name="suggestedQuote" type="number" required={false}>
+  suggestedQuote
+</ResponseField>
+<ResponseField name="onBookingCreated" type="(booking: BookingFormData) => void" required={false}>
+  onBookingCreated
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CreateBookingDialog } from '@/components/CreateBookingDialog';
+
+export default function Example() {
+  return (
+    <CreateBookingDialog open={open} onOpenChange={onOpenChange} customerName={customerName} problemCategory={problemCategory} />
+  );
+}
+```

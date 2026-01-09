@@ -1,0 +1,50 @@
+---
+title: "POST /api/webhooks/elevenlabs/personalize"
+description: "POST endpoint for /webhooks/elevenlabs/personalize"
+api: "POST /api/webhooks/elevenlabs/personalize"
+---
+
+POST endpoint for /webhooks/elevenlabs/personalize
+
+## Request Body
+
+<ParamField body="caller_id" type="string" required={true}>
+  caller_id
+</ParamField>
+<ParamField body="agent_id" type="string" required={true}>
+  agent_id
+</ParamField>
+<ParamField body="called_number" type="string" required={true}>
+  called_number
+</ParamField>
+<ParamField body="call_sid" type="string" required={false}>
+  call_sid
+</ParamField>
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/webhooks/elevenlabs/personalize \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/webhooks/elevenlabs/personalize', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

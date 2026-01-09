@@ -1,0 +1,209 @@
+---
+title: "Components Overview"
+description: "React component library for the VoiceAgent platform"
+---
+
+# Components Overview
+
+The VoiceAgent platform includes 128 React components organized by feature area. All components are built with TypeScript, support dark mode, and follow consistent design patterns.
+
+## Design System
+
+<CardGroup cols={2}>
+  <Card title="UI Primitives" icon="cube">
+    Base components: Button, Input, Card, Dialog, Select, Tabs
+  </Card>
+  <Card title="FormDialog Pattern" icon="rectangle-list">
+    Standard pattern for all create/edit dialogs with consistent styling
+  </Card>
+  <Card title="Dark Mode" icon="moon">
+    Full dark mode support using Tailwind's `dark:` prefix
+  </Card>
+  <Card title="Accessibility" icon="universal-access">
+    Keyboard navigation, focus management, screen reader support
+  </Card>
+</CardGroup>
+
+---
+
+## Component Categories
+
+### UI Primitives (20 components)
+
+Foundation components used throughout the application.
+
+| Component | Description |
+|-----------|-------------|
+| `Button` | Primary, secondary, outline, and ghost variants |
+| `Input` | Text input with validation states |
+| `Card` | Content container with header, body, footer |
+| `FormDialog` | Standardized dialog for all forms |
+| `Select` | Dropdown selection with search |
+| `Dialog` | Modal overlay with focus trap |
+| `Tabs` | Tab navigation component |
+| `Badge` | Status indicators and labels |
+| `Skeleton` | Loading state placeholders |
+| `DateRangePicker` | Date range selection |
+
+### Agent Configuration (15 components)
+
+Components for configuring AI voice agents.
+
+| Component | Description |
+|-----------|-------------|
+| `ConfigureAgentPanel` | Multi-tab agent configuration interface |
+| `GeneralTab` | Agent name, persona, greeting settings |
+| `VoiceTab` | Voice model and speech settings |
+| `BusinessHoursTab` | Operating hours configuration |
+| `ServicesTab` | Service offerings and pricing |
+| `TransferTab` | Call transfer destinations |
+| `CallHandlingTab` | Emergency keywords and behaviors |
+| `ContextTab` | Knowledge base and context documents |
+
+### Settings & Admin (34 components)
+
+Team and organization management.
+
+| Component | Description |
+|-----------|-------------|
+| `OrganizationSettings` | Main settings page container |
+| `TeamSettings` | Team member management |
+| `InviteMemberDialog` | Send team invitations |
+| `StorageSettingsSection` | Storage quota management |
+| `ElevenLabsSettings` | ElevenLabs API configuration |
+| `TimeZoneDialog` | Timezone selection |
+| `BusinessHoursDialog` | Business hours editor |
+
+### Conversation & Calls (17 components)
+
+Call detail and history views.
+
+| Component | Description |
+|-----------|-------------|
+| `TranscriptViewer` | Call transcript display |
+| `AIAnalysisPanel` | AI-generated call insights |
+| `AudioPlayer` | Call recording playback |
+| `CustomerInfoCard` | Customer details in call view |
+| `BookingDetailsCard` | Appointment information |
+| `ConversationFilters` | Filter calls by status, date, etc. |
+| `JobEditDialog` | Edit job/ticket details |
+
+### Dashboard (12 components)
+
+Dashboard views for different user roles.
+
+| Component | Description |
+|-----------|-------------|
+| `MemberDashboard` | Standard member view |
+| `AdminDashboard` | Admin-level dashboard |
+| `OwnerDashboard` | Owner dashboard with full stats |
+| `JobCard` | Job/ticket summary card |
+| `CallSummaryCard` | Recent call overview |
+
+### Inbox (8 components)
+
+Call inbox and action management.
+
+| Component | Description |
+|-----------|-------------|
+| `QuickActionsBar` | Primary CSR actions (callback, book, transfer, resolve) |
+| `CallbackDialog` | Schedule customer callbacks |
+| `CreateBookingDialog` | Book appointments |
+| `TransferDialog` | Transfer calls to technicians |
+| `MarkResolvedDialog` | Mark issues as resolved |
+
+### Customer Management (8 components)
+
+Customer CRUD and history.
+
+| Component | Description |
+|-----------|-------------|
+| `AddCustomerDialog` | Create new customer |
+| `EditCustomerDialog` | Update customer details |
+| `CustomerNotesEditor` | Edit customer notes |
+| `CustomerTagsEditor` | Manage customer tags |
+| `CustomerCallHistory` | View past calls |
+
+---
+
+## Key Patterns
+
+### FormDialog Pattern
+
+All create/edit dialogs use the `FormDialog` component for consistency:
+
+```tsx
+import { FormDialog, FormField, FormRow, FormSection } from "@/components/ui/form-dialog";
+
+<FormDialog
+  open={isOpen}
+  onOpenChange={setIsOpen}
+  title="Add New Customer"
+  description="Enter customer details below"
+  onSubmit={handleSubmit}
+  submitLabel="Create"
+  isSubmitting={isLoading}
+  size="lg"
+>
+  <FormSection title="Contact Information">
+    <FormRow>
+      <FormField label="First Name" required>
+        <Input value={firstName} onChange={...} />
+      </FormField>
+      <FormField label="Last Name" required>
+        <Input value={lastName} onChange={...} />
+      </FormField>
+    </FormRow>
+  </FormSection>
+</FormDialog>
+```
+
+### Dark Mode Support
+
+All components include dark mode variants:
+
+```tsx
+// Light and dark mode colors
+className="bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700"
+
+// Text colors
+className="text-zinc-900 dark:text-zinc-100"
+```
+
+### Props Interface Convention
+
+Components follow the `[ComponentName]Props` naming convention:
+
+```tsx
+interface CustomerCardProps {
+  customer: Customer;
+  onEdit?: (id: string) => void;
+  showActions?: boolean;
+}
+
+export function CustomerCard({ customer, onEdit, showActions = true }: CustomerCardProps) {
+  // ...
+}
+```
+
+---
+
+## Styling Standards
+
+| Element | Light Mode | Dark Mode |
+|---------|------------|-----------|
+| Background | `bg-white` | `dark:bg-zinc-900` |
+| Surface | `bg-zinc-50` | `dark:bg-zinc-800` |
+| Border | `border-zinc-200` | `dark:border-zinc-700` |
+| Text Primary | `text-zinc-900` | `dark:text-zinc-100` |
+| Text Secondary | `text-zinc-500` | `dark:text-zinc-400` |
+
+---
+
+## Dependencies
+
+- **@radix-ui** - Dialog, Select, Popover primitives
+- **class-variance-authority** - Component variants
+- **lucide-react** - Icon library
+- **Tailwind CSS** - Utility-first styling
+- **next-themes** - Dark mode management

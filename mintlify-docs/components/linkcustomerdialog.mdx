@@ -1,0 +1,50 @@
+---
+title: "LinkCustomerDialog"
+description: "onCreateNew?: () => void;
+}
+
+type Mode = "search" | "create";
+
+/** LinkCustomerDialog - Link a customer to a conversation/call * Allows users to either: 1. Search for an existing customer and link them 2. Create a new customer (opens AddCustomerDialog)"
+---
+
+onCreateNew?: () => void;
+}
+
+type Mode = "search" | "create";
+
+/** LinkCustomerDialog - Link a customer to a conversation/call * Allows users to either: 1. Search for an existing customer and link them 2. Create a new customer (opens AddCustomerDialog)
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="callId" type="string" required={true}>
+  callId
+</ResponseField>
+<ResponseField name="defaultPhone" type="string" required={false}>
+  defaultPhone
+</ResponseField>
+<ResponseField name="onCustomerLinked" type="(customerId: string) => void" required={false}>
+  onCustomerLinked
+</ResponseField>
+<ResponseField name="onCreateNew" type="() => void" required={false}>
+  onCreateNew
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { LinkCustomerDialog } from '@/components/LinkCustomerDialog';
+
+export default function Example() {
+  return (
+    <LinkCustomerDialog open={open} onOpenChange={onOpenChange} callId={callId} />
+  );
+}
+```

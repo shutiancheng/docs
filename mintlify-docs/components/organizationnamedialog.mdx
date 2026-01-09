@@ -1,0 +1,34 @@
+---
+title: "OrganizationNameDialog"
+description: "OrganizationNameDialog component"
+---
+
+OrganizationNameDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="currentName" type="string" required={true}>
+  currentName
+</ResponseField>
+<ResponseField name="onSuccess" type="(newName: string) => void" required={false}>
+  onSuccess
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { OrganizationNameDialog } from '@/components/OrganizationNameDialog';
+
+export default function Example() {
+  return (
+    <OrganizationNameDialog open={open} onOpenChange={onOpenChange} currentName={currentName} />
+  );
+}
+```

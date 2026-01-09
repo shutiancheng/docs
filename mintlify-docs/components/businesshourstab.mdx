@@ -1,0 +1,37 @@
+---
+title: "BusinessHoursTab"
+description: "BusinessHoursTab component"
+---
+
+BusinessHoursTab component
+
+## Props
+
+<ResponseField name="config" type="AgentConfig" required={true}>
+  config
+</ResponseField>
+<ResponseField name="updateConfig" type="<K extends keyof AgentConfig>(
+    key: K,
+    value: AgentConfig[K]
+  ) => void" required={true}>
+  updateConfig
+</ResponseField>
+<ResponseField name="errors" type="Record<string, string>" required={true}>
+  errors
+</ResponseField>
+<ResponseField name="onConfigRefresh" type="() => void" required={false}>
+  onConfigRefresh
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { BusinessHoursTab } from '@/components/BusinessHoursTab';
+
+export default function Example() {
+  return (
+    <BusinessHoursTab config={config} updateConfig={updateConfig} errors={errors} />
+  );
+}
+```

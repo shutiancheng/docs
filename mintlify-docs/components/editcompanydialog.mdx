@@ -1,0 +1,34 @@
+---
+title: "EditCompanyDialog"
+description: "EditCompanyDialog component"
+---
+
+EditCompanyDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="company" type="CompanyDetails | null" required={true}>
+  company
+</ResponseField>
+<ResponseField name="onSuccess" type="() => void" required={false}>
+  onSuccess
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { EditCompanyDialog } from '@/components/EditCompanyDialog';
+
+export default function Example() {
+  return (
+    <EditCompanyDialog open={open} onOpenChange={onOpenChange} company={company} />
+  );
+}
+```

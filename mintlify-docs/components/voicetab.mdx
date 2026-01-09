@@ -1,0 +1,34 @@
+---
+title: "VoiceTab"
+description: "VoiceTab component"
+---
+
+VoiceTab component
+
+## Props
+
+<ResponseField name="config" type="AgentConfig" required={true}>
+  config
+</ResponseField>
+<ResponseField name="updateConfig" type="<K extends keyof AgentConfig>(
+    key: K,
+    value: AgentConfig[K]
+  ) => void" required={true}>
+  updateConfig
+</ResponseField>
+<ResponseField name="errors" type="Record<string, string>" required={true}>
+  errors
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { VoiceTab } from '@/components/VoiceTab';
+
+export default function Example() {
+  return (
+    <VoiceTab config={config} updateConfig={updateConfig} errors={errors} />
+  );
+}
+```

@@ -1,0 +1,36 @@
+---
+title: "POST /api/webhooks/elevenlabs"
+description: "POST endpoint for /webhooks/elevenlabs"
+api: "POST /api/webhooks/elevenlabs"
+---
+
+POST endpoint for /webhooks/elevenlabs
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/webhooks/elevenlabs \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/webhooks/elevenlabs', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

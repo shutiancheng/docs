@@ -1,0 +1,31 @@
+---
+title: "AudioPlayer"
+description: "* AudioPlayer - Full-featured audio player for call recordings * Features: - Play/pause control - Seek bar with progress - Speed control (0.5x - 2x) - Volume control - Skip forward/back 10 seconds - Download option * Now integrated with global AudioPlayerContext for mini player support."
+---
+
+* AudioPlayer - Full-featured audio player for call recordings * Features: - Play/pause control - Seek bar with progress - Speed control (0.5x - 2x) - Volume control - Skip forward/back 10 seconds - Download option * Now integrated with global AudioPlayerContext for mini player support.
+
+## Props
+
+<ResponseField name="recording" type="RecordingInfo" required={true}>
+  recording
+</ResponseField>
+<ResponseField name="conversationId" type="string" required={true}>
+  conversationId
+</ResponseField>
+<ResponseField name="conversationTitle" type="string" required={true}>
+  conversationTitle
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { AudioPlayer } from '@/components/AudioPlayer';
+
+export default function Example() {
+  return (
+    <AudioPlayer recording={recording} conversationId={conversationId} conversationTitle={conversationTitle} />
+  );
+}
+```

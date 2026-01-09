@@ -1,0 +1,25 @@
+---
+title: "ProblemDetailsCard"
+description: "* ProblemDetailsCard - Problem category, urgency, and description * Shows the categorized problem with urgency level and customer's verbatim description."
+---
+
+* ProblemDetailsCard - Problem category, urgency, and description * Shows the categorized problem with urgency level and customer's verbatim description.
+
+## Props
+
+<ResponseField name="problem" type="ProblemDetails" required={true}>
+  problem
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { ProblemDetailsCard } from '@/components/ProblemDetailsCard';
+
+export default function Example() {
+  return (
+    <ProblemDetailsCard problem={problem} />
+  );
+}
+```

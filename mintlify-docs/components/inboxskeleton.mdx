@@ -1,0 +1,222 @@
+---
+title: "InboxSkeleton"
+description: "* SkeletonFilterBar - Skeleton for the inbox filter bar Matches the InboxFilters component layout /
+function SkeletonFilterBar() {
+  return (
+    <div className="flex items-center gap-3">
+      {/* Search input skeleton */}
+      <Skeleton
+        style={{
+          width: 200,
+          height: 36,
+          borderRadius: "var(--radius-md)",
+        }}
+      />
+      {/* Filter button skeletons */}
+      {[70, 60, 55].map((width, i) => (
+        <Skeleton
+          key={i}
+          style={{
+            width,
+            height: 32,
+            borderRadius: "var(--radius-md)",
+          }}
+        />
+      ))}
+      {/* Spacer */}
+      <div className="flex-1" />
+      {/* Preset buttons skeleton */}
+      <Skeleton
+        style={{
+          width: 100,
+          height: 32,
+          borderRadius: "var(--radius-md)",
+        }}
+      />
+    </div>
+  );
+}
+
+/** SkeletonInboxItem - Skeleton for a single inbox list item Matches the InboxItemDisplay component layout /
+interface SkeletonInboxItemProps {
+  isFirst?: boolean;
+  isNew?: boolean;
+}
+
+function SkeletonInboxItem({ isFirst = false, isNew = false }: SkeletonInboxItemProps) {
+  return (
+    <div
+      className="flex items-center gap-4 border-b"
+      style={{
+        padding: "var(--space-4) var(--space-5)",
+        borderColor: "var(--border-primary)",
+        background: isNew ? "var(--bg-secondary)" : "transparent",
+      }}
+    >
+      {/* Icon circle */}
+      <Skeleton
+        variant="circle"
+        style={{ width: 40, height: 40, flexShrink: 0 }}
+      />
+
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          {/* Caller name */}
+          <Skeleton style={{ width: isFirst ? 140 : 120, height: 16 }} />
+          {/* New indicator dot */}
+          {isNew && (
+            <Skeleton variant="circle" style={{ width: 6, height: 6 }} />
+          )}
+        </div>
+        {/* Reason text */}
+        <Skeleton
+          style={{
+            width: isFirst ? 220 : 180,
+            height: 14,
+            marginTop: 4,
+          }}
+        />
+      </div>
+
+      {/* Time and postcode */}
+      <div className="text-right shrink-0" style={{ minWidth: 100 }}>
+        <Skeleton style={{ width: 50, height: 14, marginLeft: "auto" }} />
+        <Skeleton
+          style={{
+            width: 40,
+            height: 14,
+            marginTop: 4,
+            marginLeft: "auto",
+          }}
+        />
+      </div>
+
+      {/* Duration */}
+      <Skeleton style={{ width: 40, height: 14, flexShrink: 0 }} />
+
+      {/* Menu button */}
+      <Skeleton style={{ width: 24, height: 24, flexShrink: 0 }} />
+    </div>
+  );
+}
+
+/** InboxSkeleton - Full inbox page skeleton Matches the exact layout of the inbox page"
+---
+
+* SkeletonFilterBar - Skeleton for the inbox filter bar Matches the InboxFilters component layout /
+function SkeletonFilterBar() {
+  return (
+    <div className="flex items-center gap-3">
+      {/* Search input skeleton */}
+      <Skeleton
+        style={{
+          width: 200,
+          height: 36,
+          borderRadius: "var(--radius-md)",
+        }}
+      />
+      {/* Filter button skeletons */}
+      {[70, 60, 55].map((width, i) => (
+        <Skeleton
+          key={i}
+          style={{
+            width,
+            height: 32,
+            borderRadius: "var(--radius-md)",
+          }}
+        />
+      ))}
+      {/* Spacer */}
+      <div className="flex-1" />
+      {/* Preset buttons skeleton */}
+      <Skeleton
+        style={{
+          width: 100,
+          height: 32,
+          borderRadius: "var(--radius-md)",
+        }}
+      />
+    </div>
+  );
+}
+
+/** SkeletonInboxItem - Skeleton for a single inbox list item Matches the InboxItemDisplay component layout /
+interface SkeletonInboxItemProps {
+  isFirst?: boolean;
+  isNew?: boolean;
+}
+
+function SkeletonInboxItem({ isFirst = false, isNew = false }: SkeletonInboxItemProps) {
+  return (
+    <div
+      className="flex items-center gap-4 border-b"
+      style={{
+        padding: "var(--space-4) var(--space-5)",
+        borderColor: "var(--border-primary)",
+        background: isNew ? "var(--bg-secondary)" : "transparent",
+      }}
+    >
+      {/* Icon circle */}
+      <Skeleton
+        variant="circle"
+        style={{ width: 40, height: 40, flexShrink: 0 }}
+      />
+
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          {/* Caller name */}
+          <Skeleton style={{ width: isFirst ? 140 : 120, height: 16 }} />
+          {/* New indicator dot */}
+          {isNew && (
+            <Skeleton variant="circle" style={{ width: 6, height: 6 }} />
+          )}
+        </div>
+        {/* Reason text */}
+        <Skeleton
+          style={{
+            width: isFirst ? 220 : 180,
+            height: 14,
+            marginTop: 4,
+          }}
+        />
+      </div>
+
+      {/* Time and postcode */}
+      <div className="text-right shrink-0" style={{ minWidth: 100 }}>
+        <Skeleton style={{ width: 50, height: 14, marginLeft: "auto" }} />
+        <Skeleton
+          style={{
+            width: 40,
+            height: 14,
+            marginTop: 4,
+            marginLeft: "auto",
+          }}
+        />
+      </div>
+
+      {/* Duration */}
+      <Skeleton style={{ width: 40, height: 14, flexShrink: 0 }} />
+
+      {/* Menu button */}
+      <Skeleton style={{ width: 24, height: 24, flexShrink: 0 }} />
+    </div>
+  );
+}
+
+/** InboxSkeleton - Full inbox page skeleton Matches the exact layout of the inbox page
+
+
+
+## Usage
+
+```tsx
+import { InboxSkeleton } from '@/components/InboxSkeleton';
+
+export default function Example() {
+  return (
+    <InboxSkeleton  />
+  );
+}
+```

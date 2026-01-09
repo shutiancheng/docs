@@ -1,0 +1,43 @@
+---
+title: "UnverifiedAddressDialog"
+description: "* Confirmation dialog shown when a user tries to save a customer with an address that couldn't be verified. * Allows the user to: 1. Go back and correct the address 2. Save anyway with the unverified address"
+---
+
+* Confirmation dialog shown when a user tries to save a customer with an address that couldn't be verified. * Allows the user to: 1. Go back and correct the address 2. Save anyway with the unverified address
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="postcode" type="string" required={true}>
+  postcode
+</ResponseField>
+<ResponseField name="address" type="string" required={false}>
+  address
+</ResponseField>
+<ResponseField name="validationMessage" type="string" required={false}>
+  validationMessage
+</ResponseField>
+<ResponseField name="onConfirm" type="() => void" required={true}>
+  onConfirm
+</ResponseField>
+<ResponseField name="onCancel" type="() => void" required={true}>
+  onCancel
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { UnverifiedAddressDialog } from '@/components/UnverifiedAddressDialog';
+
+export default function Example() {
+  return (
+    <UnverifiedAddressDialog open={open} onOpenChange={onOpenChange} postcode={postcode} onConfirm={onConfirm} onCancel={onCancel} />
+  );
+}
+```

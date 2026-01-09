@@ -1,0 +1,45 @@
+---
+title: "JobEditDialog"
+description: "Agent services config for auto-populating quoted price based on job type */
+  agentServices?: AgentServicesConfig | null;
+}
+
+/** JobEditDialog - Full form for editing job ticket details * Includes: - Status selector with validation - Appointment scheduling (date + time slot) - Technician details (name, phone, notes) - Job details (type, description) - Pricing (quoted, final) - Resolution notes (for closing)"
+---
+
+Agent services config for auto-populating quoted price based on job type */
+  agentServices?: AgentServicesConfig | null;
+}
+
+/** JobEditDialog - Full form for editing job ticket details * Includes: - Status selector with validation - Appointment scheduling (date + time slot) - Technician details (name, phone, notes) - Job details (type, description) - Pricing (quoted, final) - Resolution notes (for closing)
+
+## Props
+
+<ResponseField name="job" type="Job" required={true}>
+  job
+</ResponseField>
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="onSuccess" type="() => void" required={false}>
+  onSuccess
+</ResponseField>
+<ResponseField name="agentServices" type="AgentServicesConfig | null" required={false}>
+  agentServices
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { JobEditDialog } from '@/components/JobEditDialog';
+
+export default function Example() {
+  return (
+    <JobEditDialog job={job} open={open} onOpenChange={onOpenChange} />
+  );
+}
+```

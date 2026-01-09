@@ -1,0 +1,37 @@
+---
+title: "QuickActionsBar"
+description: "* QuickActionsBar - Primary CSR actions for inbox items * Provides one-click access to the 4 most important actions: 1. Call Back - Initiate callback to customer 2. Create Booking - Schedule a service appointment 3. Transfer - Hand off to specialist with context 4. Mark Resolved - Close the inbox item * Keyboard shortcuts: B, K, T, R (handled in parent page)"
+---
+
+* QuickActionsBar - Primary CSR actions for inbox items * Provides one-click access to the 4 most important actions: 1. Call Back - Initiate callback to customer 2. Create Booking - Schedule a service appointment 3. Transfer - Hand off to specialist with context 4. Mark Resolved - Close the inbox item * Keyboard shortcuts: B, K, T, R (handled in parent page)
+
+## Props
+
+<ResponseField name="onCallBack" type="() => void" required={true}>
+  onCallBack
+</ResponseField>
+<ResponseField name="onCreateBooking" type="() => void" required={true}>
+  onCreateBooking
+</ResponseField>
+<ResponseField name="onTransfer" type="() => void" required={true}>
+  onTransfer
+</ResponseField>
+<ResponseField name="onMarkResolved" type="() => void" required={true}>
+  onMarkResolved
+</ResponseField>
+<ResponseField name="hasBooking" type="boolean" required={false}>
+  hasBooking
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { QuickActionsBar } from '@/components/QuickActionsBar';
+
+export default function Example() {
+  return (
+    <QuickActionsBar onCallBack={onCallBack} onCreateBooking={onCreateBooking} onTransfer={onTransfer} onMarkResolved={onMarkResolved} />
+  );
+}
+```

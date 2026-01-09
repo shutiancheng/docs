@@ -1,0 +1,34 @@
+---
+title: "DateRangePicker"
+description: "DateRangePicker component"
+---
+
+DateRangePicker component
+
+## Props
+
+<ResponseField name="value" type="DateRange" required={false}>
+  value
+</ResponseField>
+<ResponseField name="onChange" type="(range: DateRange | undefined, preset: DateRangePreset) => void" required={false}>
+  onChange
+</ResponseField>
+<ResponseField name="className" type="string" required={false}>
+  className
+</ResponseField>
+<ResponseField name="defaultPreset" type="DateRangePreset" required={false}>
+  defaultPreset
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { DateRangePicker } from '@/components/DateRangePicker';
+
+export default function Example() {
+  return (
+    <DateRangePicker  />
+  );
+}
+```

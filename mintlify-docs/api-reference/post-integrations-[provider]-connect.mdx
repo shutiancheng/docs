@@ -1,0 +1,36 @@
+---
+title: "POST /api/integrations/[provider]/connect"
+description: "* POST /api/integrations/[provider]/connect * Initiates the OAuth flow for connecting an integration. Returns the authorization URL to redirect the user to."
+api: "POST /api/integrations/[provider]/connect"
+---
+
+* POST /api/integrations/[provider]/connect * Initiates the OAuth flow for connecting an integration. Returns the authorization URL to redirect the user to.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/integrations/[provider]/connect \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/integrations/[provider]/connect', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

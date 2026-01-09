@@ -1,0 +1,31 @@
+---
+title: "CreateOrganizationDialog"
+description: "CreateOrganizationDialog component"
+---
+
+CreateOrganizationDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="onSuccess" type="(organization: Organization) => void" required={false}>
+  onSuccess
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CreateOrganizationDialog } from '@/components/CreateOrganizationDialog';
+
+export default function Example() {
+  return (
+    <CreateOrganizationDialog open={open} onOpenChange={onOpenChange} />
+  );
+}
+```

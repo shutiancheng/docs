@@ -1,0 +1,31 @@
+---
+title: "ContextSummaryCard"
+description: "* ContextSummaryCard - The 15-second handoff summary * This is the KEY DIFFERENTIATOR of the product. When a CSR takes over a transferred call, they need to understand the context within seconds. This card provides that at-a-glance view. * Design requirements: - Always visible at top (sticky) - Readable in under 15 seconds - Copy-to-clipboard with one click - Visually prominent (amber/red border for urgency)"
+---
+
+* ContextSummaryCard - The 15-second handoff summary * This is the KEY DIFFERENTIATOR of the product. When a CSR takes over a transferred call, they need to understand the context within seconds. This card provides that at-a-glance view. * Design requirements: - Always visible at top (sticky) - Readable in under 15 seconds - Copy-to-clipboard with one click - Visually prominent (amber/red border for urgency)
+
+## Props
+
+<ResponseField name="summary" type="string" required={true}>
+  summary
+</ResponseField>
+<ResponseField name="urgencyLevel" type="UrgencyLevel" required={true}>
+  urgencyLevel
+</ResponseField>
+<ResponseField name="emergencyTriggers" type="EmergencyTrigger[]" required={true}>
+  emergencyTriggers
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { ContextSummaryCard } from '@/components/ContextSummaryCard';
+
+export default function Example() {
+  return (
+    <ContextSummaryCard summary={summary} urgencyLevel={urgencyLevel} emergencyTriggers={emergencyTriggers} />
+  );
+}
+```

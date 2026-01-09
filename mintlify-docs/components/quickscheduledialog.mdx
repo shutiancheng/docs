@@ -1,0 +1,42 @@
+---
+title: "QuickScheduleDialog"
+description: "QuickScheduleDialog component"
+---
+
+QuickScheduleDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="jobId" type="string" required={true}>
+  jobId
+</ResponseField>
+<ResponseField name="customerName" type="string" required={true}>
+  customerName
+</ResponseField>
+<ResponseField name="onSchedule" type="(
+    jobId: string,
+    date: string,
+    timeSlot: string,
+    technicianName?: string
+  ) => Promise<void>" required={true}>
+  onSchedule
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { QuickScheduleDialog } from '@/components/QuickScheduleDialog';
+
+export default function Example() {
+  return (
+    <QuickScheduleDialog open={open} onOpenChange={onOpenChange} jobId={jobId} customerName={customerName} onSchedule={onSchedule} />
+  );
+}
+```

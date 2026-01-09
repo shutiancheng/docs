@@ -1,0 +1,31 @@
+---
+title: "MarkResolvedDialog"
+description: "* MarkResolvedDialog - Close an inbox item with resolution notes * Features: - Resolution type selection - Required resolution notes - Archives item from active inbox - Navigates back to inbox list on completion"
+---
+
+* MarkResolvedDialog - Close an inbox item with resolution notes * Features: - Resolution type selection - Required resolution notes - Archives item from active inbox - Navigates back to inbox list on completion
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="onResolved" type="(resolutionType: string, notes: string) => void" required={false}>
+  onResolved
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { MarkResolvedDialog } from '@/components/MarkResolvedDialog';
+
+export default function Example() {
+  return (
+    <MarkResolvedDialog open={open} onOpenChange={onOpenChange} />
+  );
+}
+```

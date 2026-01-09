@@ -1,0 +1,58 @@
+---
+title: "InboxFilters"
+description: "InboxFilters component"
+---
+
+InboxFilters component
+
+## Props
+
+<ResponseField name="filters" type="InboxFiltersType" required={true}>
+  filters
+</ResponseField>
+<ResponseField name="onFilterChange" type="<K extends keyof InboxFiltersType>(
+    key: K,
+    value: InboxFiltersType[K]
+  ) => void" required={true}>
+  onFilterChange
+</ResponseField>
+<ResponseField name="onReset" type="() => void" required={true}>
+  onReset
+</ResponseField>
+<ResponseField name="onPresetApply" type="(presetId: string) => void" required={true}>
+  onPresetApply
+</ResponseField>
+<ResponseField name="onStatusToggle" type="(status: InboxStatus) => void" required={true}>
+  onStatusToggle
+</ResponseField>
+<ResponseField name="onTypeToggle" type="(type: InboxCallType) => void" required={true}>
+  onTypeToggle
+</ResponseField>
+<ResponseField name="activePreset" type="InboxFilterPreset | null" required={true}>
+  activePreset
+</ResponseField>
+<ResponseField name="hasFilters" type="boolean" required={true}>
+  hasFilters
+</ResponseField>
+<ResponseField name="totalCount" type="number" required={true}>
+  totalCount
+</ResponseField>
+<ResponseField name="filteredCount" type="number" required={true}>
+  filteredCount
+</ResponseField>
+<ResponseField name="presets" type="InboxFilterPreset[]" required={true}>
+  presets
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { InboxFilters } from '@/components/InboxFilters';
+
+export default function Example() {
+  return (
+    <InboxFilters filters={filters} onFilterChange={onFilterChange} onReset={onReset} onPresetApply={onPresetApply} onStatusToggle={onStatusToggle} onTypeToggle={onTypeToggle} activePreset={activePreset} hasFilters={hasFilters} totalCount={totalCount} filteredCount={filteredCount} presets={presets} />
+  );
+}
+```

@@ -1,0 +1,37 @@
+---
+title: "StorageSettingsSection"
+description: "StorageSettingsSection component"
+---
+
+StorageSettingsSection component
+
+## Props
+
+<ResponseField name="storageUsage" type="StorageUsage | null" required={true}>
+  storageUsage
+</ResponseField>
+<ResponseField name="callRetentionDays" type="number | null" required={true}>
+  callRetentionDays
+</ResponseField>
+<ResponseField name="onRetentionChange" type="(days: number | null) => void" required={true}>
+  onRetentionChange
+</ResponseField>
+<ResponseField name="isUpdatingRetention" type="boolean" required={true}>
+  isUpdatingRetention
+</ResponseField>
+<ResponseField name="isLoadingStorage" type="boolean" required={true}>
+  isLoadingStorage
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { StorageSettingsSection } from '@/components/StorageSettingsSection';
+
+export default function Example() {
+  return (
+    <StorageSettingsSection storageUsage={storageUsage} callRetentionDays={callRetentionDays} onRetentionChange={onRetentionChange} isUpdatingRetention={isUpdatingRetention} isLoadingStorage={isLoadingStorage} />
+  );
+}
+```

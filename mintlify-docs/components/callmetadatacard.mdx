@@ -1,0 +1,31 @@
+---
+title: "CallMetadataCard"
+description: "* CallMetadataCard - Call timing, outcome, and transfer info * Shows when the call happened, how long it lasted, and the outcome."
+---
+
+* CallMetadataCard - Call timing, outcome, and transfer info * Shows when the call happened, how long it lasted, and the outcome.
+
+## Props
+
+<ResponseField name="metadata" type="CallMetadata" required={true}>
+  metadata
+</ResponseField>
+<ResponseField name="outcome" type="CallOutcome" required={true}>
+  outcome
+</ResponseField>
+<ResponseField name="transfer" type="TransferInfo" required={true}>
+  transfer
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { CallMetadataCard } from '@/components/CallMetadataCard';
+
+export default function Example() {
+  return (
+    <CallMetadataCard metadata={metadata} outcome={outcome} transfer={transfer} />
+  );
+}
+```

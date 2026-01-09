@@ -1,0 +1,636 @@
+---
+title: "GET /api/webhooks/elevenlabs/personalize"
+description: "* POST /api/webhooks/elevenlabs/personalize * Personalization webhook for ElevenLabs inbound calls. Called by ElevenLabs DURING the dial tone (in parallel with call connection) to fetch customer context for dynamic variables. * This endpoint must respond in <300ms to avoid call delay. * Request from ElevenLabs: { "caller_id": "+447700123456", "agent_id": "abc123", "called_number": "+442071234567", "call_sid": "CA..." } * Response format: { "dynamic_variables": { "caller_id": "+447700123456", "customer_name": "John Smith", "customer_type": "returning", "previous_jobs": "Boiler repair on 2 Jan 2025", "customer_notes": "", "services_pricing": "- Boiler Repair: £150\n- Gas Safety Check: £75\n...", "diagnostic_fee": "£65" }, // Only included when outside business hours or in holiday mode: "conversation_config_override": { "agent": { "first_message": "This call is recorded... Our offices are currently closed..." } } } /
+
+import { NextRequest, NextResponse } from "next/server";
+import { createServiceClient } from "@/lib/supabase/server";
+import type { ServicesConfig, LegacyServicesConfig } from "@/lib/types/agent-config";
+import { migrateServicesConfig } from "@/lib/types/agent-config";
+import { RECORDING_DISCLAIMER } from "@/lib/integrations/elevenlabs/client";
+
+interface PersonalizationRequest {
+  caller_id: string;
+  agent_id: string;
+  called_number: string;
+  call_sid?: string;
+}
+
+interface PersonalizationResponse {
+  dynamic_variables: {
+    caller_id: string;
+    customer_name: string;
+    customer_type: string;
+    previous_jobs: string;
+    customer_notes: string;
+    services_pricing: string;
+    diagnostic_fee: string;
+    // Business hours context for agent behavior
+    is_after_hours: string; // "yes" or "no"
+    after_hours_behavior: string; // "voicemail" | "emergency" | "callback"
+  };
+  // Override greeting for after-hours calls
+  conversation_config_override?: {
+    agent: {
+      first_message: string;
+    };
+  };
+}
+
+/** Format services configuration into a pricing string for the AI agent. This is used as a dynamic variable in the ElevenLabs prompt. * Supports both the new unified array format and legacy fixed-key format. /
+function formatServicesPricing(
+  rawServices: ServicesConfig | LegacyServicesConfig | null | undefined,
+  diagnosticFee: number
+): string {
+  if (!rawServices) {
+    return `- Diagnostic/Call-out Fee: £${diagnosticFee}`;
+  }
+
+  // Migrate to new format if needed (handles both old and new formats)
+  const services = migrateServicesConfig(rawServices);
+  const lines: string[] = [];
+
+  // Format all services from the unified array
+  for (const service of services.services) {
+    if (service.enabled) {
+      // Handle services with premium pricing (out-of-hours)
+      if (service.premium !== undefined && service.premium > 0) {
+        lines.push(
+          `- ${service.label}: £${service.price} (standard hours), £${service.price + service.premium} (out-of-hours/weekends)`
+        );
+      } else {
+        lines.push(`- ${service.label}: £${service.price}`);
+      }
+    }
+  }
+
+  // Always add diagnostic fee at the end
+  lines.push(`- Diagnostic/Call-out Fee: £${diagnosticFee}`);
+
+  return lines.join("\n");
+}
+
+/** Validate the personalization webhook request * IMPORTANT: ElevenLabs Twilio personalization webhooks use DIFFERENT authentication than post-call webhooks. They do NOT send ElevenLabs-Signature headers. Instead, you configure custom headers in the ElevenLabs dashboard. * Authentication options (checked in order): 1. x-webhook-secret header (configured in ElevenLabs dashboard) 2. Authorization: Bearer token 3. x-api-key header 4. Skip auth in development or if ELEVENLABS_PERSONALIZATION_SECRET is not set /
+async function validatePersonalizationRequest(
+  request: NextRequest
+): Promise<
+  | { valid: true; data: PersonalizationRequest; rawPayload: string }
+  | { valid: false; error: string }
+> {
+  // Use a separate secret for personalization webhooks
+  const personalizationSecret = process.env.ELEVENLABS_PERSONALIZATION_SECRET;
+
+  // Get raw body
+  let rawPayload: string;
+  try {
+    rawPayload = await request.text();
+  } catch {
+    return { valid: false, error: "Failed to read request body" };
+  }
+
+  if (!rawPayload) {
+    return { valid: false, error: "Empty request body" };
+  }
+
+  // Check authentication if secret is configured
+  if (personalizationSecret) {
+    const webhookSecret = request.headers.get("x-webhook-secret");
+    const authHeader = request.headers.get("Authorization");
+    const apiKey = request.headers.get("x-api-key");
+
+    const bearerToken = authHeader?.startsWith("Bearer ")
+      ? authHeader.substring(7)
+      : null;
+
+    const isAuthenticated =
+      webhookSecret === personalizationSecret ||
+      bearerToken === personalizationSecret ||
+      apiKey === personalizationSecret;
+
+    if (!isAuthenticated) {
+      console.warn(
+        "Personalization webhook auth failed. Headers received:",
+        {
+          hasWebhookSecret: !!webhookSecret,
+          hasAuthHeader: !!authHeader,
+          hasApiKey: !!apiKey,
+        }
+      );
+      return {
+        valid: false,
+        error: "Invalid authentication",
+      };
+    }
+  } else {
+    // Log warning in production if no secret is configured
+    if (process.env.NODE_ENV === "production") {
+      console.warn(
+        "ELEVENLABS_PERSONALIZATION_SECRET not configured - personalization webhook is unauthenticated"
+      );
+    }
+  }
+
+  // Parse JSON
+  try {
+    const data = JSON.parse(rawPayload) as PersonalizationRequest;
+
+    // Validate required fields
+    if (!data.caller_id) {
+      return { valid: false, error: "Missing caller_id" };
+    }
+    if (!data.agent_id) {
+      return { valid: false, error: "Missing agent_id" };
+    }
+
+    return { valid: true, data, rawPayload };
+  } catch (error) {
+    return {
+      valid: false,
+      error: `Invalid JSON: ${error instanceof Error ? error.message : "Unknown error"}`,
+    };
+  }
+}
+
+export async function POST(
+  request: NextRequest
+): Promise<NextResponse<PersonalizationResponse | { error: string }>> {
+  const startTime = Date.now();
+
+  console.log("Personalization webhook called");
+
+  // Validate request
+  const result = await validatePersonalizationRequest(request);
+
+  if (!result.valid) {
+    console.error("Personalization webhook validation failed:", result.error);
+    return NextResponse.json({ error: result.error }, { status: 401 });
+  }
+
+  const { data } = result;
+
+  console.log("Personalization request:", {
+    caller_id: data.caller_id,
+    agent_id: data.agent_id,
+    called_number: data.called_number,
+  });
+
+  try {
+    const supabase = await createServiceClient();
+
+    // Call the RPC function to get customer context
+    // This is a single optimized query that should complete in <200ms
+    const { data: context, error } = await supabase.rpc(
+      "get_customer_context_for_call",
+      {
+        p_phone: data.caller_id,
+        p_agent_id: data.agent_id,
+      }
+    );
+
+    if (error) {
+      console.error("Failed to get customer context:", error);
+      // Return empty context on error (graceful degradation)
+      // Default to open hours so agent behaves normally
+      return NextResponse.json({
+        dynamic_variables: {
+          caller_id: data.caller_id,
+          customer_name: "",
+          customer_type: "new",
+          previous_jobs: "",
+          customer_notes: "",
+          services_pricing: "- Diagnostic/Call-out Fee: £65",
+          diagnostic_fee: "£65",
+          is_after_hours: "no", // Default to normal hours on error
+          after_hours_behavior: "voicemail",
+        },
+      });
+    }
+
+    // Log timing for monitoring
+    const duration = Date.now() - startTime;
+    console.log(`Personalization webhook completed in ${duration}ms`, {
+      caller_id: data.caller_id,
+      customer_found: !!context?.customer_name,
+      customer_type: context?.customer_type || "new",
+    });
+
+    if (duration > 200) {
+      console.warn(
+        `Personalization webhook slow response: ${duration}ms for caller ${data.caller_id}`
+      );
+    }
+
+    // Get services data from the context (returned by updated RPC)
+    const services = context?.services as ServicesConfig | undefined;
+    const diagnosticFee = (context?.diagnostic_fee as number) || 65;
+
+    // Check business hours status
+    const isOpen = context?.is_open ?? true; // Default to open if not set
+    const isHoliday = context?.is_holiday ?? false;
+    const afterHoursGreeting = (context?.after_hours_greeting as string) || "";
+    const afterHoursBehavior = (context?.after_hours_behavior as string) || "voicemail";
+    const isAfterHours = !isOpen || isHoliday;
+
+    // Return the context for dynamic variables
+    // Always include caller_id so agent knows the phone number without asking
+    const response: PersonalizationResponse = {
+      dynamic_variables: {
+        caller_id: data.caller_id,
+        customer_name: context?.customer_name || "",
+        customer_type: context?.customer_type || "new",
+        previous_jobs: context?.previous_jobs || "",
+        customer_notes: context?.customer_notes || "",
+        services_pricing: formatServicesPricing(services, diagnosticFee),
+        diagnostic_fee: `£${diagnosticFee}`,
+        // Business hours context - agent uses these to adjust behavior
+        is_after_hours: isAfterHours ? "yes" : "no",
+        after_hours_behavior: afterHoursBehavior,
+      },
+    };
+
+    // Override greeting for after-hours calls
+    if (isAfterHours && afterHoursGreeting) {
+      // Ensure recording disclaimer is included in after-hours greeting
+      const greetingWithDisclaimer = afterHoursGreeting
+        .toLowerCase()
+        .includes("this call is recorded")
+        ? afterHoursGreeting
+        : `${RECORDING_DISCLAIMER} ${afterHoursGreeting}`;
+
+      response.conversation_config_override = {
+        agent: {
+          first_message: greetingWithDisclaimer,
+        },
+      };
+
+      console.log("After-hours call detected", {
+        caller_id: data.caller_id,
+        is_open: isOpen,
+        is_holiday: isHoliday,
+        timezone: context?.timezone,
+        after_hours_behavior: afterHoursBehavior,
+        override_greeting: true,
+      });
+    }
+
+    return NextResponse.json(response);
+  } catch (error) {
+    console.error("Personalization webhook error:", error);
+    // Return empty context on error (graceful degradation)
+    // Default to open hours so agent behaves normally
+    return NextResponse.json({
+      dynamic_variables: {
+        caller_id: data.caller_id,
+        customer_name: "",
+        customer_type: "new",
+        previous_jobs: "",
+        customer_notes: "",
+        services_pricing: "- Diagnostic/Call-out Fee: £65",
+        diagnostic_fee: "£65",
+        is_after_hours: "no", // Default to normal hours on error
+        after_hours_behavior: "voicemail",
+      },
+    });
+  }
+}
+
+/** GET /api/webhooks/elevenlabs/personalize * Health check endpoint."
+api: "GET /api/webhooks/elevenlabs/personalize"
+---
+
+* POST /api/webhooks/elevenlabs/personalize * Personalization webhook for ElevenLabs inbound calls. Called by ElevenLabs DURING the dial tone (in parallel with call connection) to fetch customer context for dynamic variables. * This endpoint must respond in <300ms to avoid call delay. * Request from ElevenLabs: { "caller_id": "+447700123456", "agent_id": "abc123", "called_number": "+442071234567", "call_sid": "CA..." } * Response format: { "dynamic_variables": { "caller_id": "+447700123456", "customer_name": "John Smith", "customer_type": "returning", "previous_jobs": "Boiler repair on 2 Jan 2025", "customer_notes": "", "services_pricing": "- Boiler Repair: £150\n- Gas Safety Check: £75\n...", "diagnostic_fee": "£65" }, // Only included when outside business hours or in holiday mode: "conversation_config_override": { "agent": { "first_message": "This call is recorded... Our offices are currently closed..." } } } /
+
+import { NextRequest, NextResponse } from "next/server";
+import { createServiceClient } from "@/lib/supabase/server";
+import type { ServicesConfig, LegacyServicesConfig } from "@/lib/types/agent-config";
+import { migrateServicesConfig } from "@/lib/types/agent-config";
+import { RECORDING_DISCLAIMER } from "@/lib/integrations/elevenlabs/client";
+
+interface PersonalizationRequest {
+  caller_id: string;
+  agent_id: string;
+  called_number: string;
+  call_sid?: string;
+}
+
+interface PersonalizationResponse {
+  dynamic_variables: {
+    caller_id: string;
+    customer_name: string;
+    customer_type: string;
+    previous_jobs: string;
+    customer_notes: string;
+    services_pricing: string;
+    diagnostic_fee: string;
+    // Business hours context for agent behavior
+    is_after_hours: string; // "yes" or "no"
+    after_hours_behavior: string; // "voicemail" | "emergency" | "callback"
+  };
+  // Override greeting for after-hours calls
+  conversation_config_override?: {
+    agent: {
+      first_message: string;
+    };
+  };
+}
+
+/** Format services configuration into a pricing string for the AI agent. This is used as a dynamic variable in the ElevenLabs prompt. * Supports both the new unified array format and legacy fixed-key format. /
+function formatServicesPricing(
+  rawServices: ServicesConfig | LegacyServicesConfig | null | undefined,
+  diagnosticFee: number
+): string {
+  if (!rawServices) {
+    return `- Diagnostic/Call-out Fee: £${diagnosticFee}`;
+  }
+
+  // Migrate to new format if needed (handles both old and new formats)
+  const services = migrateServicesConfig(rawServices);
+  const lines: string[] = [];
+
+  // Format all services from the unified array
+  for (const service of services.services) {
+    if (service.enabled) {
+      // Handle services with premium pricing (out-of-hours)
+      if (service.premium !== undefined && service.premium > 0) {
+        lines.push(
+          `- ${service.label}: £${service.price} (standard hours), £${service.price + service.premium} (out-of-hours/weekends)`
+        );
+      } else {
+        lines.push(`- ${service.label}: £${service.price}`);
+      }
+    }
+  }
+
+  // Always add diagnostic fee at the end
+  lines.push(`- Diagnostic/Call-out Fee: £${diagnosticFee}`);
+
+  return lines.join("\n");
+}
+
+/** Validate the personalization webhook request * IMPORTANT: ElevenLabs Twilio personalization webhooks use DIFFERENT authentication than post-call webhooks. They do NOT send ElevenLabs-Signature headers. Instead, you configure custom headers in the ElevenLabs dashboard. * Authentication options (checked in order): 1. x-webhook-secret header (configured in ElevenLabs dashboard) 2. Authorization: Bearer token 3. x-api-key header 4. Skip auth in development or if ELEVENLABS_PERSONALIZATION_SECRET is not set /
+async function validatePersonalizationRequest(
+  request: NextRequest
+): Promise<
+  | { valid: true; data: PersonalizationRequest; rawPayload: string }
+  | { valid: false; error: string }
+> {
+  // Use a separate secret for personalization webhooks
+  const personalizationSecret = process.env.ELEVENLABS_PERSONALIZATION_SECRET;
+
+  // Get raw body
+  let rawPayload: string;
+  try {
+    rawPayload = await request.text();
+  } catch {
+    return { valid: false, error: "Failed to read request body" };
+  }
+
+  if (!rawPayload) {
+    return { valid: false, error: "Empty request body" };
+  }
+
+  // Check authentication if secret is configured
+  if (personalizationSecret) {
+    const webhookSecret = request.headers.get("x-webhook-secret");
+    const authHeader = request.headers.get("Authorization");
+    const apiKey = request.headers.get("x-api-key");
+
+    const bearerToken = authHeader?.startsWith("Bearer ")
+      ? authHeader.substring(7)
+      : null;
+
+    const isAuthenticated =
+      webhookSecret === personalizationSecret ||
+      bearerToken === personalizationSecret ||
+      apiKey === personalizationSecret;
+
+    if (!isAuthenticated) {
+      console.warn(
+        "Personalization webhook auth failed. Headers received:",
+        {
+          hasWebhookSecret: !!webhookSecret,
+          hasAuthHeader: !!authHeader,
+          hasApiKey: !!apiKey,
+        }
+      );
+      return {
+        valid: false,
+        error: "Invalid authentication",
+      };
+    }
+  } else {
+    // Log warning in production if no secret is configured
+    if (process.env.NODE_ENV === "production") {
+      console.warn(
+        "ELEVENLABS_PERSONALIZATION_SECRET not configured - personalization webhook is unauthenticated"
+      );
+    }
+  }
+
+  // Parse JSON
+  try {
+    const data = JSON.parse(rawPayload) as PersonalizationRequest;
+
+    // Validate required fields
+    if (!data.caller_id) {
+      return { valid: false, error: "Missing caller_id" };
+    }
+    if (!data.agent_id) {
+      return { valid: false, error: "Missing agent_id" };
+    }
+
+    return { valid: true, data, rawPayload };
+  } catch (error) {
+    return {
+      valid: false,
+      error: `Invalid JSON: ${error instanceof Error ? error.message : "Unknown error"}`,
+    };
+  }
+}
+
+export async function POST(
+  request: NextRequest
+): Promise<NextResponse<PersonalizationResponse | { error: string }>> {
+  const startTime = Date.now();
+
+  console.log("Personalization webhook called");
+
+  // Validate request
+  const result = await validatePersonalizationRequest(request);
+
+  if (!result.valid) {
+    console.error("Personalization webhook validation failed:", result.error);
+    return NextResponse.json({ error: result.error }, { status: 401 });
+  }
+
+  const { data } = result;
+
+  console.log("Personalization request:", {
+    caller_id: data.caller_id,
+    agent_id: data.agent_id,
+    called_number: data.called_number,
+  });
+
+  try {
+    const supabase = await createServiceClient();
+
+    // Call the RPC function to get customer context
+    // This is a single optimized query that should complete in <200ms
+    const { data: context, error } = await supabase.rpc(
+      "get_customer_context_for_call",
+      {
+        p_phone: data.caller_id,
+        p_agent_id: data.agent_id,
+      }
+    );
+
+    if (error) {
+      console.error("Failed to get customer context:", error);
+      // Return empty context on error (graceful degradation)
+      // Default to open hours so agent behaves normally
+      return NextResponse.json({
+        dynamic_variables: {
+          caller_id: data.caller_id,
+          customer_name: "",
+          customer_type: "new",
+          previous_jobs: "",
+          customer_notes: "",
+          services_pricing: "- Diagnostic/Call-out Fee: £65",
+          diagnostic_fee: "£65",
+          is_after_hours: "no", // Default to normal hours on error
+          after_hours_behavior: "voicemail",
+        },
+      });
+    }
+
+    // Log timing for monitoring
+    const duration = Date.now() - startTime;
+    console.log(`Personalization webhook completed in ${duration}ms`, {
+      caller_id: data.caller_id,
+      customer_found: !!context?.customer_name,
+      customer_type: context?.customer_type || "new",
+    });
+
+    if (duration > 200) {
+      console.warn(
+        `Personalization webhook slow response: ${duration}ms for caller ${data.caller_id}`
+      );
+    }
+
+    // Get services data from the context (returned by updated RPC)
+    const services = context?.services as ServicesConfig | undefined;
+    const diagnosticFee = (context?.diagnostic_fee as number) || 65;
+
+    // Check business hours status
+    const isOpen = context?.is_open ?? true; // Default to open if not set
+    const isHoliday = context?.is_holiday ?? false;
+    const afterHoursGreeting = (context?.after_hours_greeting as string) || "";
+    const afterHoursBehavior = (context?.after_hours_behavior as string) || "voicemail";
+    const isAfterHours = !isOpen || isHoliday;
+
+    // Return the context for dynamic variables
+    // Always include caller_id so agent knows the phone number without asking
+    const response: PersonalizationResponse = {
+      dynamic_variables: {
+        caller_id: data.caller_id,
+        customer_name: context?.customer_name || "",
+        customer_type: context?.customer_type || "new",
+        previous_jobs: context?.previous_jobs || "",
+        customer_notes: context?.customer_notes || "",
+        services_pricing: formatServicesPricing(services, diagnosticFee),
+        diagnostic_fee: `£${diagnosticFee}`,
+        // Business hours context - agent uses these to adjust behavior
+        is_after_hours: isAfterHours ? "yes" : "no",
+        after_hours_behavior: afterHoursBehavior,
+      },
+    };
+
+    // Override greeting for after-hours calls
+    if (isAfterHours && afterHoursGreeting) {
+      // Ensure recording disclaimer is included in after-hours greeting
+      const greetingWithDisclaimer = afterHoursGreeting
+        .toLowerCase()
+        .includes("this call is recorded")
+        ? afterHoursGreeting
+        : `${RECORDING_DISCLAIMER} ${afterHoursGreeting}`;
+
+      response.conversation_config_override = {
+        agent: {
+          first_message: greetingWithDisclaimer,
+        },
+      };
+
+      console.log("After-hours call detected", {
+        caller_id: data.caller_id,
+        is_open: isOpen,
+        is_holiday: isHoliday,
+        timezone: context?.timezone,
+        after_hours_behavior: afterHoursBehavior,
+        override_greeting: true,
+      });
+    }
+
+    return NextResponse.json(response);
+  } catch (error) {
+    console.error("Personalization webhook error:", error);
+    // Return empty context on error (graceful degradation)
+    // Default to open hours so agent behaves normally
+    return NextResponse.json({
+      dynamic_variables: {
+        caller_id: data.caller_id,
+        customer_name: "",
+        customer_type: "new",
+        previous_jobs: "",
+        customer_notes: "",
+        services_pricing: "- Diagnostic/Call-out Fee: £65",
+        diagnostic_fee: "£65",
+        is_after_hours: "no", // Default to normal hours on error
+        after_hours_behavior: "voicemail",
+      },
+    });
+  }
+}
+
+/** GET /api/webhooks/elevenlabs/personalize * Health check endpoint.
+
+## Request Body
+
+<ParamField body="caller_id" type="string" required={true}>
+  caller_id
+</ParamField>
+<ParamField body="agent_id" type="string" required={true}>
+  agent_id
+</ParamField>
+<ParamField body="called_number" type="string" required={true}>
+  called_number
+</ParamField>
+<ParamField body="call_sid" type="string" required={false}>
+  call_sid
+</ParamField>
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://your-domain.com/api/webhooks/elevenlabs/personalize \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/webhooks/elevenlabs/personalize', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

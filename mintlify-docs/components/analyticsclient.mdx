@@ -1,0 +1,28 @@
+---
+title: "AnalyticsClient"
+description: "AnalyticsClient component"
+---
+
+AnalyticsClient component
+
+## Props
+
+<ResponseField name="initialData" type="AnalyticsMetrics | null" required={false}>
+  initialData
+</ResponseField>
+<ResponseField name="initialDays" type="AnalyticsPeriod" required={false}>
+  initialDays
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { AnalyticsClient } from '@/components/AnalyticsClient';
+
+export default function Example() {
+  return (
+    <AnalyticsClient  />
+  );
+}
+```

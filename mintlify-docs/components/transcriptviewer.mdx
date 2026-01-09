@@ -1,0 +1,25 @@
+---
+title: "TranscriptViewer"
+description: "* TranscriptViewer - Searchable transcript with timestamps * Shows the full conversation transcript with: - Speaker identification (Agent vs Customer) - Timestamps for each entry - Search functionality - Highlighted key moments"
+---
+
+* TranscriptViewer - Searchable transcript with timestamps * Shows the full conversation transcript with: - Speaker identification (Agent vs Customer) - Timestamps for each entry - Search functionality - Highlighted key moments
+
+## Props
+
+<ResponseField name="transcript" type="TranscriptEntry[]" required={true}>
+  transcript
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { TranscriptViewer } from '@/components/TranscriptViewer';
+
+export default function Example() {
+  return (
+    <TranscriptViewer transcript={transcript} />
+  );
+}
+```

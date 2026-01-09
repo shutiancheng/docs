@@ -1,0 +1,246 @@
+---
+title: "GET /api/webhooks/elevenlabs"
+description: "* POST /api/webhooks/elevenlabs * Main webhook handler for ElevenLabs Conversational AI events. Receives three types of events: - post_call_transcription: Contains transcript, analysis, and metadata - post_call_audio: Contains base64-encoded MP3 audio - call_initiation_failure: Contains failure reason and metadata /
+
+import { NextRequest, NextResponse } from "next/server";
+import { createServiceClient } from "@/lib/supabase/server";
+import { validateAndParseElevenLabsWebhook } from "@/lib/integrations/elevenlabs/validation";
+import { handlePostCallTranscription } from "./handlers/transcription";
+import { handlePostCallAudio } from "./handlers/audio";
+import { handleCallInitiationFailure } from "./handlers/failure";
+
+export async function POST(request: NextRequest) {
+  // Validate and parse the webhook
+  const result = await validateAndParseElevenLabsWebhook(request);
+
+  if (!result.valid) {
+    console.error("ElevenLabs webhook validation failed:", result.error);
+    return NextResponse.json({ error: result.error }, { status: 401 });
+  }
+
+  const { event, rawPayload } = result;
+
+  try {
+    const supabase = await createServiceClient();
+
+    // Log the webhook event for debugging/audit
+    const conversationId = "data" in event ? event.data.conversation_id : null;
+    const agentId = "data" in event ? event.data.agent_id : null;
+
+    const { data: eventLog, error: logError } = await supabase
+      .from("elevenlabs_webhook_events")
+      .insert({
+        event_type: event.type,
+        conversation_id: conversationId,
+        agent_id: agentId,
+        raw_payload: JSON.parse(rawPayload),
+        processed: false,
+      })
+      .select()
+      .single();
+
+    if (logError) {
+      console.error("Failed to log webhook event:", logError);
+    }
+
+    // Route to appropriate handler based on event type
+    let handlerResult: { success: boolean; callId?: string; error?: string };
+
+    switch (event.type) {
+      case "post_call_transcription":
+        handlerResult = await handlePostCallTranscription(event, supabase);
+        break;
+
+      case "post_call_audio":
+        handlerResult = await handlePostCallAudio(event, supabase);
+        break;
+
+      case "call_initiation_failure":
+        handlerResult = await handleCallInitiationFailure(event, supabase);
+        break;
+
+      default:
+        console.warn("Unknown webhook event type:", (event as { type: string }).type);
+        handlerResult = { success: false, error: "Unknown event type" };
+    }
+
+    // Update event log with processing result
+    if (eventLog) {
+      await supabase
+        .from("elevenlabs_webhook_events")
+        .update({
+          processed: handlerResult.success,
+          call_id: handlerResult.callId || null,
+          error_message: handlerResult.error || null,
+        })
+        .eq("id", eventLog.id);
+    }
+
+    if (!handlerResult.success) {
+      console.error("ElevenLabs webhook handler failed:", handlerResult.error);
+      // Return 200 to prevent retries for non-transient errors
+      // Return 500 only for errors that should trigger a retry
+      const isTransientError =
+        handlerResult.error?.includes("timeout") ||
+        handlerResult.error?.includes("connection");
+
+      if (isTransientError) {
+        return NextResponse.json(
+          { status: "error", error: handlerResult.error },
+          { status: 500 }
+        );
+      }
+    }
+
+    return NextResponse.json({
+      status: "received",
+      callId: handlerResult.callId,
+    });
+  } catch (error) {
+    console.error("ElevenLabs webhook error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+/** GET /api/webhooks/elevenlabs * Health check endpoint."
+api: "GET /api/webhooks/elevenlabs"
+---
+
+* POST /api/webhooks/elevenlabs * Main webhook handler for ElevenLabs Conversational AI events. Receives three types of events: - post_call_transcription: Contains transcript, analysis, and metadata - post_call_audio: Contains base64-encoded MP3 audio - call_initiation_failure: Contains failure reason and metadata /
+
+import { NextRequest, NextResponse } from "next/server";
+import { createServiceClient } from "@/lib/supabase/server";
+import { validateAndParseElevenLabsWebhook } from "@/lib/integrations/elevenlabs/validation";
+import { handlePostCallTranscription } from "./handlers/transcription";
+import { handlePostCallAudio } from "./handlers/audio";
+import { handleCallInitiationFailure } from "./handlers/failure";
+
+export async function POST(request: NextRequest) {
+  // Validate and parse the webhook
+  const result = await validateAndParseElevenLabsWebhook(request);
+
+  if (!result.valid) {
+    console.error("ElevenLabs webhook validation failed:", result.error);
+    return NextResponse.json({ error: result.error }, { status: 401 });
+  }
+
+  const { event, rawPayload } = result;
+
+  try {
+    const supabase = await createServiceClient();
+
+    // Log the webhook event for debugging/audit
+    const conversationId = "data" in event ? event.data.conversation_id : null;
+    const agentId = "data" in event ? event.data.agent_id : null;
+
+    const { data: eventLog, error: logError } = await supabase
+      .from("elevenlabs_webhook_events")
+      .insert({
+        event_type: event.type,
+        conversation_id: conversationId,
+        agent_id: agentId,
+        raw_payload: JSON.parse(rawPayload),
+        processed: false,
+      })
+      .select()
+      .single();
+
+    if (logError) {
+      console.error("Failed to log webhook event:", logError);
+    }
+
+    // Route to appropriate handler based on event type
+    let handlerResult: { success: boolean; callId?: string; error?: string };
+
+    switch (event.type) {
+      case "post_call_transcription":
+        handlerResult = await handlePostCallTranscription(event, supabase);
+        break;
+
+      case "post_call_audio":
+        handlerResult = await handlePostCallAudio(event, supabase);
+        break;
+
+      case "call_initiation_failure":
+        handlerResult = await handleCallInitiationFailure(event, supabase);
+        break;
+
+      default:
+        console.warn("Unknown webhook event type:", (event as { type: string }).type);
+        handlerResult = { success: false, error: "Unknown event type" };
+    }
+
+    // Update event log with processing result
+    if (eventLog) {
+      await supabase
+        .from("elevenlabs_webhook_events")
+        .update({
+          processed: handlerResult.success,
+          call_id: handlerResult.callId || null,
+          error_message: handlerResult.error || null,
+        })
+        .eq("id", eventLog.id);
+    }
+
+    if (!handlerResult.success) {
+      console.error("ElevenLabs webhook handler failed:", handlerResult.error);
+      // Return 200 to prevent retries for non-transient errors
+      // Return 500 only for errors that should trigger a retry
+      const isTransientError =
+        handlerResult.error?.includes("timeout") ||
+        handlerResult.error?.includes("connection");
+
+      if (isTransientError) {
+        return NextResponse.json(
+          { status: "error", error: handlerResult.error },
+          { status: 500 }
+        );
+      }
+    }
+
+    return NextResponse.json({
+      status: "received",
+      callId: handlerResult.callId,
+    });
+  } catch (error) {
+    console.error("ElevenLabs webhook error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+/** GET /api/webhooks/elevenlabs * Health check endpoint.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://your-domain.com/api/webhooks/elevenlabs \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/webhooks/elevenlabs', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

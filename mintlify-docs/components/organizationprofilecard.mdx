@@ -1,0 +1,31 @@
+---
+title: "OrganizationProfileCard"
+description: "OrganizationProfileCard component"
+---
+
+OrganizationProfileCard component
+
+## Props
+
+<ResponseField name="organization" type="Organization" required={true}>
+  organization
+</ResponseField>
+<ResponseField name="isOwner" type="boolean" required={true}>
+  isOwner
+</ResponseField>
+<ResponseField name="onOrganizationUpdate" type="(updates: Partial<Organization>) => void" required={false}>
+  onOrganizationUpdate
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { OrganizationProfileCard } from '@/components/OrganizationProfileCard';
+
+export default function Example() {
+  return (
+    <OrganizationProfileCard organization={organization} isOwner={isOwner} />
+  );
+}
+```

@@ -1,0 +1,36 @@
+---
+title: "POST /api/webhooks/twilio/recording"
+description: "* POST /api/webhooks/twilio/recording * Handles recording status updates from Twilio. Called when a recording is completed or fails."
+api: "POST /api/webhooks/twilio/recording"
+---
+
+* POST /api/webhooks/twilio/recording * Handles recording status updates from Twilio. Called when a recording is completed or fails.
+
+
+
+## Response
+
+Returns `unknown` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/webhooks/twilio/recording \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/webhooks/twilio/recording', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

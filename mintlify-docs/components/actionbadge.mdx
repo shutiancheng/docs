@@ -1,0 +1,180 @@
+---
+title: "ActionBadge"
+description: "Show icon only without label (for compact display) */
+  compact?: boolean;
+}
+
+// =============================================================================
+// Badge Configuration
+// =============================================================================
+
+/** Priorities that show NO badge (handled quietly) These are low-priority completed items that don't need visual attention /
+const HIDDEN_PRIORITIES: ActionPriority[] = ["resolved", "completed", "archived"];
+
+const BADGE_CONFIG: Record<
+  Exclude<ActionPriority, "resolved" | "completed" | "archived">,
+  {
+    label: string;
+    icon: typeof AlertTriangle;
+    bgColor: string;
+    textColor: string;
+    darkBgColor: string;
+    darkTextColor: string;
+  }
+> = {
+  emergency: {
+    label: "Emergency",
+    icon: AlertTriangle,
+    bgColor: "rgba(239, 68, 68, 0.1)", // red-500 at 10%
+    textColor: "#DC2626", // red-600
+    darkBgColor: "rgba(239, 68, 68, 0.2)",
+    darkTextColor: "#F87171", // red-400
+  },
+  callback: {
+    label: "Callback",
+    icon: PhoneCall,
+    bgColor: "rgba(249, 115, 22, 0.1)", // orange-500 at 10%
+    textColor: "#EA580C", // orange-600
+    darkBgColor: "rgba(249, 115, 22, 0.2)",
+    darkTextColor: "#FB923C", // orange-400
+  },
+  missed: {
+    label: "Missed",
+    icon: PhoneMissed,
+    bgColor: "rgba(245, 158, 11, 0.1)", // amber-500 at 10%
+    textColor: "#D97706", // amber-600
+    darkBgColor: "rgba(245, 158, 11, 0.2)",
+    darkTextColor: "#FBBF24", // amber-400
+  },
+  transferred: {
+    label: "Transferred",
+    icon: ArrowRightLeft,
+    bgColor: "rgba(59, 130, 246, 0.1)", // blue-500 at 10%
+    textColor: "#2563EB", // blue-600
+    darkBgColor: "rgba(59, 130, 246, 0.2)",
+    darkTextColor: "#60A5FA", // blue-400
+  },
+  review: {
+    label: "Review",
+    icon: Eye,
+    bgColor: "rgba(113, 113, 122, 0.1)", // zinc-500 at 10%
+    textColor: "#52525B", // zinc-600
+    darkBgColor: "rgba(113, 113, 122, 0.2)",
+    darkTextColor: "#A1A1AA", // zinc-400
+  },
+  scheduled: {
+    label: "Scheduled",
+    icon: Calendar,
+    bgColor: "rgba(34, 197, 94, 0.1)", // green-500 at 10%
+    textColor: "#16A34A", // green-600
+    darkBgColor: "rgba(34, 197, 94, 0.2)",
+    darkTextColor: "#4ADE80", // green-400
+  },
+};
+
+// =============================================================================
+// Component
+// =============================================================================
+
+/** Action badge component showing what action is needed for an inbox item. Displays nothing for completed/resolved/archived items."
+---
+
+Show icon only without label (for compact display) */
+  compact?: boolean;
+}
+
+// =============================================================================
+// Badge Configuration
+// =============================================================================
+
+/** Priorities that show NO badge (handled quietly) These are low-priority completed items that don't need visual attention /
+const HIDDEN_PRIORITIES: ActionPriority[] = ["resolved", "completed", "archived"];
+
+const BADGE_CONFIG: Record<
+  Exclude<ActionPriority, "resolved" | "completed" | "archived">,
+  {
+    label: string;
+    icon: typeof AlertTriangle;
+    bgColor: string;
+    textColor: string;
+    darkBgColor: string;
+    darkTextColor: string;
+  }
+> = {
+  emergency: {
+    label: "Emergency",
+    icon: AlertTriangle,
+    bgColor: "rgba(239, 68, 68, 0.1)", // red-500 at 10%
+    textColor: "#DC2626", // red-600
+    darkBgColor: "rgba(239, 68, 68, 0.2)",
+    darkTextColor: "#F87171", // red-400
+  },
+  callback: {
+    label: "Callback",
+    icon: PhoneCall,
+    bgColor: "rgba(249, 115, 22, 0.1)", // orange-500 at 10%
+    textColor: "#EA580C", // orange-600
+    darkBgColor: "rgba(249, 115, 22, 0.2)",
+    darkTextColor: "#FB923C", // orange-400
+  },
+  missed: {
+    label: "Missed",
+    icon: PhoneMissed,
+    bgColor: "rgba(245, 158, 11, 0.1)", // amber-500 at 10%
+    textColor: "#D97706", // amber-600
+    darkBgColor: "rgba(245, 158, 11, 0.2)",
+    darkTextColor: "#FBBF24", // amber-400
+  },
+  transferred: {
+    label: "Transferred",
+    icon: ArrowRightLeft,
+    bgColor: "rgba(59, 130, 246, 0.1)", // blue-500 at 10%
+    textColor: "#2563EB", // blue-600
+    darkBgColor: "rgba(59, 130, 246, 0.2)",
+    darkTextColor: "#60A5FA", // blue-400
+  },
+  review: {
+    label: "Review",
+    icon: Eye,
+    bgColor: "rgba(113, 113, 122, 0.1)", // zinc-500 at 10%
+    textColor: "#52525B", // zinc-600
+    darkBgColor: "rgba(113, 113, 122, 0.2)",
+    darkTextColor: "#A1A1AA", // zinc-400
+  },
+  scheduled: {
+    label: "Scheduled",
+    icon: Calendar,
+    bgColor: "rgba(34, 197, 94, 0.1)", // green-500 at 10%
+    textColor: "#16A34A", // green-600
+    darkBgColor: "rgba(34, 197, 94, 0.2)",
+    darkTextColor: "#4ADE80", // green-400
+  },
+};
+
+// =============================================================================
+// Component
+// =============================================================================
+
+/** Action badge component showing what action is needed for an inbox item. Displays nothing for completed/resolved/archived items.
+
+## Props
+
+<ResponseField name="priority" type="ActionPriority" required={true}>
+  priority
+</ResponseField>
+<ResponseField name="compact" type="boolean" required={false}>
+  compact
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { ActionBadge } from '@/components/ActionBadge';
+
+export default function Example() {
+  return (
+    <ActionBadge priority={priority} />
+  );
+}
+```

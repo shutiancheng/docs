@@ -1,0 +1,40 @@
+---
+title: "SmartFillPreviewDialog"
+description: "SmartFillPreviewDialog component"
+---
+
+SmartFillPreviewDialog component
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="extracted" type="ExtractedBusinessData" required={true}>
+  extracted
+</ResponseField>
+<ResponseField name="diff" type="ExtractionDiff" required={true}>
+  diff
+</ResponseField>
+<ResponseField name="onApply" type="(options: ApplyExtractionOptions) => Promise<void>" required={true}>
+  onApply
+</ResponseField>
+<ResponseField name="isApplying" type="boolean" required={false}>
+  isApplying
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { SmartFillPreviewDialog } from '@/components/SmartFillPreviewDialog';
+
+export default function Example() {
+  return (
+    <SmartFillPreviewDialog open={open} onOpenChange={onOpenChange} extracted={extracted} diff={diff} onApply={onApply} />
+  );
+}
+```
