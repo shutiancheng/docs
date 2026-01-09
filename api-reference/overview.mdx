@@ -1,0 +1,185 @@
+---
+title: "API Reference"
+description: "Complete API documentation for all Renchi AI endpoints"
+---
+
+# API Reference
+
+The Renchi AI API is organized around REST principles. All endpoints are built as Next.js API routes and handle specific functionality for the platform.
+
+## Endpoint Categories
+
+<CardGroup cols={2}>
+  <Card title="Integrations" icon="plug" href="#integrations">
+    OAuth flows for third-party service connections
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="#webhooks">
+    Event handlers for Twilio and ElevenLabs
+  </Card>
+  <Card title="Cron Jobs" icon="clock" href="#cron-jobs">
+    Scheduled background tasks
+  </Card>
+  <Card title="Admin" icon="shield" href="#admin">
+    Setup and debugging endpoints
+  </Card>
+</CardGroup>
+
+---
+
+## Integrations
+
+OAuth-based connections to third-party services. Supported providers: Google Calendar, HubSpot, Salesforce, Microsoft Teams.
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/integrations/[provider]/connect` | POST/GET | Initiate OAuth flow |
+| `/api/integrations/[provider]/callback` | GET | OAuth callback handler |
+| `/api/integrations/[provider]/disconnect` | POST | Remove integration |
+| `/api/integrations/status` | GET | Get all integration statuses |
+
+### Authentication
+Requires authenticated user session with team admin/owner role.
+
+### Supported Providers
+- `google_calendar` - Google Calendar sync
+- `hubspot` - HubSpot CRM integration
+- `salesforce` - Salesforce CRM integration
+- `microsoft_teams` - Microsoft Teams notifications
+
+---
+
+## Webhooks
+
+Event handlers for voice call processing. These endpoints receive callbacks from Twilio and ElevenLabs.
+
+### Twilio Webhooks
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/webhooks/twilio/voice` | POST | Incoming call handler |
+| `/api/webhooks/twilio/status` | POST | Call status updates |
+| `/api/webhooks/twilio/recording` | POST | Recording completion |
+
+**Authentication:** Twilio signature validation via `X-Twilio-Signature` header.
+
+### ElevenLabs Webhooks
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/webhooks/elevenlabs` | POST | Main webhook (transcription, audio, failures) |
+| `/api/webhooks/elevenlabs/personalize` | POST | Real-time call personalization |
+
+**Authentication:**
+- Main webhook: `ElevenLabs-Signature` header validation
+- Personalize: `x-webhook-secret` or `Authorization: Bearer` token
+
+### Event Types (ElevenLabs)
+
+<Tabs>
+  <Tab title="post_call_transcription">
+    Sent after call completion with full transcript, AI analysis, and metadata.
+
+    ```json
+    {
+      "type": "post_call_transcription",
+      "event_timestamp": 1704067200,
+      "data": {
+        "agent_id": "agent_xxx",
+        "conversation_id": "conv_xxx",
+        "transcript": [...],
+        "analysis": {...}
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="post_call_audio">
+    Sent with base64-encoded MP3 recording of the call.
+
+    ```json
+    {
+      "type": "post_call_audio",
+      "data": {
+        "conversation_id": "conv_xxx",
+        "audio_base_64": "..."
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="call_initiation_failure">
+    Sent when a call fails to connect.
+
+    ```json
+    {
+      "type": "call_initiation_failure",
+      "data": {
+        "conversation_id": "conv_xxx",
+        "failure_reason": "busy"
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Cron Jobs
+
+Scheduled background tasks executed by Vercel Cron.
+
+| Endpoint | Schedule | Description |
+|----------|----------|-------------|
+| `/api/cron/cleanup-recordings` | Daily 3:00 AM UTC | Delete expired recordings |
+| `/api/cron/daily-summary` | Daily 6:00 PM UTC | Send daily summary emails |
+| `/api/cron/weekly-report` | Monday 9:00 AM UTC | Send weekly performance reports |
+
+**Authentication:** `Authorization: Bearer {CRON_SECRET}` header.
+
+---
+
+## Admin
+
+Setup and debugging endpoints.
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/setup-super-admin` | POST | Create super admin accounts (one-time setup) |
+| `/api/debug/db` | GET | Test database connectivity |
+
+<Warning>
+  These endpoints should be removed or heavily protected in production.
+</Warning>
+
+---
+
+## Error Handling
+
+All endpoints return errors in a consistent format:
+
+```json
+{
+  "error": "Error message describing what went wrong",
+  "code": "ERROR_CODE"
+}
+```
+
+### Common Error Codes
+
+| Code | HTTP Status | Description |
+|------|-------------|-------------|
+| `UNAUTHORIZED` | 401 | Missing or invalid authentication |
+| `FORBIDDEN` | 403 | Insufficient permissions |
+| `NOT_FOUND` | 404 | Resource not found |
+| `VALIDATION_ERROR` | 400 | Invalid request parameters |
+| `INTERNAL_ERROR` | 500 | Server error |
+
+---
+
+## Rate Limiting
+
+- Webhook endpoints: No rate limiting (event-driven)
+- Cron endpoints: Protected by Vercel Cron scheduling
+- Integration endpoints: Standard API rate limits apply
+
+## CORS
+
+All API endpoints support CORS for same-origin requests. Cross-origin requests require proper authentication.

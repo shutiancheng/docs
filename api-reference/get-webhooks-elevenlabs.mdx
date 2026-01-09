@@ -1,0 +1,42 @@
+---
+title: "GET /api/webhooks/elevenlabs"
+description: "Health check endpoint for the ElevenLabs webhook"
+api: "GET /api/webhooks/elevenlabs"
+---
+
+Health check endpoint for the ElevenLabs webhook. The main webhook functionality is handled by the POST endpoint.
+
+## Related Endpoint
+
+The POST version of this endpoint (`POST /api/webhooks/elevenlabs`) is the main webhook handler for ElevenLabs Conversational AI events. It receives three types of events:
+
+- **post_call_transcription**: Contains transcript, analysis, and metadata
+- **post_call_audio**: Contains base64-encoded MP3 audio
+- **call_initiation_failure**: Contains failure reason and metadata
+
+## Response
+
+Returns `{ status: "ok" }` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://your-domain.com/api/webhooks/elevenlabs \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/webhooks/elevenlabs', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

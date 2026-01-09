@@ -1,0 +1,82 @@
+---
+title: "FormDialog"
+description: "A consistent, production-ready dialog for forms with accessibility support"
+---
+
+A consistent, production-ready dialog for forms.
+
+**Features:**
+- Accessible (keyboard nav, focus trap, screen reader support)
+- Animated open/close transitions
+- Consistent header, body, footer layout
+- Loading state support
+- Multiple sizes
+
+**Example:**
+
+```tsx
+<FormDialog
+  open={isOpen}
+  onOpenChange={setIsOpen}
+  title="Add New Item"
+  description="Fill out the form below"
+  onSubmit={handleSubmit}
+  submitLabel="Create"
+>
+  <FormField label="Name">
+    <Input value={name} onChange={(e) => setName(e.target.value)} />
+  </FormField>
+</FormDialog>
+```
+
+## Props
+
+<ResponseField name="open" type="boolean" required={true}>
+  open
+</ResponseField>
+<ResponseField name="onOpenChange" type="(open: boolean) => void" required={true}>
+  onOpenChange
+</ResponseField>
+<ResponseField name="title" type="string" required={true}>
+  title
+</ResponseField>
+<ResponseField name="description" type="string" required={false}>
+  description
+</ResponseField>
+<ResponseField name="children" type="React.ReactNode" required={true}>
+  children
+</ResponseField>
+<ResponseField name="onSubmit" type="(e: React.FormEvent) => void" required={false}>
+  onSubmit
+</ResponseField>
+<ResponseField name="submitLabel" type="string" required={false}>
+  submitLabel
+</ResponseField>
+<ResponseField name="cancelLabel" type="string" required={false}>
+  cancelLabel
+</ResponseField>
+<ResponseField name="isSubmitting" type="boolean" required={false}>
+  isSubmitting
+</ResponseField>
+<ResponseField name="submitDisabled" type="boolean" required={false}>
+  submitDisabled
+</ResponseField>
+<ResponseField name="className" type="string" required={false}>
+  className
+</ResponseField>
+<ResponseField name="size" type="sm | md | lg | xl | 2xl | 3xl | 4xl" required={false}>
+  size
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { FormDialog } from '@/components/FormDialog';
+
+export default function Example() {
+  return (
+    <FormDialog open={open} onOpenChange={onOpenChange} title={title} children={children} />
+  );
+}
+```

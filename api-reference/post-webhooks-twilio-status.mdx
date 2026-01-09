@@ -1,0 +1,43 @@
+---
+title: "POST /api/webhooks/twilio/status"
+description: "Handles call status updates from Twilio"
+api: "POST /api/webhooks/twilio/status"
+---
+
+Handles call status updates from Twilio. This webhook is called when call status changes (initiated, ringing, answered, completed, etc.).
+
+## Status Mapping
+
+The endpoint maps Twilio call statuses to internal statuses:
+
+| Twilio Status | Internal Status |
+|--------------|-----------------|
+| queued | queued |
+| ringing | ringing |
+| in-progress | in-progress |
+| completed | completed |
+| busy | busy |
+| failed | failed |
+| no-answer | no-answer |
+| canceled | canceled |
+
+## Response
+
+Returns `200 OK` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/webhooks/twilio/status \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "CallSid=CA123&CallStatus=completed&From=%2B447700123456&To=%2B442071234567"
+```
+
+```typescript TypeScript
+// This endpoint is called by Twilio, not directly by your application
+// Configure this URL in your Twilio webhook settings
+```
+
+</CodeGroup>

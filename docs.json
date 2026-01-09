@@ -1,68 +1,259 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Renchi Docs",
+  "name": "Renchi AI",
   "colors": {
     "primary": "#ef6e2e",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "light": "#ef6e2e",
+    "dark": "#c45a24",
+    "anchors": {
+      "from": "#ef6e2e",
+      "to": "#ef6e2e"
+    }
   },
   "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Getting Started",
+            "pages": ["index"]
+          },
+          {
+            "group": "Types Reference",
+            "pages": ["types/overview"]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["api-reference/overview"]
+          },
+          {
+            "group": "Integrations",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "api-reference/post-integrations-[provider]-connect",
+              "api-reference/get-integrations-[provider]-connect",
+              "api-reference/get-integrations-[provider]-callback",
+              "api-reference/post-integrations-[provider]-disconnect",
+              "api-reference/get-integrations-status"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Twilio Webhooks",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "api-reference/post-webhooks-twilio-voice",
+              "api-reference/get-webhooks-twilio-voice",
+              "api-reference/post-webhooks-twilio-status",
+              "api-reference/get-webhooks-twilio-status",
+              "api-reference/post-webhooks-twilio-recording",
+              "api-reference/get-webhooks-twilio-recording"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "ElevenLabs Webhooks",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "api-reference/post-webhooks-elevenlabs",
+              "api-reference/get-webhooks-elevenlabs",
+              "api-reference/post-webhooks-elevenlabs-personalize",
+              "api-reference/get-webhooks-elevenlabs-personalize"
             ]
           },
           {
-            "group": "AI tools",
+            "group": "Cron Jobs",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "api-reference/get-cron-cleanup-recordings",
+              "api-reference/get-cron-daily-summary",
+              "api-reference/get-cron-weekly-report"
+            ]
+          },
+          {
+            "group": "Admin",
+            "pages": [
+              "api-reference/post-setup-super-admin",
+              "api-reference/get-debug-db"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Components",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Overview",
+            "pages": ["components/overview"]
+          },
+          {
+            "group": "UI Primitives",
             "pages": [
-              "api-reference/introduction"
+              "components/formdialog",
+              "components/skeleton",
+              "components/icon",
+              "components/daterangepicker",
+              "components/addressautocomplete"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Agent Configuration",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "components/configureagentpanel",
+              "components/generaltab",
+              "components/voicetab",
+              "components/businesshourstab",
+              "components/servicestab",
+              "components/transfertab",
+              "components/callhandlingtab",
+              "components/contexttab",
+              "components/addagentdialog",
+              "components/smartfillbutton",
+              "components/smartfillpreviewdialog"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "components/organizationsettings",
+              "components/teamsettings",
+              "components/invitememberdialog",
+              "components/elevenlabssettings",
+              "components/storagesettingssection",
+              "components/timezonedialog",
+              "components/businesshoursdialog",
+              "components/defaultcountrydialog",
+              "components/organizationnamedialog",
+              "components/businessphonedialog",
+              "components/themeselect",
+              "components/textsizeselect"
+            ]
+          },
+          {
+            "group": "Conversations",
+            "pages": [
+              "components/transcriptviewer",
+              "components/aianalysispanel",
+              "components/audioplayer",
+              "components/customerinfocard",
+              "components/bookingdetailscard",
+              "components/problemdetailscard",
+              "components/callmetadatacard",
+              "components/contextsummarycard",
+              "components/conversationnotes",
+              "components/conversationfilters",
+              "components/jobeditdialog",
+              "components/jobdetailspanel",
+              "components/exportdropdown"
+            ]
+          },
+          {
+            "group": "Dashboard",
+            "pages": [
+              "components/memberdashboard",
+              "components/admindashboard",
+              "components/ownerdashboard",
+              "components/dashboardclient",
+              "components/jobcard",
+              "components/callsummarycard",
+              "components/quickscheduledialog",
+              "components/quickclosedialog"
+            ]
+          },
+          {
+            "group": "Inbox",
+            "pages": [
+              "components/quickactionsbar",
+              "components/callbackdialog",
+              "components/createbookingdialog",
+              "components/transferdialog",
+              "components/markresolveddialog",
+              "components/inboxfilters"
+            ]
+          },
+          {
+            "group": "Customers",
+            "pages": [
+              "components/addcustomerdialog",
+              "components/editcustomerdialog",
+              "components/customernoteseditor",
+              "components/customertagseditor",
+              "components/customercallhistory",
+              "components/customerfilters",
+              "components/linkcustomerdialog"
+            ]
+          },
+          {
+            "group": "Knowledge Base",
+            "pages": [
+              "components/uploaddocumentdialog",
+              "components/viewdocumentdialog",
+              "components/firecrawldialog",
+              "components/addtextdocumentdialog",
+              "components/globalcontextsection",
+              "components/uploadglobaldocumentdialog",
+              "components/viewglobaldocumentdialog",
+              "components/globalfirecrawldialog"
+            ]
+          },
+          {
+            "group": "Analytics",
+            "pages": [
+              "components/analyticsclient",
+              "components/metriccard",
+              "components/statitem",
+              "components/activityitem"
+            ]
+          },
+          {
+            "group": "Auth & Security",
+            "pages": [
+              "components/forgotpassworddialog",
+              "components/changepassworddialog",
+              "components/passwordchangedialog",
+              "components/enable2fadialog",
+              "components/disable2fadialog",
+              "components/sessionactivitylog",
+              "components/dataconsentdialog",
+              "components/dataconsentprovider"
+            ]
+          },
+          {
+            "group": "Super Admin",
+            "pages": [
+              "components/addcompanydialog",
+              "components/editcompanydialog",
+              "components/adduserdialog",
+              "components/resetpassworddialog"
+            ]
+          },
+          {
+            "group": "Layout & Providers",
+            "pages": [
+              "components/sidebar",
+              "components/themeprovider",
+              "components/googlemapsprovider",
+              "components/passwordchangeprovider"
+            ]
+          },
+          {
+            "group": "Skeletons",
+            "pages": [
+              "components/settingsskeleton",
+              "components/dashboardskeleton",
+              "components/agentsskeleton",
+              "components/customersskeleton",
+              "components/customerdetailskeleton",
+              "components/conversationsskeleton",
+              "components/inboxskeleton",
+              "components/inboxdetailskeleton",
+              "components/analyticsskeleton"
             ]
           }
         ]
@@ -71,52 +262,32 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Renchi AI",
+          "href": "https://renchi.ai",
+          "icon": "house"
         }
       ]
     }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@renchi.ai"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://app.renchi.ai/dashboard"
     }
   },
   "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+    "options": ["copy", "view", "chatgpt", "claude", "perplexity", "mcp", "cursor", "vscode"]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "website": "https://renchi.ai"
     }
   }
 }

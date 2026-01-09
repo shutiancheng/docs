@@ -1,97 +1,82 @@
 ---
 title: "Introduction"
-description: "Welcome to the new home for your documentation"
+description: "Welcome to the Renchi AI documentation"
 ---
 
-## Setting up
+# Renchi AI
 
-Get your documentation site up and running in minutes.
+Renchi AI is an AI-powered voice call handling platform designed for UK HVAC and plumbing service businesses. It provides intelligent call routing, customer management, and automated booking capabilities.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+## Key Features
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="AI Call Handling" icon="phone">
+    Powered by ElevenLabs Conversational AI, handles inbound calls with natural conversation flow
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Customer Management" icon="users">
+    Track customer interactions, manage contact information, and maintain call history
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Job Scheduling" icon="calendar">
+    Book appointments, assign technicians, and manage service tickets
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Integrations" icon="plug">
+    Connect with Twilio, Google Calendar, HubSpot, Salesforce, and Microsoft Teams
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## Architecture Overview
 
-Everything you need to create world-class documentation.
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    INBOUND CALL FLOW                         │
+├─────────────────────────────────────────────────────────────┤
+│  Customer Call → Twilio → ElevenLabs AI → Webhook Events    │
+│                                               ↓              │
+│                                    [Transcription, Audio,    │
+│                                     Personalization]         │
+├─────────────────────────────────────────────────────────────┤
+│                    BACKEND SERVICES                          │
+│  Next.js API Routes → Supabase (Database + Storage)         │
+│                    → Email Notifications                     │
+│                    → Third-party Integrations               │
+└─────────────────────────────────────────────────────────────┘
+```
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+## Quick Links
 
-## Need inspiration?
+<CardGroup cols={3}>
+  <Card title="API Reference" icon="code" href="/api-reference/overview">
+    Explore all API endpoints including webhooks and integrations
+  </Card>
+  <Card title="Components" icon="puzzle-piece" href="/components/overview">
+    Browse React component documentation with props and examples
+  </Card>
+  <Card title="Types" icon="brackets-curly" href="/types/overview">
+    TypeScript types and Zod schemas reference
+  </Card>
+</CardGroup>
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+## Technology Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Database | PostgreSQL (Supabase) |
+| Authentication | NextAuth v5 with JWT |
+| Voice AI | ElevenLabs Conversational AI |
+| Telephony | Twilio |
+| UI Components | NextUI + Tailwind CSS |
+| State Management | Zustand |
+| Validation | Zod |
+
+## Getting Started
+
+1. **Set up environment variables** - Configure Supabase, Twilio, and ElevenLabs credentials
+2. **Run database migrations** - `npx prisma migrate dev`
+3. **Start development server** - `npm run dev`
+4. **Configure your agent** - Set up voice settings, business hours, and services
+
+## Support
+
+For issues and feature requests, visit the GitHub repository or contact the development team.

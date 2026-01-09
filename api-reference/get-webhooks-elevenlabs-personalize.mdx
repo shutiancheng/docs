@@ -1,0 +1,44 @@
+---
+title: "GET /api/webhooks/elevenlabs/personalize"
+description: "Health check endpoint for the ElevenLabs personalization webhook"
+api: "GET /api/webhooks/elevenlabs/personalize"
+---
+
+Health check endpoint for the ElevenLabs personalization webhook. The main personalization functionality is handled by the POST endpoint.
+
+## Related Endpoint
+
+The POST version of this endpoint (`POST /api/webhooks/elevenlabs/personalize`) is the main personalization webhook for ElevenLabs inbound calls. It is called by ElevenLabs during the dial tone to fetch customer context for dynamic variables.
+
+**Key features:**
+- Must respond in under 300ms to avoid call delay
+- Returns customer context including name, type, previous jobs, and notes
+- Supports business hours detection with after-hours greeting overrides
+- Handles graceful degradation on errors
+
+## Response
+
+Returns `{ status: "ok" }` on success.
+
+## Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://your-domain.com/api/webhooks/elevenlabs/personalize \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```typescript TypeScript
+const response = await fetch('/api/webhooks/elevenlabs/personalize', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
+```
+
+</CodeGroup>

@@ -1,0 +1,37 @@
+---
+title: "MetricCard"
+description: "MetricCard component"
+---
+
+MetricCard component
+
+## Props
+
+<ResponseField name="title" type="string" required={true}>
+  title
+</ResponseField>
+<ResponseField name="value" type="string" required={true}>
+  value
+</ResponseField>
+<ResponseField name="change" type="string" required={true}>
+  change
+</ResponseField>
+<ResponseField name="changeType" type="'positive' | 'negative' | 'neutral'" required={true}>
+  changeType
+</ResponseField>
+<ResponseField name="subtitle" type="string" required={false}>
+  subtitle
+</ResponseField>
+
+
+## Usage
+
+```tsx
+import { MetricCard } from '@/components/MetricCard';
+
+export default function Example() {
+  return (
+    <MetricCard title={title} value={value} change={change} changeType={changeType} />
+  );
+}
+```
