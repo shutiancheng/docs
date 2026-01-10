@@ -29,7 +29,7 @@ Agent Configuration
     Click **Agents** in the sidebar to view your agent list
   </Step>
   <Step title="Click Add Agent">
-    Click the **+ Add Agent** button in the top right
+    Click the **\+ Add Agent** button in the top right
   </Step>
   <Step title="Enter Basic Details">
     - **Agent Name**: A descriptive name (e.g., "Main Office Line")
@@ -47,10 +47,10 @@ The General tab controls your agent's identity and basic behavior.
 
 ### Agent Name & Status
 
-| Field | Description |
-|-------|-------------|
-| **Name** | Internal name to identify this agent (e.g., "Emergency Line") |
-| **Status** | Toggle between Active (receiving calls) and Disabled |
+| Field      | Description                                                   |
+| ---------- | ------------------------------------------------------------- |
+| **Name**   | Internal name to identify this agent (e.g., "Emergency Line") |
+| **Status** | Toggle between Active (receiving calls) and Disabled          |
 
 ### Greeting Configuration
 
@@ -80,12 +80,12 @@ Select and customize your agent's voice.
 
 ### Available Voice Models
 
-| Voice | Gender | Accent | Best For |
-|-------|--------|--------|----------|
-| Adaline | Female | UK | Professional, warm tone |
-| Shaun | Male | UK | Authoritative, friendly |
-| Matilda | Female | US | Energetic, clear |
-| Roger | Male | US | Calm, professional |
+| Voice   | Gender | Accent | Best For                |
+| ------- | ------ | ------ | ----------------------- |
+| Adaline | Female | UK     | Professional, warm tone |
+| Shaun   | Male   | UK     | Authoritative, friendly |
+| Matilda | Female | US     | Energetic, clear        |
+| Roger   | Male   | US     | Calm, professional      |
 
 <Tip>
   UK voices are recommended for UK-based businesses as customers respond better to familiar accents.
@@ -121,12 +121,12 @@ Sunday:     ☐ Disabled
 
 Choose what happens when calls arrive outside business hours:
 
-| Option | Behavior |
-|--------|----------|
-| **Voicemail** | Take a message and notify your team |
-| **Emergency Only** | Handle emergencies, route others to voicemail |
-| **Callback Scheduling** | Let callers book a callback slot |
-| **Transfer** | Route all calls to an emergency number |
+| Option                  | Behavior                                      |
+| ----------------------- | --------------------------------------------- |
+| **Voicemail**           | Take a message and notify your team           |
+| **Emergency Only**      | Handle emergencies, route others to voicemail |
+| **Callback Scheduling** | Let callers book a callback slot              |
+| **Transfer**            | Route all calls to an emergency number        |
 
 ## Services Tab
 
@@ -134,7 +134,7 @@ Define what services your business offers. The AI uses this to provide accurate 
 
 ### Adding Services
 
-Click **+ Add Service** and configure:
+Click **\+ Add Service** and configure:
 
 <ParamField body="name" type="string" required>
   Service name (e.g., "Boiler Service", "Drain Unblocking")
@@ -184,11 +184,11 @@ Configure when and how calls are transferred to human agents.
 
 Add multiple transfer numbers with priorities:
 
-| Priority | Destination | Number | Description |
-|----------|-------------|--------|-------------|
-| 1 | Main Office | +44 20 1234 5678 | Primary reception |
-| 2 | Mobile Backup | +44 7700 900000 | After-hours |
-| 3 | Emergency | +44 800 123 4567 | Critical issues |
+| Priority | Destination   | Number            | Description       |
+| -------- | ------------- | ----------------- | ----------------- |
+| 1        | Main Office   | \+44 20 1234 5678 | Primary reception |
+| 2        | Mobile Backup | \+44 7700 900000  | After-hours       |
+| 3        | Emergency     | \+44 800 123 4567 | Critical issues   |
 
 ### Transfer Triggers
 
@@ -237,6 +237,7 @@ Emergency Keywords:
 ```
 
 When detected, the agent:
+
 1. Acknowledges the emergency
 2. Collects essential information quickly
 3. Immediately routes to emergency transfer number
@@ -244,11 +245,11 @@ When detected, the agent:
 
 ### Callback Settings
 
-| Setting | Description |
-|---------|-------------|
-| **Enable Callbacks** | Allow customers to request callbacks |
-| **Max Queue Size** | Maximum callbacks before showing "fully booked" |
-| **Callback Window** | Offer "morning", "afternoon", or specific times |
+| Setting              | Description                                     |
+| -------------------- | ----------------------------------------------- |
+| **Enable Callbacks** | Allow customers to request callbacks            |
+| **Max Queue Size**   | Maximum callbacks before showing "fully booked" |
+| **Callback Window**  | Offer "morning", "afternoon", or specific times |
 
 ### Diagnostic Fee
 
@@ -310,10 +311,10 @@ Upload documents and information to give your agent specialized knowledge.
 
 ### Global vs Agent-Specific Context
 
-| Type | Scope | Use Case |
-|------|-------|----------|
-| **Global Context** | All agents | Company-wide info, branding guidelines |
-| **Agent Context** | Single agent | Specialized knowledge for that line |
+| Type               | Scope        | Use Case                               |
+| ------------------ | ------------ | -------------------------------------- |
+| **Global Context** | All agents   | Company-wide info, branding guidelines |
+| **Agent Context**  | Single agent | Specialized knowledge for that line    |
 
 ## Using Smart Fill
 
@@ -325,6 +326,7 @@ The **Smart Fill** feature uses AI to automatically populate agent settings base
 4. Click **Apply** to use the suggestions, or **Dismiss** to configure manually
 
 Smart Fill can populate:
+
 - Greeting messages
 - After-hours greetings
 - Service descriptions
@@ -352,4 +354,3 @@ Once configured:
     Review conversations and follow up
   </Card>
 </CardGroup>
-

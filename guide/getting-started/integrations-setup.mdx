@@ -9,14 +9,14 @@ Renchi AI integrates with various services to power your voice agents and sync d
 
 ## Integration Overview
 
-| Integration | Purpose | Required |
-|-------------|---------|----------|
-| **ElevenLabs** | Voice AI engine | Yes |
-| **Twilio** | Phone numbers & SMS | Optional |
+| Integration         | Purpose                | Required |
+| ------------------- | ---------------------- | -------- |
+| **ElevenLabs**      | Voice AI engine        | Yes      |
+| **Twilio**          | Phone numbers & SMS    | Optional |
 | **Google Calendar** | Appointment scheduling | Optional |
-| **HubSpot** | CRM sync | Optional |
-| **Salesforce** | CRM sync | Optional |
-| **Microsoft Teams** | Agent presence | Optional |
+| **HubSpot**         | CRM sync               | Optional |
+| **Salesforce**      | CRM sync               | Optional |
+| **Microsoft Teams** | Agent presence         | Optional |
 
 Navigate to **Settings → Integrations** to manage all connections.
 
@@ -62,17 +62,18 @@ If you have existing agents in ElevenLabs:
 
 ### ElevenLabs Features Used
 
-| Feature | Description |
-|---------|-------------|
+| Feature               | Description                          |
+| --------------------- | ------------------------------------ |
 | **Conversational AI** | Powers real-time voice conversations |
-| **Voice Library** | Multiple natural voices (UK/US) |
-| **Knowledge Base** | Upload documents for context |
-| **Phone Numbers** | Provision numbers directly |
+| **Voice Library**     | Multiple natural voices (UK/US)      |
+| **Knowledge Base**    | Upload documents for context         |
+| **Phone Numbers**     | Provision numbers directly           |
 
 ### Subscription Requirements
 
 <Info>
   A paid ElevenLabs subscription is required. Renchi AI uses:
+
   - Conversational AI credits (per minute)
   - Phone number provisioning (monthly fee)
   - Knowledge base storage
@@ -90,6 +91,7 @@ Twilio provides phone numbers and SMS capabilities. Use it if you want to manage
   </Step>
   <Step title="Find Credentials">
     In the Twilio Console, locate your:
+
     - **Account SID** (starts with `AC`)
     - **Auth Token**
   </Step>
@@ -110,16 +112,19 @@ Twilio provides phone numbers and SMS capabilities. Use it if you want to manage
 After connecting, configure Twilio to send call events to Renchi AI:
 
 **Voice Webhook URL:**
+
 ```
 https://your-domain.com/api/webhooks/twilio/voice
 ```
 
 **Status Callback URL:**
+
 ```
 https://your-domain.com/api/webhooks/twilio/status
 ```
 
 **Recording Callback URL:**
+
 ```
 https://your-domain.com/api/webhooks/twilio/recording
 ```
@@ -130,12 +135,12 @@ https://your-domain.com/api/webhooks/twilio/recording
 
 ### When to Use Twilio vs ElevenLabs Numbers
 
-| Scenario | Recommendation |
-|----------|----------------|
-| Starting fresh | Use ElevenLabs numbers (simpler) |
-| Existing Twilio numbers | Connect Twilio to keep them |
-| Multiple countries | Use both as needed |
-| Advanced call routing | Twilio for complex flows |
+| Scenario                | Recommendation                   |
+| ----------------------- | -------------------------------- |
+| Starting fresh          | Use ElevenLabs numbers (simpler) |
+| Existing Twilio numbers | Connect Twilio to keep them      |
+| Multiple countries      | Use both as needed               |
+| Advanced call routing   | Twilio for complex flows         |
 
 ## Google Calendar
 
@@ -160,10 +165,10 @@ Sync appointments with Google Calendar for scheduling visibility.
 
 ### What Gets Synced
 
-| Direction | Data |
-|-----------|------|
+| Direction              | Data                                |
+| ---------------------- | ----------------------------------- |
 | **Renchi AI → Google** | New bookings create calendar events |
-| **Google → Renchi AI** | Availability blocks respected |
+| **Google → Renchi AI** | Availability blocks respected       |
 
 ### Calendar Event Format
 
@@ -225,14 +230,14 @@ Sync customers and calls with HubSpot CRM.
 
 ### Field Mapping
 
-| Renchi AI Field | HubSpot Field |
-|----------------|---------------|
-| Customer Name | Contact Name |
-| Phone | Phone Number |
-| Email | Email |
-| Address | Address |
-| Last Call | Last Activity Date |
-| Total Bookings | Custom Property |
+| Renchi AI Field | HubSpot Field      |
+| --------------- | ------------------ |
+| Customer Name   | Contact Name       |
+| Phone           | Phone Number       |
+| Email           | Email              |
+| Address         | Address            |
+| Last Call       | Last Activity Date |
+| Total Bookings  | Custom Property    |
 
 ## Salesforce
 
@@ -257,17 +262,18 @@ Enterprise CRM integration for Salesforce users.
 
 ### Data Sync
 
-| Object | Sync Direction |
-|--------|----------------|
-| **Contacts** | Bidirectional |
-| **Accounts** | Renchi AI → Salesforce |
-| **Activities** | Renchi AI → Salesforce |
-| **Custom Objects** | Configurable |
+| Object             | Sync Direction         |
+| ------------------ | ---------------------- |
+| **Contacts**       | Bidirectional          |
+| **Accounts**       | Renchi AI → Salesforce |
+| **Activities**     | Renchi AI → Salesforce |
+| **Custom Objects** | Configurable           |
 
 ### Requirements
 
 <Info>
   Salesforce integration requires:
+
   - Salesforce Professional or higher
   - API access enabled
   - Connected App permissions
@@ -296,11 +302,11 @@ Show agent availability and enable warm handoffs through Teams.
 
 ### Features
 
-| Feature | Description |
-|---------|-------------|
+| Feature           | Description                          |
+| ----------------- | ------------------------------------ |
 | **Presence Sync** | Show agent availability in Renchi AI |
-| **Notifications** | Alert team of transfers via Teams |
-| **Call Handoff** | Warm transfer to Teams call |
+| **Notifications** | Alert team of transfers via Teams    |
+| **Call Handoff**  | Warm transfer to Teams call          |
 
 ## Firecrawl (Knowledge Base)
 
@@ -346,12 +352,12 @@ Firecrawl enables web scraping to build your agent's knowledge base automaticall
 
 The Integrations page shows status for each connection:
 
-| Status | Meaning |
-|--------|---------|
-| 🟢 **Connected** | Working normally |
+| Status                    | Meaning                     |
+| ------------------------- | --------------------------- |
+| 🟢 **Connected**          | Working normally            |
 | 🟡 **Reconnect Required** | Token expired, needs reauth |
-| 🔴 **Error** | Connection failed |
-| ⚪ **Not Connected** | Never set up |
+| 🔴 **Error**              | Connection failed           |
+| ⚪ **Not Connected**       | Never set up                |
 
 ### Disconnecting
 
@@ -395,13 +401,13 @@ To remove an integration:
 
 ### What Data is Shared
 
-| Integration | Data Shared |
-|-------------|-------------|
-| **ElevenLabs** | Voice audio, transcripts, knowledge base |
-| **Twilio** | Call metadata, recordings (if enabled) |
-| **Google Calendar** | Appointment details, customer names |
-| **HubSpot/Salesforce** | Customer profiles, call logs |
-| **Microsoft Teams** | User presence, notifications |
+| Integration            | Data Shared                              |
+| ---------------------- | ---------------------------------------- |
+| **ElevenLabs**         | Voice audio, transcripts, knowledge base |
+| **Twilio**             | Call metadata, recordings (if enabled)   |
+| **Google Calendar**    | Appointment details, customer names      |
+| **HubSpot/Salesforce** | Customer profiles, call logs             |
+| **Microsoft Teams**    | User presence, notifications             |
 
 ### Compliance
 

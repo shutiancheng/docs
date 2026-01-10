@@ -29,12 +29,12 @@
           {
             "group": "Getting Started",
             "pages": [
-              "guide/untitled-page",
-              "guide/getting-started/untitled-page",
-              "guide/getting-started/untitled-page-1",
-              "guide/getting-started/untitled-page-2",
-              "guide/getting-started/untitled-page-3",
-              "guide/getting-started/untitled-page-4"
+              "guide/getting-started/introduction",
+              "guide/getting-started/creating-your-first-agent",
+              "guide/getting-started/integrations-setup",
+              "guide/getting-started/managing-calls-and-customers",
+              "guide/getting-started/quick-start",
+              "guide/getting-started/understanding-the-dashboard"
             ]
           }
         ]
