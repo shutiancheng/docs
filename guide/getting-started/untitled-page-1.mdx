@@ -1,0 +1,421 @@
+---
+title: "Integrations Setup"
+description: "Connect ElevenLabs, Twilio, CRM systems, and calendar integrations"
+---
+
+# Integrations Setup
+
+Renchi AI integrates with various services to power your voice agents and sync data with your existing tools. This guide covers how to set up each integration.
+
+## Integration Overview
+
+| Integration | Purpose | Required |
+|-------------|---------|----------|
+| **ElevenLabs** | Voice AI engine | Yes |
+| **Twilio** | Phone numbers & SMS | Optional |
+| **Google Calendar** | Appointment scheduling | Optional |
+| **HubSpot** | CRM sync | Optional |
+| **Salesforce** | CRM sync | Optional |
+| **Microsoft Teams** | Agent presence | Optional |
+
+Navigate to **Settings → Integrations** to manage all connections.
+
+## ElevenLabs (Required)
+
+ElevenLabs powers your AI voice agents with natural-sounding speech and conversational AI.
+
+### Getting Your API Key
+
+<Steps>
+  <Step title="Sign Up">
+    Create an account at [elevenlabs.io](https://elevenlabs.io) if you don't have one
+  </Step>
+  <Step title="Navigate to API Keys">
+    Go to your ElevenLabs dashboard → Profile → API Keys
+  </Step>
+  <Step title="Generate Key">
+    Click "Create new API key" and copy the generated key
+  </Step>
+  <Step title="Store Securely">
+    Save the key somewhere safe - it's only shown once
+  </Step>
+</Steps>
+
+### Connecting to Renchi AI
+
+1. Go to **Settings → Integrations → ElevenLabs**
+2. Click **Connect**
+3. Paste your API key
+4. Click **Verify & Save**
+
+<Check>
+  A green "Connected" badge appears when successful.
+</Check>
+
+### Syncing Agents
+
+If you have existing agents in ElevenLabs:
+
+1. After connecting, click **Sync Agents**
+2. Renchi AI imports all agents from your ElevenLabs account
+3. Configure each imported agent with your business settings
+
+### ElevenLabs Features Used
+
+| Feature | Description |
+|---------|-------------|
+| **Conversational AI** | Powers real-time voice conversations |
+| **Voice Library** | Multiple natural voices (UK/US) |
+| **Knowledge Base** | Upload documents for context |
+| **Phone Numbers** | Provision numbers directly |
+
+### Subscription Requirements
+
+<Info>
+  A paid ElevenLabs subscription is required. Renchi AI uses:
+  - Conversational AI credits (per minute)
+  - Phone number provisioning (monthly fee)
+  - Knowledge base storage
+</Info>
+
+## Twilio (Optional)
+
+Twilio provides phone numbers and SMS capabilities. Use it if you want to manage phone numbers separately from ElevenLabs.
+
+### Getting Twilio Credentials
+
+<Steps>
+  <Step title="Create Account">
+    Sign up at [twilio.com](https://www.twilio.com)
+  </Step>
+  <Step title="Find Credentials">
+    In the Twilio Console, locate your:
+    - **Account SID** (starts with `AC`)
+    - **Auth Token**
+  </Step>
+  <Step title="Get a Phone Number">
+    Purchase a phone number in your target region (e.g., UK +44)
+  </Step>
+</Steps>
+
+### Connecting Twilio
+
+1. Go to **Settings → Integrations → Twilio**
+2. Enter your Account SID
+3. Enter your Auth Token
+4. Click **Connect**
+
+### Configuring Webhooks
+
+After connecting, configure Twilio to send call events to Renchi AI:
+
+**Voice Webhook URL:**
+```
+https://your-domain.com/api/webhooks/twilio/voice
+```
+
+**Status Callback URL:**
+```
+https://your-domain.com/api/webhooks/twilio/status
+```
+
+**Recording Callback URL:**
+```
+https://your-domain.com/api/webhooks/twilio/recording
+```
+
+<Warning>
+  Webhook URLs must be publicly accessible. Local development requires a tunnel like ngrok.
+</Warning>
+
+### When to Use Twilio vs ElevenLabs Numbers
+
+| Scenario | Recommendation |
+|----------|----------------|
+| Starting fresh | Use ElevenLabs numbers (simpler) |
+| Existing Twilio numbers | Connect Twilio to keep them |
+| Multiple countries | Use both as needed |
+| Advanced call routing | Twilio for complex flows |
+
+## Google Calendar
+
+Sync appointments with Google Calendar for scheduling visibility.
+
+### Setting Up Google Integration
+
+<Steps>
+  <Step title="Navigate to Integration">
+    Go to **Settings → Integrations → Google Calendar**
+  </Step>
+  <Step title="Authorize">
+    Click **Connect with Google** and sign in with your Google account
+  </Step>
+  <Step title="Grant Permissions">
+    Allow the app to view and edit your calendar
+  </Step>
+  <Step title="Select Calendar">
+    Choose which calendar to sync appointments to
+  </Step>
+</Steps>
+
+### What Gets Synced
+
+| Direction | Data |
+|-----------|------|
+| **Renchi AI → Google** | New bookings create calendar events |
+| **Google → Renchi AI** | Availability blocks respected |
+
+### Calendar Event Format
+
+Bookings appear in Google Calendar as:
+
+```
+📅 Service Call - John Smith
+─────────────────────────────
+When: Mon, Jan 15, 9:00 AM - 11:00 AM
+Where: 123 High Street, London SW1A 1AA
+
+Service: Boiler Repair
+Phone: +44 7700 900000
+Notes: "Enter through side gate"
+
+Created by Renchi AI
+```
+
+## HubSpot
+
+Sync customers and calls with HubSpot CRM.
+
+### Connecting HubSpot
+
+<Steps>
+  <Step title="Navigate to Integration">
+    Go to **Settings → Integrations → HubSpot**
+  </Step>
+  <Step title="Click Connect">
+    Click **Connect with HubSpot**
+  </Step>
+  <Step title="Authorize">
+    Log into HubSpot and authorize the integration
+  </Step>
+  <Step title="Configure Sync">
+    Choose which data to sync
+  </Step>
+</Steps>
+
+### Sync Options
+
+<Tabs>
+  <Tab title="Contacts">
+    - New customers create HubSpot contacts
+    - Contact updates sync both ways
+    - Phone numbers match existing contacts
+  </Tab>
+  <Tab title="Calls">
+    - Call recordings logged as activities
+    - Call notes added to contact timeline
+    - Call outcomes mapped to HubSpot fields
+  </Tab>
+  <Tab title="Deals">
+    - Bookings can create deals
+    - Deal stages mapped to job status
+    - Revenue tracking integrated
+  </Tab>
+</Tabs>
+
+### Field Mapping
+
+| Renchi AI Field | HubSpot Field |
+|----------------|---------------|
+| Customer Name | Contact Name |
+| Phone | Phone Number |
+| Email | Email |
+| Address | Address |
+| Last Call | Last Activity Date |
+| Total Bookings | Custom Property |
+
+## Salesforce
+
+Enterprise CRM integration for Salesforce users.
+
+### Connecting Salesforce
+
+<Steps>
+  <Step title="Navigate to Integration">
+    Go to **Settings → Integrations → Salesforce**
+  </Step>
+  <Step title="Click Connect">
+    Click **Connect with Salesforce**
+  </Step>
+  <Step title="Log In">
+    Enter your Salesforce credentials
+  </Step>
+  <Step title="Authorize">
+    Grant access to the connected app
+  </Step>
+</Steps>
+
+### Data Sync
+
+| Object | Sync Direction |
+|--------|----------------|
+| **Contacts** | Bidirectional |
+| **Accounts** | Renchi AI → Salesforce |
+| **Activities** | Renchi AI → Salesforce |
+| **Custom Objects** | Configurable |
+
+### Requirements
+
+<Info>
+  Salesforce integration requires:
+  - Salesforce Professional or higher
+  - API access enabled
+  - Connected App permissions
+</Info>
+
+## Microsoft Teams
+
+Show agent availability and enable warm handoffs through Teams.
+
+### Setting Up Teams Integration
+
+<Steps>
+  <Step title="Navigate to Integration">
+    Go to **Settings → Integrations → Microsoft Teams**
+  </Step>
+  <Step title="Sign In">
+    Click **Connect with Microsoft** and sign in
+  </Step>
+  <Step title="Grant Permissions">
+    Authorize presence and messaging access
+  </Step>
+  <Step title="Map Users">
+    Link Renchi AI team members to Teams accounts
+  </Step>
+</Steps>
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| **Presence Sync** | Show agent availability in Renchi AI |
+| **Notifications** | Alert team of transfers via Teams |
+| **Call Handoff** | Warm transfer to Teams call |
+
+## Firecrawl (Knowledge Base)
+
+Firecrawl enables web scraping to build your agent's knowledge base automatically.
+
+### How It Works
+
+1. Enter a URL from your website
+2. Firecrawl extracts the content
+3. Content is cleaned and formatted
+4. Uploaded to ElevenLabs knowledge base
+5. Your agent can reference this information
+
+### Using Web Crawl
+
+1. Go to **Agents → [Agent] → Context Tab**
+2. Click **Crawl Website**
+3. Enter the URL (e.g., your FAQ page)
+4. Set crawl depth:
+   - **1** - Just this page
+   - **2** - Page + linked pages
+   - **3** - Deeper crawl (use carefully)
+5. Click **Start Crawl**
+6. Review extracted content
+7. Click **Sync to Agent**
+
+### Best Pages to Crawl
+
+- FAQ pages
+- Service descriptions
+- Pricing pages
+- About us
+- Terms of service
+- Contact information
+
+<Warning>
+  Only crawl pages you own or have permission to use. Respect robots.txt.
+</Warning>
+
+## Managing Integrations
+
+### Checking Status
+
+The Integrations page shows status for each connection:
+
+| Status | Meaning |
+|--------|---------|
+| 🟢 **Connected** | Working normally |
+| 🟡 **Reconnect Required** | Token expired, needs reauth |
+| 🔴 **Error** | Connection failed |
+| ⚪ **Not Connected** | Never set up |
+
+### Disconnecting
+
+To remove an integration:
+
+1. Go to **Settings → Integrations**
+2. Find the integration
+3. Click **Disconnect**
+4. Confirm the action
+
+<Warning>
+  Disconnecting stops all syncing. Existing data in the external system remains.
+</Warning>
+
+### Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="ElevenLabs shows 'Invalid API Key'">
+    - Verify the key is copied correctly (no extra spaces)
+    - Check your ElevenLabs subscription is active
+    - Generate a new key if needed
+  </Accordion>
+  <Accordion title="Twilio webhooks not receiving events">
+    - Verify webhook URLs are publicly accessible
+    - Check the URLs are correctly configured in Twilio Console
+    - Ensure your domain SSL certificate is valid
+  </Accordion>
+  <Accordion title="Google Calendar not syncing">
+    - Try disconnecting and reconnecting
+    - Check you selected the correct calendar
+    - Verify Google account permissions
+  </Accordion>
+  <Accordion title="CRM contacts duplicating">
+    - Check field mapping for phone number matching
+    - Enable duplicate detection if available
+    - Review sync direction settings
+  </Accordion>
+</AccordionGroup>
+
+## Data Privacy
+
+### What Data is Shared
+
+| Integration | Data Shared |
+|-------------|-------------|
+| **ElevenLabs** | Voice audio, transcripts, knowledge base |
+| **Twilio** | Call metadata, recordings (if enabled) |
+| **Google Calendar** | Appointment details, customer names |
+| **HubSpot/Salesforce** | Customer profiles, call logs |
+| **Microsoft Teams** | User presence, notifications |
+
+### Compliance
+
+<Note>
+  Review your data processing agreements with each provider. Ensure integrations comply with GDPR if serving EU customers.
+</Note>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="code" href="/api-reference/overview">
+    Build custom integrations with our API
+  </Card>
+  <Card title="Webhooks Guide" icon="webhook" href="/api-reference/post-webhooks-elevenlabs">
+    Understand incoming webhook events
+  </Card>
+</CardGroup>
