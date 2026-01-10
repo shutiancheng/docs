@@ -7,13 +7,14 @@ description: "The Renchi AI platform uses a comprehensive TypeScript type system
 
 ```
 /web/src/lib/
-├── schemas/          # Zod validation schemas
-│   ├── auth.ts       # Authentication validation
-│   ├── team.ts       # Team/organization validation
-│   ├── customer.ts   # Customer data validation
-│   ├── job.ts        # Job/ticket validation
-│   └── agent-config.ts # Agent configuration validation
-├── types/            # TypeScript type definitions
+├── schemas/                    # Zod validation schemas
+│   ├── auth.ts                 # Authentication validation
+│   ├── team.ts                 # Team/organization validation
+│   ├── customer.ts             # Customer data validation
+│   ├── job.ts                  # Job/ticket validation
+│   └── agent-config.ts         # Agent configuration validation
+│
+├── types/                      # TypeScript type definitions
 │   ├── conversation.ts
 │   ├── team.ts
 │   ├── agent-config.ts
@@ -24,10 +25,13 @@ description: "The Renchi AI platform uses a comprehensive TypeScript type system
 │   ├── call-notes.ts
 │   ├── inbox.ts
 │   └── extraction.ts
-└── integrations/     # Third-party integration types
+│
+└── integrations/               # Third-party integration types
     ├── types.ts
-    ├── elevenlabs/types.ts
-    └── twilio/types.ts
+    ├── elevenlabs/
+    │   └── types.ts
+    └── twilio/
+        └── types.ts
 ```
 
 ---
