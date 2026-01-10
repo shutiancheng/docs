@@ -30,17 +30,19 @@ The Renchi AI API is organized around REST principles. All endpoints are built a
 
 OAuth-based connections to third-party services. Supported providers: Google Calendar, HubSpot, Salesforce, Microsoft Teams.
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/integrations/[provider]/connect` | POST/GET | Initiate OAuth flow |
-| `/api/integrations/[provider]/callback` | GET | OAuth callback handler |
-| `/api/integrations/[provider]/disconnect` | POST | Remove integration |
-| `/api/integrations/status` | GET | Get all integration statuses |
+| Endpoint                                  | Method   | Description                  |
+| ----------------------------------------- | -------- | ---------------------------- |
+| `/api/integrations/[provider]/connect`    | POST/GET | Initiate OAuth flow          |
+| `/api/integrations/[provider]/callback`   | GET      | OAuth callback handler       |
+| `/api/integrations/[provider]/disconnect` | POST     | Remove integration           |
+| `/api/integrations/status`                | GET      | Get all integration statuses |
 
 ### Authentication
+
 Requires authenticated user session with team admin/owner role.
 
 ### Supported Providers
+
 - `google_calendar` - Google Calendar sync
 - `hubspot` - HubSpot CRM integration
 - `salesforce` - Salesforce CRM integration
@@ -54,22 +56,23 @@ Event handlers for voice call processing. These endpoints receive callbacks from
 
 ### Twilio Webhooks
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/webhooks/twilio/voice` | POST | Incoming call handler |
-| `/api/webhooks/twilio/status` | POST | Call status updates |
-| `/api/webhooks/twilio/recording` | POST | Recording completion |
+| Endpoint                         | Method | Description           |
+| -------------------------------- | ------ | --------------------- |
+| `/api/webhooks/twilio/voice`     | POST   | Incoming call handler |
+| `/api/webhooks/twilio/status`    | POST   | Call status updates   |
+| `/api/webhooks/twilio/recording` | POST   | Recording completion  |
 
 **Authentication:** Twilio signature validation via `X-Twilio-Signature` header.
 
 ### ElevenLabs Webhooks
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/webhooks/elevenlabs` | POST | Main webhook (transcription, audio, failures) |
-| `/api/webhooks/elevenlabs/personalize` | POST | Real-time call personalization |
+| Endpoint                               | Method | Description                                   |
+| -------------------------------------- | ------ | --------------------------------------------- |
+| `/api/webhooks/elevenlabs`             | POST   | Main webhook (transcription, audio, failures) |
+| `/api/webhooks/elevenlabs/personalize` | POST   | Real-time call personalization                |
 
 **Authentication:**
+
 - Main webhook: `ElevenLabs-Signature` header validation
 - Personalize: `x-webhook-secret` or `Authorization: Bearer` token
 
@@ -126,11 +129,11 @@ Event handlers for voice call processing. These endpoints receive callbacks from
 
 Scheduled background tasks executed by Vercel Cron.
 
-| Endpoint | Schedule | Description |
-|----------|----------|-------------|
-| `/api/cron/cleanup-recordings` | Daily 3:00 AM UTC | Delete expired recordings |
-| `/api/cron/daily-summary` | Daily 6:00 PM UTC | Send daily summary emails |
-| `/api/cron/weekly-report` | Monday 9:00 AM UTC | Send weekly performance reports |
+| Endpoint                       | Schedule           | Description                     |
+| ------------------------------ | ------------------ | ------------------------------- |
+| `/api/cron/cleanup-recordings` | Daily 3:00 AM UTC  | Delete expired recordings       |
+| `/api/cron/daily-summary`      | Daily 6:00 PM UTC  | Send daily summary emails       |
+| `/api/cron/weekly-report`      | Monday 9:00 AM UTC | Send weekly performance reports |
 
 **Authentication:** `Authorization: Bearer {CRON_SECRET}` header.
 
@@ -140,10 +143,10 @@ Scheduled background tasks executed by Vercel Cron.
 
 Setup and debugging endpoints.
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/setup-super-admin` | POST | Create super admin accounts (one-time setup) |
-| `/api/debug/db` | GET | Test database connectivity |
+| Endpoint                 | Method | Description                                  |
+| ------------------------ | ------ | -------------------------------------------- |
+| `/api/setup-super-admin` | POST   | Create super admin accounts (one-time setup) |
+| `/api/debug/db`          | GET    | Test database connectivity                   |
 
 <Warning>
   These endpoints should be removed or heavily protected in production.
@@ -164,13 +167,13 @@ All endpoints return errors in a consistent format:
 
 ### Common Error Codes
 
-| Code | HTTP Status | Description |
-|------|-------------|-------------|
-| `UNAUTHORIZED` | 401 | Missing or invalid authentication |
-| `FORBIDDEN` | 403 | Insufficient permissions |
-| `NOT_FOUND` | 404 | Resource not found |
-| `VALIDATION_ERROR` | 400 | Invalid request parameters |
-| `INTERNAL_ERROR` | 500 | Server error |
+| Code               | HTTP Status | Description                       |
+| ------------------ | ----------- | --------------------------------- |
+| `UNAUTHORIZED`     | 401         | Missing or invalid authentication |
+| `FORBIDDEN`        | 403         | Insufficient permissions          |
+| `NOT_FOUND`        | 404         | Resource not found                |
+| `VALIDATION_ERROR` | 400         | Invalid request parameters        |
+| `INTERNAL_ERROR`   | 500         | Server error                      |
 
 ---
 
