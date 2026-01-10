@@ -57,6 +57,23 @@
         ]
       },
       {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "index-copied-1"
+            ]
+          },
+          {
+            "group": "Types Reference",
+            "pages": [
+              "types/overview-copied-1"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "API Reference",
         "groups": [
           {
