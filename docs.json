@@ -45,23 +45,6 @@
           {
             "group": "Getting Started",
             "pages": [
-              "index"
-            ]
-          },
-          {
-            "group": "Types Reference",
-            "pages": [
-              "types/overview"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Documentation",
-        "groups": [
-          {
-            "group": "Getting Started",
-            "pages": [
               "index-copied-1"
             ]
           },
