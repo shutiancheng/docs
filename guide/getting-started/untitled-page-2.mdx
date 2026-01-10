@@ -1,0 +1,391 @@
+---
+title: "Managing Calls & Customers"
+description: "Review conversations, handle follow-ups, and manage your customer database"
+---
+
+# Managing Calls & Customers
+
+Once your voice agents are handling calls, you'll need to review conversations, follow up on action items, and maintain customer records. This guide covers the three core operational areas: Conversations, Inbox, and Customers.
+
+## Conversations
+
+The Conversations page is your complete call history - every interaction your Renchi AI voice agents have with customers.
+
+### Viewing the Conversation List
+
+Navigate to **Conversations** in the sidebar to see all calls:
+
+```
+Recent Conversations
+├── 📞 John Smith          Boiler breakdown     2 min ago    🔴 Emergency
+├── 📞 Emma Wilson         Blocked drain        15 min ago   🟡 High
+├── 📞 Robert Brown        Annual service       1 hour ago   🟢 Normal
+└── 📞 Sarah Johnson       Quote request        2 hours ago  🟢 Normal
+```
+
+Each row shows:
+- **Caller name** (if identified) or phone number
+- **Problem category** detected by AI
+- **Time** since call
+- **Urgency level** indicator
+
+### Filtering Conversations
+
+Use the filter bar to narrow results:
+
+<Tabs>
+  <Tab title="By Outcome">
+    Filter by how the call concluded:
+    - **Booked** - Appointment scheduled
+    - **Transferred** - Sent to human agent
+    - **Resolved** - Issue handled by AI
+    - **Callback** - Callback requested
+    - **Abandoned** - Caller hung up
+    - **Voicemail** - Message left
+  </Tab>
+  <Tab title="By Urgency">
+    Filter by priority level:
+    - **Emergency** - Gas leaks, flooding, safety issues
+    - **High** - No heating, major leaks
+    - **Normal** - Standard inquiries
+  </Tab>
+  <Tab title="By Problem">
+    Filter by issue category:
+    - Boiler breakdown
+    - Blocked drain
+    - Leak/burst pipe
+    - No heating
+    - Gas smell
+    - General inquiry
+  </Tab>
+  <Tab title="By Date">
+    Select a date range:
+    - Today
+    - Yesterday
+    - Last 7 days
+    - Custom range
+  </Tab>
+</Tabs>
+
+### Conversation Detail View
+
+Click any conversation to see the full details:
+
+<CardGroup cols={2}>
+  <Card title="Call Recording" icon="play">
+    Listen to the complete call audio
+  </Card>
+  <Card title="Transcript" icon="align-left">
+    Read the full AI-generated transcript
+  </Card>
+  <Card title="AI Analysis" icon="brain">
+    Summary, sentiment, and key points
+  </Card>
+  <Card title="Customer Info" icon="user">
+    Caller details and history
+  </Card>
+</CardGroup>
+
+### Call Recording Player
+
+The audio player provides:
+- Play/pause controls
+- Playback speed adjustment (0.5x to 2x)
+- Progress scrubbing
+- Volume control
+- Download option
+
+<Info>
+  Call recordings are retained according to your organization's data retention settings (default: 90 days).
+</Info>
+
+### Transcript Viewer
+
+The transcript shows the conversation with:
+- **Speaker labels** (AI Agent vs Caller)
+- **Timestamps** for each message
+- **Highlighted keywords** (emergency terms, booking confirmations)
+
+```
+[00:00] Agent: "Hello, thank you for calling ABC Plumbing. My name is
+        Adaline, how can I help you today?"
+[00:05] Caller: "Hi, I've got a leaking pipe under my kitchen sink."
+[00:08] Agent: "I'm sorry to hear about the leak. Can you tell me how
+        severe it is? Is water actively dripping?"
+```
+
+### AI Analysis Panel
+
+The AI provides:
+
+| Analysis | Description |
+|----------|-------------|
+| **Summary** | 2-3 sentence overview of the call |
+| **Problem Detected** | Categorized issue type |
+| **Urgency Assessment** | Normal, High, or Emergency |
+| **Customer Sentiment** | Positive, Neutral, or Frustrated |
+| **Key Information** | Address, preferred times, special notes |
+| **Recommended Action** | Suggested follow-up steps |
+
+### Booking Details Card
+
+If a booking was made:
+
+```
+Booking Confirmed
+├── Service: Leak Repair
+├── Date: Monday, 15 Jan 2025
+├── Time: 9:00 AM - 11:00 AM
+├── Address: 123 High Street, London SW1A 1AA
+├── Quoted Price: £120 (estimated)
+└── Special Notes: "Enter through side gate"
+```
+
+### Exporting Conversations
+
+Click the **Export** button to download:
+- **CSV** - All conversation metadata
+- **PDF** - Formatted report with transcript
+- **Audio** - Download the call recording
+
+## Inbox
+
+The Inbox contains action items that need human attention - callback requests, follow-ups, and unresolved issues.
+
+### Understanding Inbox Items
+
+Each item has a status:
+
+| Status | Color | Meaning |
+|--------|-------|---------|
+| **New** | Blue | Just arrived, not yet reviewed |
+| **In Progress** | Yellow | Being worked on |
+| **Completed** | Green | Resolved and closed |
+| **Archived** | Gray | Kept for records |
+
+### Priority Levels
+
+Items are automatically prioritized:
+
+```
+🔴 Urgent (Red)
+└── Emergency calls, same-day requests
+
+🟡 High (Yellow)
+└── Next-day callbacks, complex issues
+
+🟢 Normal (Green)
+└── Standard follow-ups, inquiries
+```
+
+### Quick Actions Bar
+
+When viewing an inbox item, use the quick actions:
+
+<CardGroup cols={4}>
+  <Card title="Call Back" icon="phone-arrow-up-right">
+    Mark as callback made
+  </Card>
+  <Card title="Book Job" icon="calendar-plus">
+    Create a booking
+  </Card>
+  <Card title="Transfer" icon="arrow-right">
+    Assign to team member
+  </Card>
+  <Card title="Resolve" icon="check">
+    Mark as completed
+  </Card>
+</CardGroup>
+
+### Creating a Callback
+
+1. Click the **Call Back** action
+2. Enter the callback outcome:
+   - **Answered** - Spoke with customer
+   - **Voicemail** - Left a message
+   - **No Answer** - Will try again
+3. Add notes about the conversation
+4. Set follow-up reminder if needed
+
+### Creating a Booking from Inbox
+
+1. Click **Book Job**
+2. Fill in the booking dialog:
+   - Service type
+   - Date and time slot
+   - Assigned technician (if applicable)
+   - Address (pre-filled from call)
+   - Notes
+3. Click **Confirm Booking**
+4. The item automatically moves to **Completed**
+
+### Transferring Items
+
+To reassign an item to another team member:
+
+1. Click **Transfer**
+2. Select the team member
+3. Add a note explaining the transfer
+4. Click **Transfer**
+
+The item moves to the new team member's queue.
+
+## Customers
+
+The Customers page is your built-in CRM - a database of everyone who has called.
+
+### Customer List View
+
+```
+Customers (156 total)
+├── John Smith        Residential    Last call: Today       5 bookings
+├── ABC Corp          Commercial     Last call: 3 days ago  12 bookings
+├── Emma Wilson       Residential    Last call: 1 week ago  2 bookings
+└── ...
+```
+
+### Customer Types
+
+| Type | Description | Icon |
+|------|-------------|------|
+| **Residential** | Home customers | 🏠 |
+| **Commercial** | Business accounts | 🏢 |
+
+### Filtering Customers
+
+<Tabs>
+  <Tab title="By Status">
+    - **Active** - Recent calls/bookings
+    - **New** - First-time callers
+    - **Inactive** - No activity in 90+ days
+  </Tab>
+  <Tab title="By Type">
+    - Residential
+    - Commercial
+  </Tab>
+  <Tab title="By Call Volume">
+    - High (10+ calls)
+    - Medium (3-9 calls)
+    - Low (1-2 calls)
+  </Tab>
+</Tabs>
+
+### Customer Detail View
+
+Click a customer to see their full profile:
+
+**Contact Information**
+- Name
+- Phone number(s)
+- Email
+- Address (with verification status)
+
+**History**
+- All conversations
+- Booking history
+- Total spend
+
+**Notes & Tags**
+- Internal notes (staff only)
+- Custom tags for segmentation
+
+### Adding a New Customer
+
+1. Click **+ Add Customer**
+2. Fill in the form:
+   - First name, Last name
+   - Phone number
+   - Email (optional)
+   - Address (with autocomplete)
+   - Type (Residential/Commercial)
+3. Click **Create**
+
+### Editing Customer Information
+
+1. Open customer detail view
+2. Click the **Edit** button
+3. Update any fields
+4. Click **Save Changes**
+
+### Address Verification
+
+Addresses are verified against Google Maps:
+
+| Status | Meaning |
+|--------|---------|
+| ✅ **Verified** | Address confirmed, coordinates saved |
+| ⚠️ **Unverified** | Could not verify - needs review |
+| ❓ **Partial** | Street found but house number unconfirmed |
+
+Unverified addresses show a dialog to manually confirm or correct.
+
+### Customer Notes
+
+Add internal notes visible only to your team:
+
+```
+Notes for John Smith:
+─────────────────────
+[Jan 15, 2025 - Sarah] Called about boiler. Elderly customer,
+prefers morning appointments. Hard of hearing - speak clearly.
+
+[Jan 10, 2025 - Mike] Previous job went well, happy customer.
+Recommended annual service plan.
+```
+
+### Customer Tags
+
+Create tags to segment customers:
+
+- `VIP` - High-value customers
+- `Landlord` - Manages multiple properties
+- `Vulnerable` - Needs extra care
+- `Commercial` - Business account
+- `New Build` - Newer property
+
+Tags can be filtered and used for targeted follow-ups.
+
+### Linking Conversations to Customers
+
+When a conversation isn't linked to a customer:
+
+1. Open the conversation
+2. Click **Link Customer**
+3. Search for existing customer or create new
+4. Click **Link**
+
+The call is now part of that customer's history.
+
+## Workflow Best Practices
+
+### Morning Routine
+
+1. Check **Inbox** for overnight callbacks
+2. Review **Emergency** items first
+3. Process **High Priority** items
+4. Plan callbacks for **Normal** items
+
+### During Business Hours
+
+- Monitor **Dashboard** for incoming calls
+- Handle **Inbox** items as they arrive
+- Update customer notes after callbacks
+- Create bookings promptly
+
+### End of Day
+
+1. Review outstanding inbox items
+2. Set reminders for next-day callbacks
+3. Archive completed items
+4. Export daily report if needed
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Integrations Setup" icon="plug" href="/getting-started/integrations-setup">
+    Connect your CRM and calendar systems
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/overview">
+    Automate with webhooks and APIs
+  </Card>
+</CardGroup>
