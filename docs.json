@@ -29,7 +29,7 @@
           {
             "group": "Getting Started",
             "pages": [
-              "index-copied-1",
+              "guide/getting-started/introduction",
               "guide/getting-started/creating-your-first-agent",
               "guide/getting-started/integrations-setup",
               "guide/getting-started/managing-calls-and-customers",
@@ -40,7 +40,7 @@
           {
             "group": "Types Reference",
             "pages": [
-              "types/overview-copied-1"
+              "types/overview"
             ]
           }
         ]
