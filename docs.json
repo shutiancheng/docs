@@ -24,28 +24,17 @@
     },
     "tabs": [
       {
-        "tab": "Guide",
-        "groups": [
-          {
-            "group": "Getting Started",
-            "pages": [
-              "guide/getting-started/introduction",
-              "guide/getting-started/creating-your-first-agent",
-              "guide/getting-started/integrations-setup",
-              "guide/getting-started/managing-calls-and-customers",
-              "guide/getting-started/quick-start",
-              "guide/getting-started/understanding-the-dashboard"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "Documentation",
         "groups": [
           {
             "group": "Getting Started",
             "pages": [
-              "index-copied-1"
+              "index-copied-1",
+              "guide/getting-started/creating-your-first-agent",
+              "guide/getting-started/integrations-setup",
+              "guide/getting-started/managing-calls-and-customers",
+              "guide/getting-started/quick-start",
+              "guide/getting-started/understanding-the-dashboard"
             ]
           },
           {
