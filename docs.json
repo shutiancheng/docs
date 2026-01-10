@@ -25,8 +25,14 @@
     "tabs": [
       {
         "tab": "Guide",
-        "pages": [
-          "guide/untitled-page"
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "guide/getting-started/untitled-page",
+              "guide/untitled-page"
+            ]
+          }
         ]
       },
       {

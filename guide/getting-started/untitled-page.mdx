@@ -1,0 +1,355 @@
+---
+title: "Creating Your First Agent"
+description: "Step-by-step guide to configuring an AI voice agent for your business"
+---
+
+# Creating Your First Agent
+
+Your AI voice agent is the heart of Renchi AI. It handles inbound calls, diagnoses customer issues, provides quotes, and books appointments. This guide walks you through every configuration option.
+
+## Agent Overview
+
+Each agent has these configurable areas:
+
+```
+Agent Configuration
+├── General Settings     (name, status, greeting)
+├── Voice Settings       (voice model, personality)
+├── Business Hours       (operating schedule)
+├── Services & Pricing   (what you offer)
+├── Transfer Settings    (human handoff rules)
+├── Call Handling        (emergency, callbacks)
+└── Knowledge Base       (context documents)
+```
+
+## Creating a New Agent
+
+<Steps>
+  <Step title="Navigate to Agents">
+    Click **Agents** in the sidebar to view your agent list
+  </Step>
+  <Step title="Click Add Agent">
+    Click the **+ Add Agent** button in the top right
+  </Step>
+  <Step title="Enter Basic Details">
+    - **Agent Name**: A descriptive name (e.g., "Main Office Line")
+    - **Voice Model**: Select your preferred voice
+    - **Greeting**: The opening message callers will hear
+  </Step>
+  <Step title="Assign Phone Number">
+    Select an available phone number or provision a new one through ElevenLabs
+  </Step>
+</Steps>
+
+## General Settings Tab
+
+The General tab controls your agent's identity and basic behavior.
+
+### Agent Name & Status
+
+| Field | Description |
+|-------|-------------|
+| **Name** | Internal name to identify this agent (e.g., "Emergency Line") |
+| **Status** | Toggle between Active (receiving calls) and Disabled |
+
+### Greeting Configuration
+
+Customize what callers hear when the agent picks up:
+
+```
+"Hello, thank you for calling [Business Name]. My name is [Agent Persona],
+how can I help you today?"
+```
+
+<Info>
+  Use placeholders like `[Business Name]` and `[Agent Persona]` which are automatically filled from your settings.
+</Info>
+
+### After-Hours Greeting
+
+Configure a different message for calls outside business hours:
+
+```
+"Thank you for calling [Business Name]. We're currently closed but your call
+is important to us. I can help you schedule a callback or leave a message."
+```
+
+## Voice Settings Tab
+
+Select and customize your agent's voice.
+
+### Available Voice Models
+
+| Voice | Gender | Accent | Best For |
+|-------|--------|--------|----------|
+| Adaline | Female | UK | Professional, warm tone |
+| Shaun | Male | UK | Authoritative, friendly |
+| Matilda | Female | US | Energetic, clear |
+| Roger | Male | US | Calm, professional |
+
+<Tip>
+  UK voices are recommended for UK-based businesses as customers respond better to familiar accents.
+</Tip>
+
+### Voice Customization
+
+Fine-tune the voice behavior:
+
+- **Speed**: Adjust speaking pace (slower for complex information)
+- **Stability**: Higher values = more consistent delivery
+- **Clarity**: Boost for noisy call environments
+
+## Business Hours Tab
+
+Configure when your agent operates in "business hours" mode vs "after hours" mode.
+
+### Setting Your Schedule
+
+For each day of the week, configure:
+
+```
+Monday:     ☑ Enabled   09:00 - 17:30
+Tuesday:    ☑ Enabled   09:00 - 17:30
+Wednesday:  ☑ Enabled   09:00 - 17:30
+Thursday:   ☑ Enabled   09:00 - 17:30
+Friday:     ☑ Enabled   09:00 - 17:00
+Saturday:   ☑ Enabled   10:00 - 14:00
+Sunday:     ☐ Disabled
+```
+
+### After-Hours Behavior
+
+Choose what happens when calls arrive outside business hours:
+
+| Option | Behavior |
+|--------|----------|
+| **Voicemail** | Take a message and notify your team |
+| **Emergency Only** | Handle emergencies, route others to voicemail |
+| **Callback Scheduling** | Let callers book a callback slot |
+| **Transfer** | Route all calls to an emergency number |
+
+## Services Tab
+
+Define what services your business offers. The AI uses this to provide accurate quotes and book appropriate appointments.
+
+### Adding Services
+
+Click **+ Add Service** and configure:
+
+<ParamField body="name" type="string" required>
+  Service name (e.g., "Boiler Service", "Drain Unblocking")
+</ParamField>
+
+<ParamField body="description" type="string">
+  Brief description the AI uses to understand when to offer this service
+</ParamField>
+
+<ParamField body="price" type="number">
+  Base price for the service (can include "from" prefix)
+</ParamField>
+
+<ParamField body="duration" type="string">
+  Estimated job duration (e.g., "1-2 hours")
+</ParamField>
+
+<ParamField body="enabled" type="boolean">
+  Toggle to temporarily disable a service
+</ParamField>
+
+### Example Service Configuration
+
+```json
+{
+  "name": "Boiler Service",
+  "description": "Annual boiler service and safety inspection",
+  "price": "from £89",
+  "duration": "45-60 minutes",
+  "enabled": true
+}
+```
+
+### Pre-built Templates
+
+Use the **Load Template** button for industry-standard services:
+
+- **Plumbing Services** - Leaks, blockages, installations
+- **HVAC Services** - Boiler repairs, heating, air conditioning
+- **Emergency Services** - 24/7 callouts, gas leaks, flooding
+
+## Transfer Settings Tab
+
+Configure when and how calls are transferred to human agents.
+
+### Transfer Destinations
+
+Add multiple transfer numbers with priorities:
+
+| Priority | Destination | Number | Description |
+|----------|-------------|--------|-------------|
+| 1 | Main Office | +44 20 1234 5678 | Primary reception |
+| 2 | Mobile Backup | +44 7700 900000 | After-hours |
+| 3 | Emergency | +44 800 123 4567 | Critical issues |
+
+### Transfer Triggers
+
+Define when automatic transfers occur:
+
+<CardGroup cols={2}>
+  <Card title="Customer Request" icon="hand">
+    "I'd like to speak to a real person"
+  </Card>
+  <Card title="Complex Issues" icon="puzzle-piece">
+    Agent cannot resolve after 3 attempts
+  </Card>
+  <Card title="Emergency Detection" icon="triangle-exclamation">
+    Gas leak, flooding, safety concerns
+  </Card>
+  <Card title="High-Value Customers" icon="star">
+    Based on customer tags or history
+  </Card>
+</CardGroup>
+
+### Transfer Message
+
+Customize what the AI says before transferring:
+
+```
+"I'll transfer you to one of our team members now. Please hold while I
+connect you. This may take a moment."
+```
+
+## Call Handling Tab
+
+Advanced settings for call behavior and emergency detection.
+
+### Emergency Detection
+
+Enable automatic detection of emergency keywords:
+
+```
+Emergency Keywords:
+├── "gas leak"
+├── "flooding" / "flood"
+├── "no heating" (in winter)
+├── "burst pipe"
+├── "carbon monoxide"
+└── "fire"
+```
+
+When detected, the agent:
+1. Acknowledges the emergency
+2. Collects essential information quickly
+3. Immediately routes to emergency transfer number
+4. Logs as high-priority in the system
+
+### Callback Settings
+
+| Setting | Description |
+|---------|-------------|
+| **Enable Callbacks** | Allow customers to request callbacks |
+| **Max Queue Size** | Maximum callbacks before showing "fully booked" |
+| **Callback Window** | Offer "morning", "afternoon", or specific times |
+
+### Diagnostic Fee
+
+If you charge for diagnostic visits:
+
+```
+Diagnostic Fee: £65
+AI Response: "There's a £65 diagnostic fee which is waived if you proceed
+with the repair. Would you like to book an appointment?"
+```
+
+## Knowledge Base Tab (Context)
+
+Upload documents and information to give your agent specialized knowledge.
+
+### Document Types
+
+<CardGroup cols={2}>
+  <Card title="PDF Documents" icon="file-pdf">
+    Service manuals, price lists, FAQs
+  </Card>
+  <Card title="Text Content" icon="file-lines">
+    Custom instructions, scripts, policies
+  </Card>
+  <Card title="Web Pages" icon="globe">
+    Crawl your website for product information
+  </Card>
+  <Card title="Spreadsheets" icon="table">
+    Price matrices, service catalogs
+  </Card>
+</CardGroup>
+
+### Adding Knowledge
+
+<Tabs>
+  <Tab title="Upload Document">
+    1. Click **Upload Document**
+    2. Select a PDF, DOCX, or TXT file
+    3. Give it a descriptive name
+    4. Click **Upload & Sync**
+  </Tab>
+  <Tab title="Add Text">
+    1. Click **Add Text**
+    2. Enter a title (e.g., "Pricing Policy")
+    3. Paste your content
+    4. Click **Save**
+  </Tab>
+  <Tab title="Web Crawl">
+    1. Click **Crawl Website**
+    2. Enter the URL to scrape
+    3. Set crawl depth (1-3 pages recommended)
+    4. Click **Start Crawl**
+  </Tab>
+</Tabs>
+
+<Warning>
+  Documents are synced to ElevenLabs. Large documents may take a few minutes to process.
+</Warning>
+
+### Global vs Agent-Specific Context
+
+| Type | Scope | Use Case |
+|------|-------|----------|
+| **Global Context** | All agents | Company-wide info, branding guidelines |
+| **Agent Context** | Single agent | Specialized knowledge for that line |
+
+## Using Smart Fill
+
+The **Smart Fill** feature uses AI to automatically populate agent settings based on your business profile:
+
+1. Ensure your organization profile is complete in Settings
+2. When configuring an agent, click the **Smart Fill** button (robot icon)
+3. Review the suggested settings in the preview panel
+4. Click **Apply** to use the suggestions, or **Dismiss** to configure manually
+
+Smart Fill can populate:
+- Greeting messages
+- After-hours greetings
+- Service descriptions
+- Emergency keywords relevant to your industry
+
+## Activating Your Agent
+
+Once configured:
+
+1. Review all settings in each tab
+2. Toggle the agent **Status** to **Active**
+3. Your agent is now live and receiving calls!
+
+<Check>
+  Make a test call to verify everything works before sharing the number with customers.
+</Check>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Dashboard Guide" icon="chart-line" href="/getting-started/understanding-the-dashboard">
+    Monitor your agent's performance
+  </Card>
+  <Card title="Managing Calls" icon="phone" href="/getting-started/managing-calls-and-customers">
+    Review conversations and follow up
+  </Card>
+</CardGroup>
+
