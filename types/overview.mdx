@@ -5,36 +5,25 @@ description: "The Renchi AI platform uses a comprehensive TypeScript type system
 
 ## Type Organization
 
-```
-/web/src/lib/
-├── schemas/                    # Zod validation schemas
-│   ├── auth.ts                 # Authentication validation
-│   ├── team.ts                 # Team/organization validation
-│   ├── customer.ts             # Customer data validation
-│   ├── job.ts                  # Job/ticket validation
-│   └── agent-config.ts         # Agent configuration validation
-│
-├── types/                      # TypeScript type definitions
-│   ├── conversation.ts
-│   ├── team.ts
-│   ├── agent-config.ts
-│   ├── knowledge-base.ts
-│   ├── sentiment.ts
-│   ├── customer.ts
-│   ├── job.ts
-│   ├── call-notes.ts
-│   ├── inbox.ts
-│   └── extraction.ts
-│
-└── integrations/               # Third-party integration types
-    ├── types.ts
-    ├── elevenlabs/
-    │   └── types.ts
-    └── twilio/
-        └── types.ts
-```
+**`/web/src/lib/schemas/`** — Zod validation schemas
 
----
+- `auth.ts` — Authentication validation
+- `team.ts` — Team/organization validation
+- `customer.ts` — Customer data validation
+- `job.ts` — Job/ticket validation
+- `agent-config.ts` — Agent configuration validation
+
+**`/web/src/lib/types/`** — TypeScript type definitions
+
+- `conversation.ts`, `team.ts`, `agent-config.ts`
+- `knowledge-base.ts`, `sentiment.ts`, `customer.ts`
+- `job.ts`, `call-notes.ts`, `inbox.ts`, `extraction.ts`
+
+**`/web/src/lib/integrations/`** — Third-party integration types
+
+- `types.ts`
+- `elevenlabs/types.ts`
+- `twilio/types.ts`
 
 ## Core Types
 
