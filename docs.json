@@ -24,7 +24,10 @@
     },
     "tabs": [
       {
-        "tab": "Guide"
+        "tab": "Guide",
+        "pages": [
+          "guide/untitled-page"
+        ]
       },
       {
         "tab": "Documentation",
