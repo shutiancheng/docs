@@ -29,9 +29,9 @@
           {
             "group": "Getting Started",
             "pages": [
-              "guide/getting-started/untitled-page-1",
+              "guide/untitled-page",
               "guide/getting-started/untitled-page",
-              "guide/untitled-page"
+              "guide/getting-started/untitled-page-1"
             ]
           }
         ]
